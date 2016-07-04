@@ -6,16 +6,15 @@ router.get('/', function (req, res) {
 })
 
 router.get('/deskpro', function (req, res) {
-  console.log('deskpro')
-  res.render('index')
+  res.render('deskpro')
 })
 
 router.get('/tawk', function (req, res) {
-  res.render('index')
+  res.render('tawk')
 })
 
 router.get('/livechatinc', function (req, res) {
-  res.render('index')
+  res.render('livechatinc')
 })
 
 module.exports = router
