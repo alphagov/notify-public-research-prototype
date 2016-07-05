@@ -18,14 +18,15 @@
     <main id="content" role="main" class="multi-page">
       <header class="page-header">
         <div>
-          <h1>Jobseeker's Allowance (JSA)</h1> </div>
+          <h1>Jobseeker's Allowance (JSA)</h1>
+        </div>
       </header>
       <div class="article-container group">
         <div class="content-block">
           <div class="inner">
             <aside>
-              <div class="inner">
-                <nav role="navigation" class="page-navigation" aria-label="parts to this guide">
+              <div class="inner"> <a href="#" class="show-all-parts">Show all parts of this guide</a>
+                <nav role="navigation" class="page-navigation page-navigation-closed" aria-label="parts to this guide">
                   <ol>
                     <li class="active"> <span class="part-number">1.</span> <span>How it works</span> </li>
                     <li> <span class="part-number">2.</span> <a title="Part 2: Eligibility" href="/jobseekers-allowance/eligibility">Eligibility</a> </li>
@@ -122,7 +123,7 @@
                 </ul>
               </nav>
             </footer>
-            <div class="print-link"><a rel="nofollow" href="/jobseekers-allowance/print">Print entire guide</a></div>
+            <div class="print-link"><a rel="nofollow" href="/jobseekers-allowance/print" target="_blank">Print entire guide</a></div>
           </div>
         </div>
         <div class="meta-data group">
@@ -130,34 +131,9 @@
         </div>
       </div>
     </main>
-    <div class="related-container">
-      <aside class="related" id="related">
-        <div class="inner group related-subsection">
-          <h2 id="parent-subsection">Benefits entitlement</h2>
-          <nav role="navigation" aria-labelledby="parent-subsection">
-            <ul>
-              <li> <a href="/benefits-calculators">Benefits calculators</a> </li>
-              <li> <a href="/employment-support-allowance">Employment and Support Allowance (ESA)</a> </li>
-              <li> <a href="/how-to-have-your-benefits-paid">How and when your benefits are paid</a> </li>
-              <li> <a href="/universal-credit">Universal Credit</a> </li>
-              <li class="related-topic"><a href="/browse/benefits/entitlement">More <span class="visuallyhidden">in Benefits entitlement</span></a></li>
-            </ul>
-          </nav>
-        </div>
-        <div class="inner group related-other">
-          <h2 id="parent-other">Elsewhere on GOV.UK</h2>
-          <nav role="navigation" aria-labelledby="parent-other">
-            <ul>
-              <li> <a href="/jobsearch">Find a job with Universal Jobmatch</a> </li>
-              <li> <a href="/contact-jobcentre-plus">Contact Jobcentre Plus</a> </li>
-            </ul>
-          </nav>
-        </div>
-        <div class="inner group"> <a class="return-to-top" href="#content">Return to top ↑</a> </div>
-      </aside>
-    </div>
-    </main>
+    {% include "includes/related-content.html" %}
   </div>
+  {% include "includes/report-a-problem.html" %}
 </div>
 
 {% endblock %}

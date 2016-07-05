@@ -94,64 +94,9 @@
         </div>
       </div>
     </main>
-    <!-- related -->
-    <div class="related-container">
-      <aside class="related" id="related">
-        <div class="inner group related-subsection">
-          <h2 id="parent-subsection">Benefits entitlement</h2>
-          <nav role="navigation" aria-labelledby="parent-subsection">
-            <ul>
-              <li> <a href="/jobseekers-allowance">Jobseeker's Allowance (JSA)</a> </li>
-              <li> <a href="/benefit-cap">Benefit cap</a> </li>
-              <li> <a href="/benefits-calculators">Benefits calculators</a> </li>
-              <li> <a href="/apply-universal-credit">Apply for Universal Credit</a> </li>
-              <li class="related-topic"><a href="/browse/benefits/entitlement">More <span class="visuallyhidden">in Benefits entitlement</span></a></li>
-            </ul>
-          </nav>
-        </div>
-        <div class="inner group related-other">
-          <h2 id="parent-other">Elsewhere on GOV.UK</h2>
-          <nav role="navigation" aria-labelledby="parent-other">
-            <ul>
-              <li> <a href="/jobsearch">Find a job with Universal Jobmatch</a> </li>
-              <li> <a href="/guidance/universal-credit-how-it-helps-you-into-work">Universal Credit: how it helps you into work</a> </li>
-              <li> <a href="/guidance/universal-credit-how-it-can-help-your-business">Universal Credit for employers: how it helps your business</a> </li>
-              <li> <a href="/guidance/universal-credit-toolkit-for-partner-organisations">Universal Credit guides</a> </li>
-              <li> <a href="/register-to-vote">Register to vote</a> </li>
-            </ul>
-          </nav>
-        </div>
-        <div class="inner group"> <a class="return-to-top" href="#content">Return to top ↑</a> </div>
-      </aside>
-    </div>
-    <!-- end related -->
+    {% include "includes/related-content.html" %}
   </div>
-  <div class="report-a-problem-toggle-wrapper js-footer">
-    <p class="report-a-problem-toggle"> <a href="" class="js-report-a-problem-toggle">Is there anything wrong with this page?</a> </p>
-  </div>
-  <div class="report-a-problem-container">
-    <div class="report-a-problem-inner">
-      <div class="report-a-problem-content">
-        <h2>Help us improve GOV.UK</h2>
-        <form accept-charset="UTF-8" action="/contact/govuk/problem_reports" method="post">
-          <div style="margin:0;padding:0;display:inline">
-            <input name="utf8" type="hidden" value="✓"> </div>
-          <input id="url" name="url" type="hidden" value="https://www.gov.uk/universal-credit/if-your-payment-is-stopped-or-reduced">
-          <input id="source" name="source" type="hidden" value="">
-          <input id="page_owner" name="page_owner" type="hidden" value="">
-          <p>Don’t include personal or financial information, eg your National Insurance number or credit card details.</p>
-          <label for="what_doing">What you were doing</label>
-          <input id="what_doing" name="what_doing" type="text">
-          <label for="what_wrong">What went wrong</label>
-          <input id="what_wrong" name="what_wrong" type="text">
-          <div class="button-wrapper">
-            <button name="commit" type="submit" class="button">Send</button>
-          </div>
-          <input type="hidden" name="javascript_enabled" value="true">
-          <input type="hidden" name="referrer" value="https://www.gov.uk/universal-credit/claiming-other-benefits"> </form>
-      </div>
-    </div>
-  </div>
+  {% include "includes/report-a-problem.html" %}
 </div>
 
 {% endblock %}
