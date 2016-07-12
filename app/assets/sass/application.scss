@@ -33,3 +33,12 @@
 .grid-row main#content {
   margin: 0;
 }
+
+.related.related li a[href*="#"] {
+  color: #005ea5;
+  text-decoration: underline;
+
+  &:visited {
+    color: #4c2c92;
+  }
+}
