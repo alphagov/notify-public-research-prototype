@@ -1,0 +1,52 @@
+$govuk-black: #0B0C0C;
+$govuk-navy: #005EA5;
+$govuk-gray: #DEE0E2;
+$govuk-light-gray: #454A4C;
+$govuk-dark-gray: #A1ACB2;
+
+.govuk-light-gray { color: $govuk-light-gray }
+.bg-govuk-black { background-color: $govuk-black }
+.bg-govuk-navy { background-color: $govuk-navy }
+.bg-govuk-gray { background-color: $govuk-gray}
+.b--govuk-dark-gray { border-color: $govuk-dark-gray }
+
+.new-transport { font-family: 'nta', 'helvetica neue', helvetica, sans-serif }
+.wfs-aa { -webkit-font-smoothing: antialiased }
+.tr-ol { text-rendering: optimizeLegibility }
+
+.f0 { font-size: 0 }
+.f1875 { font-size: 1.875rem } // 30px
+
+.h0625 { height: 0.625rem } // 10px
+.mt1875 { margin-top: 1.875rem } // 30px
+.mb3750 { margin-bottom: 3.750rem } // 60px
+
+.govuk-logo {
+  background-image: url(/public/stylesheets/images/gov.uk_logotype_crown.png?0.17.3);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 35px 31px;
+  border-bottom: 1px solid transparent;
+  padding: 2px 0 0 41px;
+
+  &:hover {
+    border-bottom: 1px solid #fff;
+  }
+}
+
+.crown-copyright {
+  background-image: url(/public/stylesheets/images/govuk-crest.png?0.17.3);
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  padding-top: 115px;
+}
+
+.ogl-logo {
+  background-image: url(images/open-government-licence.png?0.17.3);
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  height: 17px;
+  margin: 0 9px -1px 0;
+  text-indent: -999em;
+  width: 41px;
+}

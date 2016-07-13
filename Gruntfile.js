@@ -64,6 +64,13 @@ module.exports = function (grunt) {
           src: '**',
           dest: 'lib/'
         }]
+      },
+      tachyons: {
+        files: [{
+          cwd: 'node_modules/tachyons/css/',
+          src: '**',
+          dest: 'public/stylesheets/'
+        }]
       }
     },
 
