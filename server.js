@@ -2,16 +2,16 @@ var path = require('path')
 var express = require('express')
 var session = require('express-session')
 var nunjucks = require('express-nunjucks')
-var routes = require(__dirname + '/app/routes.js')
+var routes = require(path.join(__dirname, '/app/routes.js'))
 var favicon = require('serve-favicon')
 var app = express()
 var bodyParser = require('body-parser')
 var browserSync = require('browser-sync')
-var config = require(__dirname + '/app/config.js')
-var utils = require(__dirname + '/lib/utils.js')
-var packageJson = require(__dirname + '/package.json')
+var config = require(path.join(__dirname, '/app/config.js'))
+var utils = require(path.join(__dirname, '/lib/utils.js'))
+var packageJson = require(path.join(__dirname, '/package.json'))
 
-  // Grab environment variables specified in Procfile or as Heroku config vars
+// Grab environment variables specified in Procfile or as Heroku config vars
 var releaseVersion = packageJson.version
 var username = process.env.USERNAME
 var password = process.env.PASSWORD
@@ -31,7 +31,7 @@ if (env === 'production' && useAuth === 'true') {
 
 // Application settings
 app.set('view engine', 'html')
-app.set('views', [__dirname + '/app/views', __dirname + '/lib/'])
+app.set('views', [path.join(__dirname, '/app/views'), path.join(__dirname, '/lib/')])
 
 nunjucks.setup({
   autoescape: true,
@@ -42,8 +42,8 @@ nunjucks.setup({
 // require core and custom filters, merges to one object
 // and then add the methods to nunjucks env obj
 nunjucks.ready(function (nj) {
-  var coreFilters = require(__dirname + '/lib/core_filters.js')(nj)
-  var customFilters = require(__dirname + '/app/filters.js')(nj)
+  var coreFilters = require(path.join(__dirname, '/lib/core_filters.js'))(nj)
+  var customFilters = require(path.join(__dirname, '/app/filters.js'))(nj)
   var filters = Object.assign(coreFilters, customFilters)
   Object.keys(filters).forEach(function (filterName) {
     nj.addFilter(filterName, filters[filterName])
@@ -51,10 +51,10 @@ nunjucks.ready(function (nj) {
 })
 
 // Middleware to serve static assets
-app.use('/public', express.static(__dirname + '/public'))
-app.use('/public', express.static(__dirname + '/govuk_modules/govuk_template/assets'))
-app.use('/public', express.static(__dirname + '/govuk_modules/govuk_frontend_toolkit'))
-app.use('/public/images/icons', express.static(__dirname + '/govuk_modules/govuk_frontend_toolkit/images'))
+app.use('/public', express.static(path.join(__dirname, '/public')))
+app.use('/public', express.static(path.join(__dirname, '/govuk_modules/govuk_template/assets')))
+app.use('/public', express.static(path.join(__dirname, '/govuk_modules/govuk_frontend_toolkit')))
+app.use('/public/images/icons', express.static(path.join(__dirname, '/govuk_modules/govuk_frontend_toolkit/images')))
 
 // Elements refers to icon folder instead of images folder
 app.use(favicon(path.join(__dirname, 'govuk_modules', 'govuk_template', 'assets', 'images', 'favicon.ico')))
