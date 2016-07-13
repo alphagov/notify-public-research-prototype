@@ -2,14 +2,14 @@ var path = require('path')
 var express = require('express')
 var session = require('express-session')
 var nunjucks = require('express-nunjucks')
-var routes = require(path.join(__dirname, '/app/routes.js'))
+var routes = require('./app/routes.js')
 var favicon = require('serve-favicon')
 var app = express()
 var bodyParser = require('body-parser')
 var browserSync = require('browser-sync')
-var config = require(path.join(__dirname, '/app/config.js'))
-var utils = require(path.join(__dirname, '/lib/utils.js'))
-var packageJson = require(path.join(__dirname, '/package.json'))
+var config = require('./app/config.js')
+var utils = require('./lib/utils.js')
+var packageJson = require('./package.json')
 
 // Grab environment variables specified in Procfile or as Heroku config vars
 var releaseVersion = packageJson.version
@@ -42,8 +42,8 @@ nunjucks.setup({
 // require core and custom filters, merges to one object
 // and then add the methods to nunjucks env obj
 nunjucks.ready(function (nj) {
-  var coreFilters = require(path.join(__dirname, '/lib/core_filters.js'))(nj)
-  var customFilters = require(path.join(__dirname, '/app/filters.js'))(nj)
+  var coreFilters = require('./lib/core_filters.js')(nj)
+  var customFilters = require('./app/filters.js')(nj)
   var filters = Object.assign(coreFilters, customFilters)
   Object.keys(filters).forEach(function (filterName) {
     nj.addFilter(filterName, filters[filterName])
