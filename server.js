@@ -23,11 +23,11 @@ env = env.toLowerCase()
 useAuth = useAuth.toLowerCase()
 useHttps = useHttps.toLowerCase()
 
-// // Authenticate against the environment-provided credentials, if running
-// // the app in production (Heroku, effectively)
-// if (env === 'production' && useAuth === 'true') {
-//   app.use(utils.basicAuth(username, password))
-// }
+// Authenticate against the environment-provided credentials, if running
+// the app in production (Heroku, effectively)
+if (env === 'production' && useAuth === 'true') {
+  app.use(utils.basicAuth(username, password))
+}
 
 // Application settings
 app.set('view engine', 'html')
@@ -48,12 +48,6 @@ nunjucks.ready(function (nj) {
   Object.keys(filters).forEach(function (filterName) {
     nj.addFilter(filterName, filters[filterName])
   })
-})
-
-// Allow CORS for 3rd party webchat clients that need our custom typeface.
-app.use(function (req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  next()
 })
 
 // Middleware to serve static assets
