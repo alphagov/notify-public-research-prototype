@@ -23,11 +23,11 @@ env = env.toLowerCase()
 useAuth = useAuth.toLowerCase()
 useHttps = useHttps.toLowerCase()
 
-// Authenticate against the environment-provided credentials, if running
-// the app in production (Heroku, effectively)
-if (env === 'production' && useAuth === 'true') {
-  app.use(utils.basicAuth(username, password))
-}
+// // Authenticate against the environment-provided credentials, if running
+// // the app in production (Heroku, effectively)
+// if (env === 'production' && useAuth === 'true') {
+//   app.use(utils.basicAuth(username, password))
+// }
 
 // Application settings
 app.set('view engine', 'html')
