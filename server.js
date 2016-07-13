@@ -10,6 +10,10 @@ var browserSync = require('browser-sync')
 var config = require('./app/config.js')
 var utils = require('./lib/utils.js')
 var packageJson = require('./package.json')
+var webpackDevMiddleware = require('webpack-dev-middleware')
+var webpackHotMiddleware = require('webpack-hot-middleware')
+var webpack = require('webpack')
+var webpackConfig = require('./webpack.config.js')
 
 // Grab environment variables specified in Procfile or as Heroku config vars
 var releaseVersion = packageJson.version
@@ -22,6 +26,13 @@ var useHttps = process.env.USE_HTTPS || config.useHttps
 env = env.toLowerCase()
 useAuth = useAuth.toLowerCase()
 useHttps = useHttps.toLowerCase()
+
+var compiler = webpack(webpackConfig)
+app.use(webpackHotMiddleware(compiler))
+app.use(webpackDevMiddleware(compiler, {
+  noInfo: true,
+  publicPath: webpackConfig.output.publicPath
+}))
 
 // Authenticate against the environment-provided credentials, if running
 // the app in production (Heroku, effectively)
