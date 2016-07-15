@@ -26,7 +26,7 @@ module.exports = {
       loaders: ['babel'],
       query: {
         plugins: ['react-hot-loader/babel'],
-        presets: ['es2015-webpack', 'stage-1', 'react']
+        presets: ['es2015-webpack', 'stage-0', 'react']
       }
     }]
   }
