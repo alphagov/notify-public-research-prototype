@@ -39,8 +39,7 @@ $white: #FFF;
 .ba2 { border-style: solid; border-width: 2px }
 .outline:focus { outline: 3px solid $govuk-yellow }
 
-.active-offset { transition: transform .1s ease }
-.active-offset:active { transform: translate3d(0, 2px, 0) }
+.active-offset:active { top: 2px }
 
 .govuk-logo {
   background-image: url(/public/stylesheets/images/gov.uk_logotype_crown.png?0.17.3);

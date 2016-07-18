@@ -9,11 +9,15 @@ export default class Input extends Component {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   }
 
+  handleChange (evt) {
+    this.props.onChange(evt.target.value)
+  }
+
   render () {
     return <input
       className="ba2 b--govuk-gray-3 pa1 outline"
       id={this.props.id}
-      onChange={this.props.onChange}
+      onChange={this::this.handleChange}
       onKeyUp={this.props.onKeyUp}
       type={this.props.type}
       value={this.props.value}
