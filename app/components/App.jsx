@@ -22,6 +22,43 @@ class MessageList extends Component {
   }
 }
 
+class Label extends Component {
+  static propTypes = {
+    htmlFor: PropTypes.string.isRequired,
+    children: PropTypes.node.isRequired
+  }
+
+  render () {
+    return <label
+      className="db pb0125"
+      htmlFor={this.props.htmlFor}
+    >
+      {this.props.children}
+    </label>
+  }
+}
+
+class Input extends Component {
+  static propTypes = {
+    id: PropTypes.string,
+    onChange: PropTypes.func.isRequired,
+    onKeyUp: PropTypes.func.isRequired,
+    type: PropTypes.oneOf(['text']).isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  }
+
+  render () {
+    return <input
+      className="ba2 b--govuk-gray-3 pa1 outline"
+      id={this.props.id}
+      onChange={this.props.onChange}
+      onKeyUp={this.props.onKeyUp}
+      type={this.props.type}
+      value={this.props.value}
+    />
+  }
+}
+
 class MessageInput extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired
@@ -45,11 +82,12 @@ class MessageInput extends Component {
   }
 
   render () {
-    return <input
-      type="text"
-      value={this.state.value}
+    return <Input
+      id="input-1"
       onChange={this::this.handleOnChange}
       onKeyUp={this::this.handleOnKeyUp}
+      type="text"
+      value={this.state.value}
     />
   }
 }
