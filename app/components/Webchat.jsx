@@ -17,10 +17,12 @@ export default class Webchat extends Component {
   handleMessageSubmit (evt) {
     const ENTER_KEY_CODE = 13
     const isEnter = evt.keyCode === ENTER_KEY_CODE
-    if (isEnter) {
+    const message = this.state.currentMessage.trim()
+    const messageIsValid = message.length > 0
+    if (isEnter && messageIsValid) {
       this.setState({
         currentMessage: '',
-        messages: [...this.state.messages, this.state.currentMessage]
+        messages: [...this.state.messages, message]
       })
     }
   }
