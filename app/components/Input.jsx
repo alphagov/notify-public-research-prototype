@@ -3,8 +3,8 @@ import React, { Component, PropTypes } from 'react'
 export default class Input extends Component {
   static propTypes = {
     id: PropTypes.string,
-    onChange: PropTypes.func.isRequired,
-    onKeyUp: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
+    onKeyUp: PropTypes.func,
     type: PropTypes.oneOf(['text']).isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   }

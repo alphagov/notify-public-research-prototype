@@ -3,6 +3,9 @@ $govuk-gray-1: #DEE0E2;
 $govuk-gray-2: #A1ACB2;
 $govuk-gray-3: #6F777B;
 $govuk-gray-4: #454A4C;
+$govuk-green-1: #00823B;
+$govuk-green-2: #003618;
+$govuk-green-3: #00692F;
 $govuk-navy: #005EA5;
 $govuk-yellow: #FFBF47;
 $white: #FFF;
@@ -13,6 +16,10 @@ $white: #FFF;
 .bg-govuk-gray-1 { background-color: $govuk-gray-1 }
 .b--govuk-gray-2 { border-color: $govuk-gray-2 }
 .b--govuk-gray-3 { border-color: $govuk-gray-3 }
+.bg-govuk-green-1 { background-color: $govuk-green-1 }
+.hover-bg-govuk-green-3:hover { background-color: $govuk-green-3 }
+
+.shadow-green { box-shadow: 0 2px 0 $govuk-green-2 }
 
 .new-transport { font-family: 'nta', 'helvetica neue', helvetica, sans-serif }
 .wfs-aa { -webkit-font-smoothing: antialiased }
@@ -25,10 +32,15 @@ $white: #FFF;
 .mt1875 { margin-top: 1.875rem } // 30px
 .mb3750 { margin-bottom: 3.750rem } // 60px
 
+.pt0625 { padding-top: 0.625rem } // 10px
 .pb0125 { padding-bottom: 0.125rem } // 2px
+.pb03125 { padding-bottom: 0.3125rem } // 5px
 
 .ba2 { border-style: solid; border-width: 2px }
 .outline:focus { outline: 3px solid $govuk-yellow }
+
+.active-offset { transition: transform .1s ease }
+.active-offset:active { transform: translate3d(0, 2px, 0) }
 
 .govuk-logo {
   background-image: url(/public/stylesheets/images/gov.uk_logotype_crown.png?0.17.3);
