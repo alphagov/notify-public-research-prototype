@@ -1,3 +1,4 @@
+/* global io */
 import React, { Component } from 'react'
 import WebchatIntro from './WebchatIntro'
 import WebchatConversation from './WebchatConversation'
@@ -14,6 +15,13 @@ export default class Webchat extends Component {
     ready: false
   }
 
+  componentDidMount () {
+    this.socket = io()
+    this.socket.on('chat message', (msg) => {
+      this.setState({ messages: [...this.state.messages, msg] })
+    })
+  }
+
   handleMessageChange (currentMessage) {
     this.setState({ currentMessage })
   }
@@ -24,14 +32,12 @@ export default class Webchat extends Component {
     const message = this.state.currentMessage.trim()
     const messageIsValid = message.length > 0
     if (isEnter && messageIsValid) {
-      this.setState({
-        currentMessage: '',
-        messages: [...this.state.messages, {
-          author: this.state.name,
-          content: this.state.currentMessage,
-          time: Date.now()
-        }]
+      this.socket.emit('chat message', {
+        author: this.state.name,
+        content: this.state.currentMessage,
+        time: Date.now()
       })
+      this.setState({ currentMessage: '' })
     }
   }
 
