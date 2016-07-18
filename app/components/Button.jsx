@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
+import PropTypes from '../lib/PropTypes'
 
 export default class Button extends Component {
   static propTypes = {
