@@ -5,7 +5,11 @@ import WebchatConversation from './WebchatConversation'
 export default class Webchat extends Component {
   state = {
     currentMessage: '',
-    messages: ['Hi, you\'re chatting with Ashan. How can I help you today?'],
+    messages: [{
+      author: 'GOV.UK',
+      content: 'Hi, you\'re chatting with Ashan. How can I help you today?',
+      time: 1468850180719
+    }],
     name: '',
     ready: false
   }
@@ -22,7 +26,11 @@ export default class Webchat extends Component {
     if (isEnter && messageIsValid) {
       this.setState({
         currentMessage: '',
-        messages: [...this.state.messages, message]
+        messages: [...this.state.messages, {
+          author: this.state.name,
+          content: this.state.currentMessage,
+          time: Date.now()
+        }]
       })
     }
   }

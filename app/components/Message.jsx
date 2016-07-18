@@ -3,10 +3,13 @@ import PropTypes from '../lib/PropTypes'
 
 export default class Message extends Component {
   static propTypes = {
-    content: PropTypes.string.isRequired
+    author: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    time: PropTypes.number.isRequired
   }
 
   render () {
-    return <div>{this.props.content}</div>
+    const timeAt = (new Date(this.props.time)).toString()
+    return <div>{this.props.author} at {timeAt}: {this.props.content}</div>
   }
 }

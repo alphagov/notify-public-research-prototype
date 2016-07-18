@@ -4,12 +4,17 @@ import Message from './Message'
 
 export default class MessageList extends Component {
   static propTypes = {
-    messages: PropTypes.arrayOf(PropTypes.string).isRequired
+    messages: PropTypes.messages.isRequired
   }
 
   render () {
     return <div className="f4">
-      {this.props.messages.map((text, idx) => <Message key={idx} content={text} />)}
+      {this.props.messages.map((message, idx) => <Message
+        key={idx}
+        author={message.author}
+        content={message.content}
+        time={message.time}
+      />)}
     </div>
   }
 }

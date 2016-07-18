@@ -10,7 +10,7 @@ export default class WebchatConversation extends Component {
     handleBack: PropTypes.func.isRequired,
     handleMessageChange: PropTypes.func.isRequired,
     handleMessageSubmit: PropTypes.func.isRequired,
-    messages: PropTypes.arrayOf(PropTypes.string).isRequired,
+    messages: PropTypes.messages.isRequired,
     name: PropTypes.string.isRequired
   }
 
