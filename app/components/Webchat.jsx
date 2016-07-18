@@ -6,11 +6,7 @@ import WebchatConversation from './WebchatConversation'
 export default class Webchat extends Component {
   state = {
     currentMessage: '',
-    messages: [{
-      author: 'GOV.UK',
-      content: 'Hi, you\'re chatting with Ashan. How can I help you today?',
-      time: 1468850180719
-    }],
+    messages: [],
     name: '',
     ready: false
   }
