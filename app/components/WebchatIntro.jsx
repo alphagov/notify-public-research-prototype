@@ -15,13 +15,15 @@ export default class WebchatIntro extends Component {
     return <div>
       <p>Please fill in your name to start chatting.</p>
 
-      <Label htmlFor="webchat-input-name">Name</Label>
-      <Input
-        id="webchat-input-name"
-        onChange={this.props.handleNameChange}
-        type="text"
-        value={this.props.name}
-      />
+      <div className="w-50">
+        <Label htmlFor="webchat-input-name">Name</Label>
+        <Input
+          id="webchat-input-name"
+          onChange={this.props.handleNameChange}
+          type="text"
+          value={this.props.name}
+        />
+      </div>
 
       <Button
         onClick={this.props.handleSubmit}
