@@ -14,6 +14,8 @@ var webpackDevMiddleware = require('webpack-dev-middleware')
 var webpackHotMiddleware = require('webpack-hot-middleware')
 var webpack = require('webpack')
 var webpackConfig = require('./webpack.config.js')
+var http = require('http').Server(app)
+var io = require('socket.io')(http)
 
 // Grab environment variables specified in Procfile or as Heroku config vars
 var releaseVersion = packageJson.version
@@ -152,6 +154,16 @@ app.get(/^\/([^.]+)$/, function (req, res) {
   })
 })
 
+io.on('connection', (socket) => {
+  console.log('a user connected')
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg)
+  })
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+})
+
 console.log('\nGOV.UK Prototype kit v' + releaseVersion)
 // Display warning not to use kit for production services.
 console.log('\nNOTICE: the kit is for building prototypes, do not use it for production services.')
@@ -160,13 +172,15 @@ console.log('\nNOTICE: the kit is for building prototypes, do not use it for pro
 utils.findAvailablePort(app, function (port) {
   console.log('Listening on port ' + port + '   url: http://localhost:' + port)
   if (env === 'production') {
-    app.listen(port)
+    // app.listen(port)
+    http.listen(port)
   } else {
-    app.listen(port - 50, function () {
+    // app.listen(port - 50, function () {
+    http.listen(port - 50, function () {
       browserSync({
         proxy: 'localhost:' + (port - 50),
         port: port,
-        ui: false,
+        ui: { port: 4000 },
         files: ['public/**/*.*', 'app/views/**/*.*'],
         ghostmode: false,
         open: false,
