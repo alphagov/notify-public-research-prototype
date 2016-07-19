@@ -21,7 +21,7 @@ export default class WebchatConversation extends Component {
       />
 
       <Input
-        onChange={this.props.handleMessageChange}
+        handleChange={this.props.handleMessageChange}
         handleSubmit={this.props.handleMessageSubmit}
         type="text"
         value={this.props.currentMessage}

@@ -2,15 +2,15 @@ import React, { Component, PropTypes } from 'react'
 
 export default class Input extends Component {
   static propTypes = {
-    id: PropTypes.string,
-    onChange: PropTypes.func,
+    handleChange: PropTypes.func,
     handleSubmit: PropTypes.func,
+    id: PropTypes.string,
     type: PropTypes.oneOf(['text']).isRequired,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   }
 
   handleChange (evt) {
-    this.props.onChange(evt.target.value)
+    this.props.handleChange(evt.target.value)
   }
 
   handleKeyUp (evt) {

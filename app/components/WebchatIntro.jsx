@@ -7,6 +7,7 @@ import Label from './Label'
 export default class WebchatIntro extends Component {
   static propTypes = {
     handleNameChange: PropTypes.func.isRequired,
+    handleNameSubmit: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired
   }
@@ -19,7 +20,8 @@ export default class WebchatIntro extends Component {
         <Label htmlFor="webchat-input-name">Name</Label>
         <Input
           id="webchat-input-name"
-          onChange={this.props.handleNameChange}
+          handleChange={this.props.handleNameChange}
+          handleSubmit={this.props.handleNameSubmit}
           type="text"
           value={this.props.name}
         />

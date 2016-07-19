@@ -35,6 +35,10 @@ export default class Webchat extends Component {
     this.setState({ name })
   }
 
+  handleNameSubmit () {
+    this.changeToConversation()
+  }
+
   changeToConversation () {
     this.setState({ ready: true })
   }
@@ -46,8 +50,8 @@ export default class Webchat extends Component {
   renderCurrentScreen () {
     if (!this.state.ready) {
       return <WebchatIntro
-        handleMessageSubmit={this::this.handleMessageSubmit}
         handleNameChange={this::this.handleNameChange}
+        handleNameSubmit={this::this.handleNameSubmit}
         handleSubmit={this::this.changeToConversation}
         name={this.state.name}
       />
