@@ -9,8 +9,9 @@ export default class Label extends Component {
 
   render () {
     return <label
-      className="db pb0125"
+      className="db"
       htmlFor={this.props.htmlFor}
+      style={{ paddingBottom: '2px' }}
     >
       {this.props.children}
     </label>

@@ -15,7 +15,7 @@ export default class Input extends Component {
 
   render () {
     return <input
-      className="ba2 b--govuk-gray-3 pa1 outline w-100"
+      className="ba2 b--govuk-gray-1 pa1 outline w-100"
       id={this.props.id}
       onChange={this::this.handleChange}
       onKeyUp={this.props.onKeyUp}

@@ -3,12 +3,8 @@ $govuk-gray-1: #DEE0E2;
 $govuk-gray-2: #A1ACB2;
 $govuk-gray-3: #6F777B;
 $govuk-gray-4: #454A4C;
-$govuk-green-1: #00823B;
-$govuk-green-2: #003618;
-$govuk-green-3: #00692F;
 $govuk-navy: #005EA5;
-$govuk-yellow: #FFBF47;
-$white: #FFF;
+$govuk-white: #FFF;
 
 .govuk-gray-3 { color: $govuk-gray-3 }
 .govuk-gray-4 { color: $govuk-gray-4 }
@@ -17,10 +13,6 @@ $white: #FFF;
 .bg-govuk-gray-1 { background-color: $govuk-gray-1 }
 .b--govuk-gray-2 { border-color: $govuk-gray-2 }
 .b--govuk-gray-3 { border-color: $govuk-gray-3 }
-.bg-govuk-green-1 { background-color: $govuk-green-1 }
-.hover-bg-govuk-green-3:hover { background-color: $govuk-green-3 }
-
-.shadow-green { box-shadow: 0 2px 0 $govuk-green-2 }
 
 .new-transport { font-family: 'nta', 'helvetica neue', helvetica, sans-serif }
 .wfs-aa { -webkit-font-smoothing: antialiased }
@@ -37,11 +29,6 @@ $white: #FFF;
 .pb0125 { padding-bottom: 0.125rem } // 2px
 .pb03125 { padding-bottom: 0.3125rem } // 5px
 
-.ba2 { border-style: solid; border-width: 2px }
-.outline:focus { outline: 3px solid $govuk-yellow }
-
-.active-offset:active { top: 2px }
-
 .govuk-logo {
   background-image: url(/public/stylesheets/images/gov.uk_logotype_crown.png?0.17.3);
   background-position: 0 0;
@@ -51,7 +38,7 @@ $white: #FFF;
   padding: 2px 0 0 41px;
 
   &:hover {
-    border-bottom: 1px solid $white;
+    border-bottom: 1px solid $govuk-white;
   }
 }
 

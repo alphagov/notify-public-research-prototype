@@ -30,7 +30,7 @@ export default class Message extends Component {
     const timeAt = HHMMDateString(dateAt)
     const dateTime = dateAt.toISOString()
     return <div>
-      <div className="flex justify-between govuk-gray-3 f5">
+      <div className="flex justify-between govuk-gray-1 f5">
         <span>{this.props.author}</span>
         <time dateTime={dateTime}>{timeAt}</time>
       </div>

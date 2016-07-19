@@ -1,0 +1,20 @@
+$govuk-gray-1: #6F777B;
+$govuk-green-1: #00823B;
+$govuk-green-2: #003618;
+$govuk-green-3: #00692F;
+$govuk-yellow: #FFBF47;
+
+// Overrides for stuff Tacyhons breaks.
+html, body { font-size: 100% }
+#global-header .header-wrapper { padding-left: 0; padding-right: 0 }
+
+.govuk-gray-1 { color: $govuk-gray-1 }
+.b--govuk-gray-1 { border-color: $govuk-gray-1 }
+.bg-govuk-green-1 { background-color: $govuk-green-1 }
+.hover-bg-govuk-green-3:hover { background-color: $govuk-green-3 }
+.shadow-green { box-shadow: 0 2px 0 $govuk-green-2 }
+.outline:focus { outline: 3px solid $govuk-yellow }
+
+.ba2 { border-style: solid; border-width: 2px }
+
+.active-offset:active { top: 2px }
