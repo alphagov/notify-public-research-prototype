@@ -5,7 +5,8 @@ import UserIsTyping from './UserIsTyping'
 
 export default class MessageList extends Component {
   static propTypes = {
-    messages: PropTypes.messages.isRequired
+    messages: PropTypes.messages.isRequired,
+    userIsTyping: PropTypes.string.isRequired
   }
 
   componentWillUpdate () {
@@ -29,7 +30,7 @@ export default class MessageList extends Component {
         content={message.content}
         time={message.time}
       />)}
-      <UserIsTyping user="GOV.UK" />
+      {this.props.userIsTyping ? <UserIsTyping user={this.props.userIsTyping} /> : ''}
     </div>
   }
 }

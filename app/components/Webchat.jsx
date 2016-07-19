@@ -14,7 +14,9 @@ export default class Webchat extends Component {
   state = {
     currentMessage: '',
     messages: [],
-    name: '',
+    myName: '',
+    otherPersonName: 'GOV.UK',
+    otherPersonIsTyping: true,
     ready: false
   }
 
@@ -26,11 +28,47 @@ export default class Webchat extends Component {
     return this.props.type === 'agent'
   }
 
+  userIsTyping () {
+    if (this.state.otherPersonIsTyping) {
+      return this.state.otherPersonName
+    } else {
+      return ''
+    }
+  }
+
+  handleWebchatConnect (payload) {
+    console.log('connect', payload)
+  }
+
+  handleWebchatMessage (payload) {
+    this.setState({ messages: [...this.state.messages, payload] })
+  }
+
+  handleWebchatTyping (payload) {
+    console.log('typing', payload)
+  }
+
+  handleChatMessageReceived ({ type, payload }) {
+    switch (type) {
+      case 'WEBCHAT_CONNECT':
+        this.handleWebchatConnect(payload)
+        break
+      case 'WEBCHAT_MESSAGE':
+        this.handleWebchatMessage(payload)
+        break
+      case 'WEBCHAT_TYPING':
+        this.handleWebchatTyping(payload)
+        break
+      default:
+        console.warn('Unknown webchat message received!')
+        console.warn('Type:', type)
+        console.warn('Payload:', payload)
+    }
+  }
+
   componentDidMount () {
     this.socket = io()
-    this.socket.on('chat message', (msg) => {
-      this.setState({ messages: [...this.state.messages, msg] })
-    })
+    this.socket.on('message', this::this.handleChatMessageReceived)
   }
 
   handleMessageChange (currentMessage) {
@@ -38,15 +76,18 @@ export default class Webchat extends Component {
   }
 
   handleMessageSubmit () {
-    const author = this.isAgent() ? AGENT_NAME : this.state.name
+    const author = this.isAgent() ? AGENT_NAME : this.state.myName
     const content = this.state.currentMessage
     const time = Date.now()
-    this.socket.emit('chat message', { author, content, time })
+    this.socket.emit('message', {
+      type: 'WEBCHAT_MESSAGE',
+      payload: { author, content, time }
+    })
     this.setState({ currentMessage: '' })
   }
 
-  handleNameChange (name) {
-    this.setState({ name })
+  handleNameChange (myName) {
+    this.setState({ myName })
   }
 
   handleNameSubmit () {
@@ -67,7 +108,7 @@ export default class Webchat extends Component {
         handleNameChange={this::this.handleNameChange}
         handleNameSubmit={this::this.handleNameSubmit}
         handleSubmit={this::this.changeToConversation}
-        name={this.state.name}
+        name={this.state.myName}
       />
     }
     if (this.state.ready) {
@@ -76,8 +117,8 @@ export default class Webchat extends Component {
         handleBack={this::this.changeToIntro}
         handleMessageChange={this::this.handleMessageChange}
         handleMessageSubmit={this::this.handleMessageSubmit}
-        name={this.state.name}
         messages={this.state.messages}
+        userIsTyping={this.userIsTyping()}
       />
     }
   }
@@ -89,6 +130,7 @@ export default class Webchat extends Component {
       handleMessageChange={this::this.handleMessageChange}
       handleMessageSubmit={this::this.handleMessageSubmit}
       messages={this.state.messages}
+      userIsTyping={this.userIsTyping()}
     />
   }
 

@@ -10,13 +10,15 @@ export default class WebchatConversation extends Component {
     handleBack: PropTypes.func.isRequired,
     handleMessageChange: PropTypes.func.isRequired,
     handleMessageSubmit: PropTypes.func.isRequired,
-    messages: PropTypes.messages.isRequired
+    messages: PropTypes.messages.isRequired,
+    userIsTyping: PropTypes.string.isRequired
   }
 
   render () {
     return <div>
       <MessageList
         messages={this.props.messages}
+        userIsTyping={this.props.userIsTyping}
       />
 
       <Input
