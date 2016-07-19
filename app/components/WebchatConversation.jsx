@@ -22,7 +22,7 @@ export default class WebchatConversation extends Component {
 
       <Input
         onChange={this.props.handleMessageChange}
-        onKeyUp={this.props.handleMessageSubmit}
+        handleSubmit={this.props.handleMessageSubmit}
         type="text"
         value={this.props.currentMessage}
       />

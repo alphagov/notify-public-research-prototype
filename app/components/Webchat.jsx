@@ -22,19 +22,13 @@ export default class Webchat extends Component {
     this.setState({ currentMessage })
   }
 
-  handleMessageSubmit (evt) {
-    const ENTER_KEY_CODE = 13
-    const isEnter = evt.keyCode === ENTER_KEY_CODE
-    const message = this.state.currentMessage.trim()
-    const messageIsValid = message.length > 0
-    if (isEnter && messageIsValid) {
-      this.socket.emit('chat message', {
-        author: this.state.name,
-        content: this.state.currentMessage,
-        time: Date.now()
-      })
-      this.setState({ currentMessage: '' })
-    }
+  handleMessageSubmit () {
+    this.socket.emit('chat message', {
+      author: this.state.name,
+      content: this.state.currentMessage,
+      time: Date.now()
+    })
+    this.setState({ currentMessage: '' })
   }
 
   handleNameChange (name) {
@@ -52,6 +46,7 @@ export default class Webchat extends Component {
   renderCurrentScreen () {
     if (!this.state.ready) {
       return <WebchatIntro
+        handleMessageSubmit={this::this.handleMessageSubmit}
         handleNameChange={this::this.handleNameChange}
         handleSubmit={this::this.changeToConversation}
         name={this.state.name}
