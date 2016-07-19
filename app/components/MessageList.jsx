@@ -7,8 +7,21 @@ export default class MessageList extends Component {
     messages: PropTypes.messages.isRequired
   }
 
+  componentWillUpdate () {
+    const node = this._node
+    this.shouldScrollBottom = (node.scrollTop + node.offsetHeight) === node.scrollHeight
+  }
+
+  componentDidUpdate () {
+    if (this.shouldScrollBottom) {
+      const node = this._node
+      node.scrollTop = node.scrollHeight
+    }
+  }
+
   render () {
-    return <div className="f4">
+    const ref = (c) => { this._node = c }
+    return <div className="h5 overflow-y-scroll" ref={ref}>
       {this.props.messages.map((message, idx) => <Message
         key={idx}
         author={message.author}
