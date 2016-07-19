@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from '../lib/PropTypes'
 import Message from './Message'
+import UserIsTyping from './UserIsTyping'
 
 export default class MessageList extends Component {
   static propTypes = {
@@ -28,6 +29,7 @@ export default class MessageList extends Component {
         content={message.content}
         time={message.time}
       />)}
+      <UserIsTyping user="GOV.UK" />
     </div>
   }
 }
