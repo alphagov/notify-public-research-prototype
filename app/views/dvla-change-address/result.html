@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/static-2016-07-04.css" media="screen" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block page_title %}
+  Tell DVLA you've changed address - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <header class="page-header">
+        <div>
+          <h1>Tell DVLA you’ve changed address</h1>
+        </div>
+      </header>
+      <div class="article-container group">
+        <div class="content-block">
+          <div class="inner">
+            <div class="summary">
+              <h2>We can't find your address.</h2>
+            </div>
+            <div class="content-block">
+              <p>We suggest getting in contact with one of our advisers.</p>
+              <h2>Telephone</h2>
+              <ul>
+                <li>
+                  <span class="type">Telephone: </span>
+                  <span class="value">0345 300 3900</span>
+                </li>
+
+                <li>
+                  <span class="type">Textphone: </span>
+                  <span class="value">0345 300 3909</span>
+                </li>
+
+                <li>
+                  <span class="type">Outside UK: </span>
+                  <span class="value">+44 2890 538 192</span>
+                </li>
+              </ul>
+              <p>Current waiting time: 9 minutes</p>
+              <h3>Opening times:</h3>
+              <p>8am to 8pm, Monday to Friday<br />8am to 4pm Saturday</p>
+              <p>Closed Sundays, Christmas Day, Boxing Day and New Year’s Day</p>
+
+              <h2>Web chat</h2>
+              <a class="js-trigger-livechat" href="/">Chat with an advisor</a>
+              <p>Current waiting time: 2 minutes</p>
+              <h3>Opening times:</h3>
+              <p>8am to 8pm, Monday to Saturday<br />8am to 4pm Sunday</p>
+              <p>Closed Sundays, Christmas Day, Boxing Day and New Year’s Day</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}
