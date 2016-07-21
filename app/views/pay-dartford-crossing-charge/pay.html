@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Pay the Dartford Crossing charge (Dart Charge) - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h1 class="b f1">Pay the Dartford Crossing charge (Dart Charge)</h1>
+      <h2 class="b f3 mv3">Pay the Dartford Crossing Charge</h2>
+      <p>Total: <strong>£16.00</strong></p>
+      <div class="form-group">
+        <label class="form-label" for="card-number">Card number</label>
+        <input class="form-control" id="card-number" name="card-number" type="text">
+      </div>
+      <div class="form-date cf mv4">
+        <div class="form-group form-group-month">
+          <label class="form-label" for="card-month">Month</label>
+          <input class="form-control" id="card-month" name="card-month" type="number" pattern="[0-9]*" min="0" max="12">
+        </div>
+        <div class="form-group form-group-year">
+          <label class="form-label" for="card-year">Year</label>
+          <input class="form-control" id="card-year" name="card-year" type="number" pattern="[0-9]*" min="0" max="2016">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="card-security-code">Security code</label>
+        <input class="mw3 form-control" id="card-security-code" name="card-security-code" type="text">
+      </div>
+      <a rel="nofollow" href="/pay-dartford-crossing-charge/pay-result" class="button">Pay</a>
+    </div>
+  </div>
+  <script>
+    document.querySelectorAll('.form-control').forEach(function (el) {
+      el.addEventListener('keyup', function () {
+        localStorage.setItem(el.id, el.value)
+      })
+    })
+  </script>
+</main>
+
+{% endblock %}

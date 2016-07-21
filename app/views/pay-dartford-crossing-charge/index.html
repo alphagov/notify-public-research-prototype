@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/static-2016-07-04.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Pay the Dartford Crossing charge (Dart Charge) - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <header class="page-header">
+        <div>
+          <h1>Pay the Dartford Crossing charge (Dart Charge)</h1>
+        </div>
+      </header>
+      <p>
+        <a rel="external" href="#">Sign in to your Dart Charge account</a> to pay or use this service to:
+      </p>
+      <ul class="ml1 pl3" style="list-style-type: disc">
+        <li>pay for a one-off crossing online</li>
+        <li>pay a Penalty Charge Notice (PCN)</li>
+        <li>set up an account</li>
+        <li>apply for a local resident discount account</li>
+        <li>check how many crossings you’ve paid for</li>
+      </ul>
+      <div class="transaction">
+        <div class="get-started">
+          <p id="get-started" class="get-started group">
+            <a href="/pay-dartford-crossing-charge/vr" class="button" role="button">Start now</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

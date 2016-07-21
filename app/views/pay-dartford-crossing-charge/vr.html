@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Pay the Dartford Crossing charge (Dart Charge) - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h1 class="b f1">Pay the Dartford Crossing charge (Dart Charge)</h1>
+      <h2 class="b f3 mv3">Enter your vehicle's registration</h2>
+      <div class="form-group">
+        <label class="form-label" for="vehicle-registration-number">Vehicle registration number</label>
+        <input class="form-control" id="vehicle-registration-number" name="vehicle-registration-number" type="text">
+      </div>
+      <a rel="nofollow" href="/pay-dartford-crossing-charge/date" class="button">Next</a>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

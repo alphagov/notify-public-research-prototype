@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Pay the Dartford Crossing charge (Dart Charge) - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h1 class="b f1">Pay the Dartford Crossing charge (Dart Charge)</h1>
+      <h2 class="b f3 mv3">What date do you want to pay for?</h2>
+      <div class="form-date cf">
+        <div class="form-group form-group-day">
+          <label class="form-label" for="pay-day">Day</label>
+          <input class="form-control" id="pay-day" name="pay-day" type="number" pattern="[0-9]*" min="0" max="31">
+        </div>
+        <div class="form-group form-group-month">
+          <label class="form-label" for="pay-month">Month</label>
+          <input class="form-control" id="pay-month" name="pay-month" type="number" pattern="[0-9]*" min="0" max="12">
+        </div>
+        <div class="form-group form-group-year">
+          <label class="form-label" for="pay-year">Year</label>
+          <input class="form-control" id="pay-year" name="pay-year" type="number" pattern="[0-9]*" min="0" max="2016">
+        </div>
+      </div>
+      <a rel="nofollow" href="/pay-dartford-crossing-charge/pay" class="button mt4">Next</a>
+    </div>
+  </div>
+</main>
+
+{% endblock %}
