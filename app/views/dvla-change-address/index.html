@@ -3,6 +3,8 @@
 {% block head %}
   <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="/public/stylesheets/static-2016-07-04.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
 {% endblock %}
 
 {% block page_title %}
@@ -14,11 +16,7 @@
 <main id="content" role="main">
   <div class="grid-row">
     <div class="column-two-thirds">
-      <header class="page-header">
-        <div>
-          <h1>Tell DVLA you’ve changed address</h1>
-        </div>
-      </header>
+      <h1 class="b f2 f1-l mv4">Tell DVLA you’ve changed address</h1>
       <div class="article-container group">
         <div class="content-block">
           <div class="inner">
@@ -29,7 +27,11 @@
             <div role="note" aria-label="Help" class="application-notice help-notice">
               <p>You can be fined up to £1,000 if you don’t tell <abbr title="Driver and Vehicle Licensing Agency">DVLA</abbr> when your address changes.</p>
             </div>
-            <a rel="nofollow" href="/dvla-change-address/ln" class="big button">Start now</a>
+          <div class="transaction">
+            <div class="get-started">
+                <a rel="nofollow" href="/dvla-change-address/ln" class="big button">Start now</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
