@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/static-2016-07-04.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Check your State Pension age - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <header class="page-header">
+        <div>
+          <h1>Check your State Pension age</h1>
+        </div>
+      </header>
+      <p>
+        You can check:
+      </p>
+      <ul class="ml1 pl3" style="list-style-type: disc">
+        <li>when you’ll reach State Pension age</li>
+        <li>your Pension Credit qualifying age</li>
+        <li>when you’ll be eligible for free bus travel</li>
+      </ul>
+      <div class="transaction">
+        <div class="get-started">
+          <p id="get-started" class="get-started group">
+            <a href="/state-pension-age/enter-nino" class="button" role="button">Start now</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

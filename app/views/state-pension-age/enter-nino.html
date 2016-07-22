@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Check your State Pension age - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h1 class="b f1">Check your State Pension age</h1>
+      <h2 class="b f3 mv3">Enter your national insurance number</h2>
+      <div class="form-group">
+        <label class="form-label" for="nino">National insurance number</label>
+        <input class="form-control" id="nino" name="nino" type="text">
+      </div>
+      <details class="mb3">
+        <summary>I do not have a national insurance number</summary>
+        <div>
+          <p>We suggest getting in contact with one of our advisers.</p>
+          <h2 class="b f3 mv3">Telephone</h2>
+          <ul>
+            <li>
+              <span class="type">Telephone: </span>
+              <span class="b">0345 300 3900</span>
+            </li>
+
+            <li>
+              <span class="type">Textphone: </span>
+              <span class="b">0345 300 3909</span>
+            </li>
+
+            <li>
+              <span class="type">Outside UK: </span>
+              <span class="b">+44 2890 538 192</span>
+            </li>
+          </ul>
+          <p>Current waiting time: 9 minutes</p>
+          <h3>Opening times:</h3>
+          <p>8am to 8pm, Monday to Friday<br />8am to 4pm Saturday</p>
+          <p>Closed Sundays, Christmas Day, Boxing Day and New Year’s Day</p>
+
+          <h2 class="b f3 mv3">Web chat</h2>
+          <a class="js-trigger-livechat" href="/">Chat with an advisor</a>
+          <p>Current waiting time: 2 minutes</p>
+          <h3>Opening times:</h3>
+          <p>8am to 8pm, Monday to Saturday<br />8am to 4pm Sunday</p>
+          <p>Closed Sundays, Christmas Day, Boxing Day and New Year’s Day</p>
+        </div>
+      </details>
+      <a rel="nofollow" href="#" class="button">Next</a>
+    </div>
+  </div>
+</main>
+
+{% endblock %}
