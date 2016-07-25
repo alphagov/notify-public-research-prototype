@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from '../lib/PropTypes'
 import Button from './Button'
 import Input from './Input'
@@ -14,6 +15,10 @@ export default class WebchatConversation extends Component {
     userIsTyping: PropTypes.string.isRequired
   }
 
+  componentDidMount () {
+    ReactDOM.findDOMNode(this.refs.messageInput).focus()
+  }
+
   render () {
     return <div>
       <MessageList
@@ -24,6 +29,7 @@ export default class WebchatConversation extends Component {
       <Input
         handleChange={this.props.handleMessageChange}
         handleSubmit={this.props.handleMessageSubmit}
+        ref="messageInput"
         type="text"
         value={this.props.currentMessage}
       />
