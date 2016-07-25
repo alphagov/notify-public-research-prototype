@@ -1,5 +1,6 @@
 /* global io */
 import React, { Component } from 'react'
+import _ from 'lodash'
 import PropTypes from '../lib/PropTypes'
 import WebchatIntro from './WebchatIntro'
 import WebchatConversation from './WebchatConversation'
@@ -15,9 +16,8 @@ export default class Webchat extends Component {
     currentMessage: '',
     messages: [],
     myName: '',
-    otherPersonName: 'GOV.UK',
-    otherPersonIsTyping: true,
-    ready: false
+    ready: false,
+    whoIsTyping: ''
   }
 
   isClient () {
@@ -28,16 +28,18 @@ export default class Webchat extends Component {
     return this.props.type === 'agent'
   }
 
-  userIsTyping () {
-    if (this.state.otherPersonIsTyping) {
-      return this.state.otherPersonName
-    } else {
-      return ''
-    }
+  getMyName () {
+    return this.isAgent() ? AGENT_NAME : this.state.myName
   }
 
-  handleWebchatConnect (payload) {
-    console.log('connect', payload)
+  userIsTyping () {
+    return this.state.whoIsTyping
+  }
+
+  // Executes after a while to clean the typing notification in case people
+  // disconnect or stop sending events. _.debounce call is in componentDidMount.
+  handleTypingCleanup () {
+    this.setState({ whoIsTyping: '' })
   }
 
   handleWebchatMessage (payload) {
@@ -45,14 +47,21 @@ export default class Webchat extends Component {
   }
 
   handleWebchatTyping (payload) {
-    console.log('typing', payload)
+    const whoIsTyping = payload.name
+    const isTyping = payload.isTyping
+    const isOtherPerson = whoIsTyping !== this.getMyName()
+    if (isOtherPerson) {
+      if (isTyping) {
+        this.setState({ whoIsTyping })
+        this.handleTypingCleanup()
+      } else {
+        this.setState({ whoIsTyping: '' })
+      }
+    }
   }
 
   handleChatMessageReceived ({ type, payload }) {
     switch (type) {
-      case 'WEBCHAT_CONNECT':
-        this.handleWebchatConnect(payload)
-        break
       case 'WEBCHAT_MESSAGE':
         this.handleWebchatMessage(payload)
         break
@@ -69,19 +78,36 @@ export default class Webchat extends Component {
   componentDidMount () {
     this.socket = io()
     this.socket.on('message', this::this.handleChatMessageReceived)
+
+    this.handleTypingCleanup = _.debounce(this.handleTypingCleanup, 1000)
   }
 
   handleMessageChange (currentMessage) {
+    const isTyping = currentMessage.length
+    this.socket.emit('message', {
+      type: 'WEBCHAT_TYPING',
+      payload: {
+        name: this.getMyName(),
+        isTyping
+      }
+    })
     this.setState({ currentMessage })
   }
 
   handleMessageSubmit () {
-    const author = this.isAgent() ? AGENT_NAME : this.state.myName
+    const author = this.getMyName()
     const content = this.state.currentMessage
     const time = Date.now()
     this.socket.emit('message', {
       type: 'WEBCHAT_MESSAGE',
       payload: { author, content, time }
+    })
+    this.socket.emit('message', {
+      type: 'WEBCHAT_TYPING',
+      payload: {
+        name: author,
+        isTyping: false
+      }
     })
     this.setState({ currentMessage: '' })
   }

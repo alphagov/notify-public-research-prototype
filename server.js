@@ -155,12 +155,8 @@ app.get(/^\/([^.]+)$/, function (req, res) {
 })
 
 io.on('connection', (socket) => {
-  console.log('sockets', Object.keys(io.sockets.connected))
   socket.on('message', (msg) => {
     io.emit('message', msg)
-  })
-  socket.on('disconnect', () => {
-    console.log('sockets', Object.keys(io.sockets.connected))
   })
 })
 
