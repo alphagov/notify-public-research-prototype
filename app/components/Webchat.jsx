@@ -5,8 +5,6 @@ import PropTypes from '../lib/PropTypes'
 import WebchatIntro from './WebchatIntro'
 import WebchatConversation from './WebchatConversation'
 
-const AGENT_NAME = 'GOV.UK'
-
 export default class Webchat extends Component {
   static propTypes = {
     type: PropTypes.oneOf(['client', 'agent']).isRequired
@@ -29,7 +27,7 @@ export default class Webchat extends Component {
   }
 
   getMyName () {
-    return this.isAgent() ? AGENT_NAME : this.state.myName
+    return this.state.myName
   }
 
   userIsTyping () {
@@ -124,7 +122,7 @@ export default class Webchat extends Component {
     this.setState({ ready: true })
   }
 
-  renderClientInterface () {
+  renderCurrentScreen () {
     if (!this.state.ready) {
       return <WebchatIntro
         handleNameChange={this::this.handleNameChange}
@@ -141,26 +139,6 @@ export default class Webchat extends Component {
         messages={this.state.messages}
         userIsTyping={this.userIsTyping()}
       />
-    }
-  }
-
-  renderAgentInterface () {
-    return <WebchatConversation
-      currentMessage={this.state.currentMessage}
-      handleMessageChange={this::this.handleMessageChange}
-      handleMessageSubmit={this::this.handleMessageSubmit}
-      messages={this.state.messages}
-      userIsTyping={this.userIsTyping()}
-    />
-  }
-
-  renderCurrentScreen () {
-    if (this.isClient()) {
-      return this.renderClientInterface()
-    }
-
-    if (this.isAgent()) {
-      return this.renderAgentInterface()
     }
   }
 
