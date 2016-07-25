@@ -21,6 +21,7 @@
     "basic-auth-connect": "^1.0.0",
     "body-parser": "^1.14.1",
     "browser-sync": "^2.11.1",
+    "classnames": "^2.2.5",
     "consolidate": "0.x",
     "eslint": "^3.0.1",
     "eslint-config-standard": "^5.3.5",

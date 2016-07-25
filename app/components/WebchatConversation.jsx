@@ -24,6 +24,7 @@ export default class WebchatConversation extends Component {
         <MessageList
           messages={this.props.messages}
           userIsTyping={this.props.userIsTyping}
+          name={this.props.name}
         />
       </div>
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from '../lib/PropTypes'
-import Message from './Message'
+import Message from './MessageBubble'
 import UserIsTyping from './UserIsTyping'
 
 export default class MessageList extends Component {
@@ -29,6 +29,7 @@ export default class MessageList extends Component {
         author={message.author}
         content={message.content}
         time={message.time}
+        type={(message.author === this.props.name) ? 'gray' : 'blue'}
       />)}
       {this.props.userIsTyping ? <UserIsTyping user={this.props.userIsTyping} /> : ''}
     </div>

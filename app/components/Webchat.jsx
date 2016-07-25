@@ -170,6 +170,7 @@ export default class Webchat extends Component {
         handleMessageSubmit={this::this.handleMessageSubmit}
         messages={this.state.messages}
         userIsTyping={this.userIsTyping()}
+        name={this.getMyName()}
       />
     }
   }

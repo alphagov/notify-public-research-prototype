@@ -9,10 +9,8 @@ function HHMMDateString (d) {
   return `${HH}:${MM}`
 }
 
-export default class Message extends Component {
+export default class MessageTime extends Component {
   static propTypes = {
-    author: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
     time: PropTypes.number.isRequired
   }
 
@@ -20,12 +18,6 @@ export default class Message extends Component {
     const dateAt = new Date(this.props.time)
     const timeAt = HHMMDateString(dateAt)
     const dateTime = dateAt.toISOString()
-    return <div>
-      <div className="flex justify-between govuk-gray-1 f5">
-        <span>{this.props.author}</span>
-        <time dateTime={dateTime}>{timeAt}</time>
-      </div>
-      <p className="mt0">{this.props.content}</p>
-    </div>
+    return <time dateTime={dateTime}>{timeAt}</time>
   }
 }
