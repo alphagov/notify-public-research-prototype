@@ -16,7 +16,7 @@ export default class WebchatIntro extends Component {
     return <div>
       <p>Please fill in your name to start chatting.</p>
 
-      <div className="w-50">
+      <div className="w-75">
         <Label htmlFor="webchat-input-name">Name</Label>
         <Input
           id="webchat-input-name"
@@ -27,11 +27,9 @@ export default class WebchatIntro extends Component {
         />
       </div>
 
-      <Button
-        onClick={this.props.handleSubmit}
-      >
-        Start the chat
-      </Button>
+      <div className="w-50 mt3">
+        <Button onClick={this.props.handleSubmit}>Start the chat</Button>
+      </div>
     </div>
   }
 }
