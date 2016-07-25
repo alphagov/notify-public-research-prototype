@@ -4,10 +4,9 @@ import Button from './Button'
 import Input from './Input'
 import Label from './Label'
 
-export default class WebchatIntro extends Component {
+export default class WebchatIntroClient extends Component {
   static propTypes = {
     handleNameChange: PropTypes.func.isRequired,
-    handleNameSubmit: PropTypes.func.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired
   }
@@ -21,7 +20,7 @@ export default class WebchatIntro extends Component {
         <Input
           id="webchat-input-name"
           handleChange={this.props.handleNameChange}
-          handleSubmit={this.props.handleNameSubmit}
+          handleSubmit={this.props.handleSubmit}
           type="text"
           value={this.props.name}
         />

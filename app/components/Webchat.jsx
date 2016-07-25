@@ -2,7 +2,8 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import PropTypes from '../lib/PropTypes'
-import WebchatIntro from './WebchatIntro'
+import WebchatIntroAgent from './WebchatIntroAgent'
+import WebchatIntroClient from './WebchatIntroClient'
 import WebchatConversation from './WebchatConversation'
 
 export default class Webchat extends Component {
@@ -15,7 +16,8 @@ export default class Webchat extends Component {
     messages: [],
     myName: '',
     ready: false,
-    whoIsTyping: ''
+    whoIsTyping: '',
+    welcomeMessage: ''
   }
 
   isClient () {
@@ -40,6 +42,18 @@ export default class Webchat extends Component {
     this.setState({ whoIsTyping: '' })
   }
 
+  handleWebchatConnect () {
+    if (this.state.welcomeMessage) {
+      const author = this.getMyName()
+      const content = this.state.welcomeMessage
+      const time = Date.now()
+      this.socket.emit('message', {
+        type: 'WEBCHAT_MESSAGE',
+        payload: { author, content, time }
+      })
+    }
+  }
+
   handleWebchatMessage (payload) {
     this.setState({ messages: [...this.state.messages, payload] })
   }
@@ -60,6 +74,9 @@ export default class Webchat extends Component {
 
   handleChatMessageReceived ({ type, payload }) {
     switch (type) {
+      case 'WEBCHAT_CONNECT':
+        this.handleWebchatConnect(payload)
+        break
       case 'WEBCHAT_MESSAGE':
         this.handleWebchatMessage(payload)
         break
@@ -114,22 +131,37 @@ export default class Webchat extends Component {
     this.setState({ myName })
   }
 
-  handleNameSubmit () {
-    this.changeToConversation()
+  handleWelcomeMessageChange (welcomeMessage) {
+    this.setState({ welcomeMessage })
   }
 
   changeToConversation () {
     this.setState({ ready: true })
+    if (this.isClient()) {
+      this.socket.emit('message', {
+        type: 'WEBCHAT_CONNECT',
+        payload: { name: this.getMyName() }
+      })
+    }
   }
 
   renderCurrentScreen () {
     if (!this.state.ready) {
-      return <WebchatIntro
-        handleNameChange={this::this.handleNameChange}
-        handleNameSubmit={this::this.handleNameSubmit}
-        handleSubmit={this::this.changeToConversation}
-        name={this.state.myName}
-      />
+      if (this.isAgent()) {
+        return <WebchatIntroAgent
+          handleNameChange={this::this.handleNameChange}
+          handleWelcomeMessageChange={this::this.handleWelcomeMessageChange}
+          handleSubmit={this::this.changeToConversation}
+          name={this.getMyName()}
+          welcomeMessage={this.state.welcomeMessage}
+        />
+      } else {
+        return <WebchatIntroClient
+          handleNameChange={this::this.handleNameChange}
+          handleSubmit={this::this.changeToConversation}
+          name={this.getMyName()}
+        />
+      }
     }
     if (this.state.ready) {
       return <WebchatConversation
