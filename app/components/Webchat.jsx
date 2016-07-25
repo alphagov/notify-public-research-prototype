@@ -124,10 +124,6 @@ export default class Webchat extends Component {
     this.setState({ ready: true })
   }
 
-  changeToIntro () {
-    this.setState({ ready: false })
-  }
-
   renderClientInterface () {
     if (!this.state.ready) {
       return <WebchatIntro
@@ -140,7 +136,6 @@ export default class Webchat extends Component {
     if (this.state.ready) {
       return <WebchatConversation
         currentMessage={this.state.currentMessage}
-        handleBack={this::this.changeToIntro}
         handleMessageChange={this::this.handleMessageChange}
         handleMessageSubmit={this::this.handleMessageSubmit}
         messages={this.state.messages}
@@ -152,7 +147,6 @@ export default class Webchat extends Component {
   renderAgentInterface () {
     return <WebchatConversation
       currentMessage={this.state.currentMessage}
-      handleBack={this::this.changeToIntro}
       handleMessageChange={this::this.handleMessageChange}
       handleMessageSubmit={this::this.handleMessageSubmit}
       messages={this.state.messages}
@@ -171,7 +165,7 @@ export default class Webchat extends Component {
   }
 
   render () {
-    return <div className="f4">
+    return <div className="f4 h-100">
       {this.renderCurrentScreen()}
     </div>
   }
