@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Check your State Pension age - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h1 class="b f2 f1-l mv4">Check your State Pension</h1>
+      <h2 class="b f3 mv3">Enter your post code</h2>
+      <div class="form-group">
+        <label class="form-label" for="nino">Post code</label>
+        <input class="form-control" id="nino" name="nino" type="text">
+      </div>
+
+      <a rel="nofollow" href="#" class="button">Next</a>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

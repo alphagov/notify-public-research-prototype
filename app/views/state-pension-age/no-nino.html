@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Check your State Pension age - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h1 class="b f2 f1-l mv4">Check your State Pension</h1>
+      <h2 class="b f3 mv3">Enter your National Insurance number</h2>
+      <div class="form-group error">
+        <label class="form-label-bold" for="example-form-control">
+          <span class="error-message">No National Insurance number provided</span>
+        </label>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="nino">National Insurance number</label>
+        <input class="form-control" id="nino" name="nino" type="text">
+      </div>
+      <details class="mb3">
+        <summary>I cannot find my National Insurance number</summary>
+        <div>
+          <p>We can find your National Insurance number or issue one if you have not had one before.</p>
+          <h2 class="b f3 mv3">Call us</h2>
+          <p>0345 300 3900<br />3 minute queue</p>
+
+
+
+          <h2 class="b f3 mv3"><a class="js-trigger-livechat" href="/">Live chat</a></h2>
+          <p>3 minute queue</p>
+        </div>
+      </details>
+      <a rel="nofollow" href="/state-pension-age/enter-postcode" class="button">Next</a>
+    </div>
+  </div>
+</main>
+
+{% endblock %}
