@@ -15,7 +15,10 @@ export default class WebchatConversation extends Component {
   }
 
   componentDidMount () {
-    ReactDOM.findDOMNode(this.refs.messageInput).focus()
+    const isDesktop = window.innerWidth > 700
+    if (isDesktop) {
+      ReactDOM.findDOMNode(this.refs.messageInput).focus()
+    }
   }
 
   render () {
