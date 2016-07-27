@@ -6,6 +6,7 @@ import UserIsTyping from './UserIsTyping'
 export default class MessageList extends Component {
   static propTypes = {
     messages: PropTypes.messages.isRequired,
+    name: PropTypes.string.isRequired,
     userIsTyping: PropTypes.string.isRequired
   }
 
