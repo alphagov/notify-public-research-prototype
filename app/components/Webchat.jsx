@@ -2,10 +2,9 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import PropTypes from '../lib/PropTypes'
-import WebchatIntro from './WebchatIntro'
+import WebchatIntroAgent from './WebchatIntroAgent'
+import WebchatIntroClient from './WebchatIntroClient'
 import WebchatConversation from './WebchatConversation'
-
-const AGENT_NAME = 'GOV.UK'
 
 export default class Webchat extends Component {
   static propTypes = {
@@ -17,7 +16,8 @@ export default class Webchat extends Component {
     messages: [],
     myName: '',
     ready: false,
-    whoIsTyping: ''
+    whoIsTyping: '',
+    welcomeMessage: ''
   }
 
   isClient () {
@@ -29,7 +29,7 @@ export default class Webchat extends Component {
   }
 
   getMyName () {
-    return this.isAgent() ? AGENT_NAME : this.state.myName
+    return this.state.myName
   }
 
   userIsTyping () {
@@ -40,6 +40,18 @@ export default class Webchat extends Component {
   // disconnect or stop sending events. _.debounce call is in componentDidMount.
   handleTypingCleanup () {
     this.setState({ whoIsTyping: '' })
+  }
+
+  handleWebchatConnect () {
+    if (this.state.welcomeMessage) {
+      const author = this.getMyName()
+      const content = this.state.welcomeMessage
+      const time = Date.now()
+      this.socket.emit('message', {
+        type: 'WEBCHAT_MESSAGE',
+        payload: { author, content, time }
+      })
+    }
   }
 
   handleWebchatMessage (payload) {
@@ -62,6 +74,9 @@ export default class Webchat extends Component {
 
   handleChatMessageReceived ({ type, payload }) {
     switch (type) {
+      case 'WEBCHAT_CONNECT':
+        this.handleWebchatConnect(payload)
+        break
       case 'WEBCHAT_MESSAGE':
         this.handleWebchatMessage(payload)
         break
@@ -116,62 +131,52 @@ export default class Webchat extends Component {
     this.setState({ myName })
   }
 
-  handleNameSubmit () {
-    this.changeToConversation()
+  handleWelcomeMessageChange (welcomeMessage) {
+    this.setState({ welcomeMessage })
   }
 
   changeToConversation () {
     this.setState({ ready: true })
+    if (this.isClient()) {
+      this.socket.emit('message', {
+        type: 'WEBCHAT_CONNECT',
+        payload: { name: this.getMyName() }
+      })
+    }
   }
 
-  changeToIntro () {
-    this.setState({ ready: false })
-  }
-
-  renderClientInterface () {
+  renderCurrentScreen () {
     if (!this.state.ready) {
-      return <WebchatIntro
-        handleNameChange={this::this.handleNameChange}
-        handleNameSubmit={this::this.handleNameSubmit}
-        handleSubmit={this::this.changeToConversation}
-        name={this.state.myName}
-      />
+      if (this.isAgent()) {
+        return <WebchatIntroAgent
+          handleNameChange={this::this.handleNameChange}
+          handleWelcomeMessageChange={this::this.handleWelcomeMessageChange}
+          handleSubmit={this::this.changeToConversation}
+          name={this.getMyName()}
+          welcomeMessage={this.state.welcomeMessage}
+        />
+      } else {
+        return <WebchatIntroClient
+          handleNameChange={this::this.handleNameChange}
+          handleSubmit={this::this.changeToConversation}
+          name={this.getMyName()}
+        />
+      }
     }
     if (this.state.ready) {
       return <WebchatConversation
         currentMessage={this.state.currentMessage}
-        handleBack={this::this.changeToIntro}
         handleMessageChange={this::this.handleMessageChange}
         handleMessageSubmit={this::this.handleMessageSubmit}
         messages={this.state.messages}
         userIsTyping={this.userIsTyping()}
+        name={this.getMyName()}
       />
     }
   }
 
-  renderAgentInterface () {
-    return <WebchatConversation
-      currentMessage={this.state.currentMessage}
-      handleBack={this::this.changeToIntro}
-      handleMessageChange={this::this.handleMessageChange}
-      handleMessageSubmit={this::this.handleMessageSubmit}
-      messages={this.state.messages}
-      userIsTyping={this.userIsTyping()}
-    />
-  }
-
-  renderCurrentScreen () {
-    if (this.isClient()) {
-      return this.renderClientInterface()
-    }
-
-    if (this.isAgent()) {
-      return this.renderAgentInterface()
-    }
-  }
-
   render () {
-    return <div className="f4">
+    return <div className="f4 h-100">
       {this.renderCurrentScreen()}
     </div>
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from '../lib/PropTypes'
-import Message from './Message'
+import Message from './MessageBubble'
 import UserIsTyping from './UserIsTyping'
 
 export default class MessageList extends Component {
@@ -23,12 +23,13 @@ export default class MessageList extends Component {
 
   render () {
     const ref = (c) => { this._node = c }
-    return <div className="h5 overflow-y-scroll" ref={ref}>
+    return <div className="h-100 overflow-y-scroll pt3 pt4-ns" ref={ref}>
       {this.props.messages.map((message, idx) => <Message
         key={idx}
         author={message.author}
         content={message.content}
         time={message.time}
+        type={(message.author === this.props.name) ? 'gray' : 'blue'}
       />)}
       {this.props.userIsTyping ? <UserIsTyping user={this.props.userIsTyping} /> : ''}
     </div>

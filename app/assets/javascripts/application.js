@@ -120,4 +120,9 @@ $(document).ready(function () {
     evt.preventDefault()
     window.open('https://secure.livechatinc.com/licence/7756631/open_chat.cgi', 'newwin', 'width=200,height=100')
   })
+
+  $('.js-trigger-custom-window').on('click', function (evt) {
+    evt.preventDefault()
+    window.open('/webchat-implementations/custom-window', 'newwin', 'width=400,height=500')
+  })
 })

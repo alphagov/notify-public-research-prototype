@@ -8,7 +8,7 @@ export default class App extends Component {
   }
 
   render () {
-    return <div className="f4">
+    return <div className="f4 h-100">
       <Webchat type={this.props.type} />
     </div>
   }
