@@ -37,8 +37,8 @@
 .related.related li a[href*="#"] {
   color: #005ea5;
   text-decoration: underline;
+}
 
-  &:visited {
-    color: #4c2c92;
-  }
+a:visited {
+  color: #005ea5;
 }
