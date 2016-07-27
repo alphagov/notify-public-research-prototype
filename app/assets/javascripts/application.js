@@ -125,4 +125,11 @@ $(document).ready(function () {
     evt.preventDefault()
     window.open('/webchat-implementations/custom-window', 'newwin', 'width=400,height=500')
   })
+
+  $('.state-pension-age-next').on('click', function (evt) {
+    if ($('#nino').val().trim().length === 0) {
+      evt.preventDefault()
+      $('#nino-error').removeClass('dn')
+    }
+  })
 })
