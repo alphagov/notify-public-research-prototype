@@ -123,7 +123,7 @@ $(document).ready(function () {
 
   $('.js-trigger-custom-window').on('click', function (evt) {
     evt.preventDefault()
-    window.open('/webchat-implementations/custom-window', 'newwin', 'width=400,height=500')
+    window.open('/implementations/custom-window', 'newwin', 'width=400,height=500')
   })
 
   $('.state-pension-age-next').on('click', function (evt) {
