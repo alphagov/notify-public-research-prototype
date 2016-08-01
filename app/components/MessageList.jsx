@@ -10,9 +10,8 @@ export default class MessageList extends Component {
     userIsTyping: PropTypes.string.isRequired
   }
 
-  componentWillUpdate () {
-    const node = this._node
-    this.shouldScrollBottom = (node.scrollTop + node.offsetHeight) === node.scrollHeight
+  componentWillUpdate (nextProps) {
+    this.shouldScrollBottom = this.props.messages.length !== nextProps.messages.length
   }
 
   componentDidUpdate () {
