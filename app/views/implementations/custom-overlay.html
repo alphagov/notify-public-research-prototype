@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Webchat Custom
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <div class="column-two-thirds">
+
+      <h1 class="heading-xlarge">Custom webchat, overlay</h1>
+
+      <p>There should be a button at the button right you can click on.</p>
+
+      <div id="webchat-root" data-webchat-type="client-overlay"></div>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/public/javascripts/bundle.js"></script>
+</main>
+
+{% endblock %}

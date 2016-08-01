@@ -4,21 +4,23 @@ import App from './App'
 import { AppContainer } from 'react-hot-loader'
 
 const rootEl = document.getElementById('webchat-root')
-const webchatType = rootEl.dataset.webchatType
+if (rootEl) {
+  const webchatType = rootEl.dataset.webchatType
 
-ReactDOM.render(
-  <AppContainer>
-    <App type={webchatType} />
-  </AppContainer>,
-  rootEl
-)
+  ReactDOM.render(
+    <AppContainer>
+      <App type={webchatType} />
+    </AppContainer>,
+    rootEl
+  )
 
-if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NewApp = require('./App').default
-    ReactDOM.render(
-      <AppContainer><NewApp type={webchatType} /></AppContainer>,
-      rootEl
-    )
-  })
+  if (module.hot) {
+    module.hot.accept('./App', () => {
+      const NewApp = require('./App').default
+      ReactDOM.render(
+        <AppContainer><NewApp type={webchatType} /></AppContainer>,
+        rootEl
+      )
+    })
+  }
 }

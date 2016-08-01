@@ -4,7 +4,7 @@ import Webchat from './Webchat'
 
 export default class App extends Component {
   static propTypes = {
-    type: PropTypes.oneOf(['client', 'agent']).isRequired
+    type: PropTypes.oneOf(['client', 'client-overlay', 'agent']).isRequired
   }
 
   render () {

@@ -8,7 +8,7 @@ import WebchatConversation from './WebchatConversation'
 
 export default class Webchat extends Component {
   static propTypes = {
-    type: PropTypes.oneOf(['client', 'agent']).isRequired
+    type: PropTypes.oneOf(['client', 'client-overlay', 'agent']).isRequired
   }
 
   state = {
@@ -21,7 +21,11 @@ export default class Webchat extends Component {
   }
 
   isClient () {
-    return this.props.type === 'client'
+    return this.props.type === 'client' || this.isClientOverlay()
+  }
+
+  isClientOverlay () {
+    return this.props.type === 'client-overlay'
   }
 
   isAgent () {
@@ -176,7 +180,9 @@ export default class Webchat extends Component {
   }
 
   render () {
-    return <div className="f4 h-100">
+    const cls = this.isClientOverlay() ? 'ba bb-0 b--govuk-gray-1 pa3 bg-white fixed bottom-0 right-2' : 'f4 h-100'
+    const style = this.isClientOverlay() ? { height: 500, width: 400, zIndex: 1 } : {}
+    return <div className={cls} style={style}>
       {this.renderCurrentScreen()}
     </div>
   }
