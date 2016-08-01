@@ -94,7 +94,7 @@ export default class Webchat extends Component {
     this.socket = io()
     this.socket.on('message', this::this.handleChatMessageReceived)
 
-    this.handleTypingCleanup = _.debounce(this.handleTypingCleanup, 1000)
+    this.handleTypingCleanup = _.debounce(this.handleTypingCleanup, 3000)
   }
 
   handleMessageChange (currentMessage) {

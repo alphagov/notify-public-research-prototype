@@ -29,8 +29,8 @@ export default class UserIsTyping extends Component {
   }
 
   render () {
-    return <p className="govuk-gray-1 f5">
+    return <div className="govuk-gray-1 f5" style={{ height: 0 }}>
       {this.props.user} is typing{this.state.dots}
-    </p>
+    </div>
   }
 }
