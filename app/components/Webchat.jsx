@@ -105,8 +105,7 @@ export default class Webchat extends Component {
     this.handleTypingCleanup = _.debounce(this.handleTypingCleanup, 3000)
 
     if (this.isClientOverlay()) {
-      document
-        .querySelectorAll('.js-trigger-custom-overlay')
+      Array.from(document.querySelectorAll('.js-trigger-custom-overlay'))
         .forEach((el) => el.addEventListener('click', this::this.handleOverlayShow))
     }
   }
