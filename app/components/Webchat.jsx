@@ -106,8 +106,8 @@ export default class Webchat extends Component {
 
     if (this.isClientOverlay()) {
       document
-        .querySelector('.js-trigger-custom-overlay')
-        .addEventListener('click', this::this.handleOverlayShow)
+        .querySelectorAll('.js-trigger-custom-overlay')
+        .forEach((el) => el.addEventListener('click', this::this.handleOverlayShow))
     }
   }
 
