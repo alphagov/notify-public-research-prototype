@@ -202,10 +202,11 @@ export default class Webchat extends Component {
   }
 
   renderOverlay () {
+    const {overlayMinimized, overlayVisible} = this.state
     const height = 500
     let transformContainer = ''
-    if (this.state.overlayVisible) {
-      if (this.state.overlayMinimized) {
+    if (overlayVisible) {
+      if (overlayMinimized) {
         transformContainer = `translate3d(0, calc(${height}px - 2.5rem), 0)`
       } else {
         transformContainer = 'translate3d(0, 0, 0)'
@@ -214,37 +215,34 @@ export default class Webchat extends Component {
       transformContainer = `translate3d(0, ${height}px, 0)`
     }
 
-    const transformToggle = (this.state.overlayMinimized)
-      ? 'rotate(180deg)'
-      : 'rotate(0deg)'
-
     return <div
-      className="ba bb-0 b--govuk-gray-1 bg-white fixed bottom-0 right-2 flex flex-column transition-transform"
+      className="ba bb-0 b--govuk-gray-1 bg-white fixed bottom-0 right-0 right-2-ns transition-transform w-100 mw6-ns"
       style={{
         height,
         transform: transformContainer,
-        width: 400,
         zIndex: 1
       }}
     >
-      <div className="pa2 bg-govuk-black-1 white flex">
-        <span className="flex flex-grow-1">GOV.UK web chat</span>
+      <div className="pa2 bg-govuk-black-1 white flex justify-between">
         <span
-          className="flex pointer mh2 transition-transform"
+          className="flex pointer transition-transform"
           onClick={this::this.handleOverlayToggle}
-          style={{
-            transform: transformToggle
-          }}
-        ><IconExpandMore /></span>
+        >
+          <IconExpandMore flipVertical={overlayMinimized} />
+          <span className="ml1">{(overlayMinimized) ? 'show chat' : 'hide'}</span>
+        </span>
         <span
           className="flex pointer"
           onClick={this::this.handleOverlayHide}
-        ><IconClear /></span>
+        >
+          <span className="mr1">close</span>
+          <IconClear />
+        </span>
       </div>
-      <div className="ph2 flex flex-grow-1">
-        <div className="w-100">
-          {this.renderCurrentScreen()}
-        </div>
+      <div className="ph2 center mw6-ns" style={{
+        height: 'calc(100% - 3rem)'
+      }}>
+        {this.renderCurrentScreen()}
       </div>
     </div>
   }
