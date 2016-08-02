@@ -5,6 +5,8 @@ import PropTypes from '../lib/PropTypes'
 import WebchatIntroAgent from './WebchatIntroAgent'
 import WebchatIntroClient from './WebchatIntroClient'
 import WebchatConversation from './WebchatConversation'
+import IconClear from './IconClear'
+import IconExpandMore from './IconExpandMore'
 
 export default class Webchat extends Component {
   static propTypes = {
@@ -15,6 +17,8 @@ export default class Webchat extends Component {
     currentMessage: '',
     messages: [],
     myName: '',
+    overlayVisible: false,
+    overlayMinimized: false,
     ready: false,
     whoIsTyping: '',
     welcomeMessage: ''
@@ -99,6 +103,12 @@ export default class Webchat extends Component {
     this.socket.on('message', this::this.handleChatMessageReceived)
 
     this.handleTypingCleanup = _.debounce(this.handleTypingCleanup, 3000)
+
+    if (this.isClientOverlay()) {
+      document
+        .querySelector('.js-trigger-custom-overlay')
+        .addEventListener('click', this::this.handleOverlayShow)
+    }
   }
 
   handleMessageChange (currentMessage) {
@@ -133,6 +143,19 @@ export default class Webchat extends Component {
 
   handleNameChange (myName) {
     this.setState({ myName })
+  }
+
+  handleOverlayToggle () {
+    const overlayMinimized = !this.state.overlayMinimized
+    this.setState({ overlayMinimized })
+  }
+
+  handleOverlayShow () {
+    this.setState({ overlayVisible: true })
+  }
+
+  handleOverlayHide () {
+    this.setState({ overlayVisible: false })
   }
 
   handleWelcomeMessageChange (welcomeMessage) {
@@ -179,10 +202,60 @@ export default class Webchat extends Component {
     }
   }
 
+  renderOverlay () {
+    const height = 500
+    let transformContainer = ''
+    if (this.state.overlayVisible) {
+      if (this.state.overlayMinimized) {
+        transformContainer = `translate3d(0, calc(${height}px - 2.5rem), 0)`
+      } else {
+        transformContainer = 'translate3d(0, 0, 0)'
+      }
+    } else {
+      transformContainer = `translate3d(0, ${height}px, 0)`
+    }
+
+    const transformToggle = (this.state.overlayMinimized)
+      ? 'rotate(180deg)'
+      : 'rotate(0deg)'
+
+    return <div
+      className="ba bb-0 b--govuk-gray-1 bg-white fixed bottom-0 right-2 flex flex-column transition-transform"
+      style={{
+        height,
+        transform: transformContainer,
+        width: 400,
+        zIndex: 1
+      }}
+    >
+      <div className="pa2 bg-govuk-black-1 white flex">
+        <span className="flex flex-grow-1">GOV.UK web chat</span>
+        <span
+          className="flex pointer mh2 transition-transform"
+          onClick={this::this.handleOverlayToggle}
+          style={{
+            transform: transformToggle
+          }}
+        ><IconExpandMore /></span>
+        <span
+          className="flex pointer"
+          onClick={this::this.handleOverlayHide}
+        ><IconClear /></span>
+      </div>
+      <div className="ph2 flex flex-grow-1">
+        <div className="w-100">
+          {this.renderCurrentScreen()}
+        </div>
+      </div>
+    </div>
+  }
+
   render () {
-    const cls = this.isClientOverlay() ? 'ba bb-0 b--govuk-gray-1 pa3 bg-white fixed bottom-0 right-2' : 'f4 h-100'
-    const style = this.isClientOverlay() ? { height: 500, width: 400, zIndex: 1 } : {}
-    return <div className={cls} style={style}>
+    if (this.isClientOverlay()) {
+      return this.renderOverlay()
+    }
+
+    return <div className="f4 h-100">
       {this.renderCurrentScreen()}
     </div>
   }
