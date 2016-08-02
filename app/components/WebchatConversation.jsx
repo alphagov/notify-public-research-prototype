@@ -43,7 +43,7 @@ export default class WebchatConversation extends Component {
           />
         </div>
         <div className="w-25">
-          <Button onClick={this.props.handleMessageSubmit}>Reply</Button>
+          <Button onClick={this.props.handleMessageSubmit}>Send</Button>
         </div>
       </div>
     </div>
