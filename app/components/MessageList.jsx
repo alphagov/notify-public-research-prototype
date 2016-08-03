@@ -23,7 +23,7 @@ export default class MessageList extends Component {
 
   render () {
     const ref = (c) => { this._node = c }
-    return <div className="h-100 overflow-y-scroll pt3 pt4-ns pb4" ref={ref}>
+    return <div className="h-100 overflow-y-scroll pt3 pt4-ns pb4 wos-t" ref={ref}>
       {this.props.messages.map((message, idx) => <Message
         key={idx}
         author={message.author}
