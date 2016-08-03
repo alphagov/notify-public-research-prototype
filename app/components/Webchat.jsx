@@ -150,7 +150,7 @@ export default class Webchat extends Component {
   }
 
   handleOverlayShow () {
-    this.setState({ overlayVisible: true })
+    this.setState({ overlayVisible: true, overlayMinimized: false })
   }
 
   handleOverlayHide () {
