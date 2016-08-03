@@ -11,8 +11,8 @@ export default class MessageBubble extends Component {
   }
 
   render () {
-    const cls = classnames('white br4 pa2 w-75 mb2', {
-      'bg-govuk-navy-1 white': this.props.type === 'blue',
+    const cls = classnames('white br2 pa2 w-75 mb2', {
+      'bg-purple white': this.props.type === 'blue',
       'bg-govuk-gray-2 govuk-black-1 ml-25': this.props.type === 'gray'
     })
     return <div className={cls}>

@@ -6,6 +6,7 @@ $govuk-green-1: #00823B;
 $govuk-green-2: #003618;
 $govuk-green-3: #00692F;
 $govuk-yellow: #FFBF47;
+$purple: #7337A9;
 
 // Overrides for stuff Tacyhons breaks.
 html, body { font-size: 100% }
@@ -14,6 +15,7 @@ html, body { font-size: 100% }
 .govuk-black-1 { color: $govuk-black-1 }
 .govuk-gray-1 { color: $govuk-gray-1 }
 .b--govuk-gray-1 { border-color: $govuk-gray-1 }
+.bg-purple { background-color: $purple }
 .bg-govuk-black-1 { background-color: $govuk-black-1 }
 .bg-govuk-green-1 { background-color: $govuk-green-1 }
 .bg-govuk-navy-1 { background-color: $govuk-navy-1 }
