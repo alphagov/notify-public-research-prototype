@@ -4,6 +4,7 @@ import _ from 'lodash'
 import PropTypes from '../lib/PropTypes'
 import WebchatIntroAgent from './WebchatIntroAgent'
 import WebchatIntroClient from './WebchatIntroClient'
+import WebchatQueue from './WebchatQueue'
 import WebchatConversation from './WebchatConversation'
 import IconClear from './IconClear'
 import IconExpandMore from './IconExpandMore'
@@ -19,7 +20,9 @@ export default class Webchat extends Component {
     myName: '',
     overlayVisible: false,
     overlayMinimized: false,
-    ready: false,
+    queueSize: 10,
+    step: 'intro',
+    userConnected: false,
     whoIsTyping: '',
     welcomeMessage: ''
   }
@@ -51,7 +54,7 @@ export default class Webchat extends Component {
   }
 
   handleWebchatConnect () {
-    if (this.state.welcomeMessage) {
+    if (this.state.welcomeMessage && this.isAgent()) {
       const author = this.getMyName()
       const content = this.state.welcomeMessage
       const time = Date.now()
@@ -60,6 +63,7 @@ export default class Webchat extends Component {
         payload: { author, content, time }
       })
     }
+    this.setState({ userConnected: true })
   }
 
   handleWebchatMessage (payload) {
@@ -80,6 +84,13 @@ export default class Webchat extends Component {
     }
   }
 
+  handleWebchatQueueDecrement ({ value }) {
+    this.setState({ queueSize: value })
+    if (value < 1) {
+      this.changeToConversation()
+    }
+  }
+
   handleChatMessageReceived ({ type, payload }) {
     switch (type) {
       case 'WEBCHAT_CONNECT':
@@ -90,6 +101,9 @@ export default class Webchat extends Component {
         break
       case 'WEBCHAT_TYPING':
         this.handleWebchatTyping(payload)
+        break
+      case 'WEBCHAT_QUEUE_DECREMENT':
+        this.handleWebchatQueueDecrement(payload)
         break
       default:
         console.warn('Unknown webchat message received!')
@@ -161,8 +175,15 @@ export default class Webchat extends Component {
     this.setState({ welcomeMessage })
   }
 
-  changeToConversation () {
-    this.setState({ ready: true })
+  handleQueueDecrement () {
+    this.socket.emit('message', {
+      type: 'WEBCHAT_QUEUE_DECREMENT',
+      payload: { value: this.state.queueSize - 1 }
+    })
+  }
+
+  changeToQueue () {
+    this.setState({ step: 'queue' })
     if (this.isClient()) {
       this.socket.emit('message', {
         type: 'WEBCHAT_CONNECT',
@@ -171,33 +192,46 @@ export default class Webchat extends Component {
     }
   }
 
-  renderCurrentScreen () {
-    if (!this.state.ready) {
-      if (this.isAgent()) {
-        return <WebchatIntroAgent
-          handleNameChange={this::this.handleNameChange}
-          handleWelcomeMessageChange={this::this.handleWelcomeMessageChange}
-          handleSubmit={this::this.changeToConversation}
-          name={this.getMyName()}
+  changeToConversation () {
+    this.setState({ step: 'conversation' })
+  }
+
+  renderCurrentStep () {
+    switch (this.state.step) {
+      case 'intro':
+        if (this.isAgent()) {
+          return <WebchatIntroAgent
+            handleNameChange={this::this.handleNameChange}
+            handleWelcomeMessageChange={this::this.handleWelcomeMessageChange}
+            handleSubmit={this::this.changeToQueue}
+            name={this.getMyName()}
+            welcomeMessage={this.state.welcomeMessage}
+          />
+        } else {
+          return <WebchatIntroClient
+            handleNameChange={this::this.handleNameChange}
+            handleSubmit={this::this.changeToQueue}
+            name={this.getMyName()}
+          />
+        }
+      case 'queue':
+        return <WebchatQueue
+          handleQueueDecrement={this::this.handleQueueDecrement}
+          isAgent={this.isAgent()}
+          queueSize={this.state.queueSize}
+          userConnected={this.state.userConnected}
           welcomeMessage={this.state.welcomeMessage}
         />
-      } else {
-        return <WebchatIntroClient
-          handleNameChange={this::this.handleNameChange}
-          handleSubmit={this::this.changeToConversation}
+      case 'conversation':
+        return <WebchatConversation
+          currentMessage={this.state.currentMessage}
+          handleMessageChange={this::this.handleMessageChange}
+          handleMessageSubmit={this::this.handleMessageSubmit}
+          isAgent={this.isAgent()}
+          messages={this.state.messages}
+          userIsTyping={this.userIsTyping()}
           name={this.getMyName()}
         />
-      }
-    }
-    if (this.state.ready) {
-      return <WebchatConversation
-        currentMessage={this.state.currentMessage}
-        handleMessageChange={this::this.handleMessageChange}
-        handleMessageSubmit={this::this.handleMessageSubmit}
-        messages={this.state.messages}
-        userIsTyping={this.userIsTyping()}
-        name={this.getMyName()}
-      />
     }
   }
 
@@ -242,7 +276,7 @@ export default class Webchat extends Component {
       <div className="ph2 center mw6-ns" style={{
         height: 'calc(100% - 3rem)'
       }}>
-        {this.renderCurrentScreen()}
+        {this.renderCurrentStep()}
       </div>
     </div>
   }
@@ -253,7 +287,7 @@ export default class Webchat extends Component {
     }
 
     return <div className="f4 h-100">
-      {this.renderCurrentScreen()}
+      {this.renderCurrentStep()}
     </div>
   }
 }
