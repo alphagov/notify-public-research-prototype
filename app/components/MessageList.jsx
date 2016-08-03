@@ -23,7 +23,11 @@ export default class MessageList extends Component {
 
   render () {
     const ref = (c) => { this._node = c }
-    return <div className="h-100 overflow-y-scroll pt3 pt4-ns pb4 wos-t" ref={ref}>
+    return <div className="h-100 overflow-y-scroll pb4 wos-t" ref={ref}>
+      <div className="flex pv3">
+        <img className="br-100" src="http://placehold.it/50x50" alt="Profile picture" />
+        <p className="self-center mv0 ml1">You are chatting with Ashan.</p>
+      </div>
       {this.props.messages.map((message, idx) => <Message
         key={idx}
         author={message.author}
