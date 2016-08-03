@@ -10,6 +10,7 @@ export default class WebchatConversation extends Component {
     currentMessage: PropTypes.string.isRequired,
     handleMessageChange: PropTypes.func.isRequired,
     handleMessageSubmit: PropTypes.func.isRequired,
+    isAgent: PropTypes.bool.isRequired,
     messages: PropTypes.messages.isRequired,
     name: PropTypes.string.isRequired,
     userIsTyping: PropTypes.string.isRequired
@@ -26,9 +27,10 @@ export default class WebchatConversation extends Component {
     return <div className="h-100">
       <div style={{ height: 'calc(100% - 3rem)' }}>
         <MessageList
+          isAgent={this.props.isAgent}
           messages={this.props.messages}
-          userIsTyping={this.props.userIsTyping}
           name={this.props.name}
+          userIsTyping={this.props.userIsTyping}
         />
       </div>
 
