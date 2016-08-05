@@ -2,6 +2,8 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
 import PropTypes from '../lib/PropTypes'
+import WebchatAreYouSure from './WebchatAreYouSure'
+import WebchatEnd from './WebchatEnd'
 import WebchatIntroAgent from './WebchatIntroAgent'
 import WebchatIntroClient from './WebchatIntroClient'
 import WebchatQueue from './WebchatQueue'
@@ -208,6 +210,10 @@ export default class Webchat extends Component {
     })
   }
 
+  changeToIntro () {
+    this.setState({ step: 'intro' })
+  }
+
   changeToQueue () {
     this.setState({ step: 'queue' })
     if (this.isClient()) {
@@ -220,6 +226,14 @@ export default class Webchat extends Component {
 
   changeToConversation () {
     this.setState({ step: 'conversation' })
+  }
+
+  changeToAreYouSure () {
+    this.setState({ step: 'are-you-sure' })
+  }
+
+  changeToEnd () {
+    this.setState({ step: 'end' })
   }
 
   renderCurrentStep () {
@@ -260,6 +274,15 @@ export default class Webchat extends Component {
           userIsTyping={this.userIsTyping()}
           name={this.getMyName()}
         />
+      case 'are-you-sure':
+        return <WebchatAreYouSure
+          handleEnd={this::this.changeToEnd}
+          handleReturn={this::this.changeToIntro}
+        />
+      case 'end':
+        return <WebchatEnd
+          handleWindowClose={this::this.handleOverlayHide}
+        />
     }
   }
 
@@ -295,7 +318,7 @@ export default class Webchat extends Component {
         </span>
         <span
           className="flex pointer"
-          onClick={this::this.handleOverlayHide}
+          onClick={this::this.changeToAreYouSure}
         >
           <span className="mr1">close</span>
           <IconClear />
