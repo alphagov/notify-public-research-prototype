@@ -9,6 +9,12 @@ import WebchatConversation from './WebchatConversation'
 import IconClear from './IconClear'
 import IconExpandMore from './IconExpandMore'
 
+const advisers = [
+  { name: 'Chris', image: 'https://pbs.twimg.com/profile_images/103521656/cheathco_square.jpg' },
+  { name: 'Emma', image: 'https://avatars.slack-edge.com/2016-07-11/58543921264_069b73b591245de5ef4d_192.png' },
+  { name: 'Theo', image: 'https://pbs.twimg.com/profile_images/455332460046188544/19_XJF18.png' }
+]
+
 export default class Webchat extends Component {
   static propTypes = {
     type: PropTypes.oneOf(['client', 'client-overlay', 'agent']).isRequired
@@ -21,6 +27,7 @@ export default class Webchat extends Component {
     overlayVisible: false,
     overlayMinimized: false,
     queueSize: 10,
+    selectedAdviser: 0,
     step: 'intro',
     userConnected: false,
     whoIsTyping: '',
@@ -40,6 +47,9 @@ export default class Webchat extends Component {
   }
 
   getMyName () {
+    if (this.isAgent()) {
+      return advisers[this.state.selectedAdviser].name
+    }
     return this.state.myName
   }
 
@@ -53,6 +63,10 @@ export default class Webchat extends Component {
     this.setState({ whoIsTyping: '' })
   }
 
+  handleWebchatAdviser ({ selectedAdviser }) {
+    this.setState({ selectedAdviser })
+  }
+
   handleWebchatConnect () {
     if (this.state.welcomeMessage && this.isAgent()) {
       const author = this.getMyName()
@@ -61,6 +75,10 @@ export default class Webchat extends Component {
       this.socket.emit('message', {
         type: 'WEBCHAT_MESSAGE',
         payload: { author, content, time }
+      })
+      this.socket.emit('message', {
+        type: 'WEBCHAT_ADVISER',
+        payload: { selectedAdviser: this.state.selectedAdviser }
       })
     }
     this.setState({ userConnected: true })
@@ -93,6 +111,9 @@ export default class Webchat extends Component {
 
   handleChatMessageReceived ({ type, payload }) {
     switch (type) {
+      case 'WEBCHAT_ADVISER':
+        this.handleWebchatAdviser(payload)
+        break
       case 'WEBCHAT_CONNECT':
         this.handleWebchatConnect(payload)
         break
@@ -154,6 +175,11 @@ export default class Webchat extends Component {
     this.setState({ currentMessage: '' })
   }
 
+  handleAdviserChange (idx) {
+    this.handleNameChange(advisers[idx].name)
+    this.setState({ selectedAdviser: idx })
+  }
+
   handleNameChange (myName) {
     this.setState({ myName })
   }
@@ -201,10 +227,11 @@ export default class Webchat extends Component {
       case 'intro':
         if (this.isAgent()) {
           return <WebchatIntroAgent
-            handleNameChange={this::this.handleNameChange}
+            advisers={advisers}
+            handleAdviserChange={this::this.handleAdviserChange}
             handleWelcomeMessageChange={this::this.handleWelcomeMessageChange}
             handleSubmit={this::this.changeToQueue}
-            name={this.getMyName()}
+            selectedAdviser={this.state.selectedAdviser}
             welcomeMessage={this.state.welcomeMessage}
           />
         } else {
@@ -224,6 +251,7 @@ export default class Webchat extends Component {
         />
       case 'conversation':
         return <WebchatConversation
+          adviser={advisers[this.state.selectedAdviser]}
           currentMessage={this.state.currentMessage}
           handleMessageChange={this::this.handleMessageChange}
           handleMessageSubmit={this::this.handleMessageSubmit}

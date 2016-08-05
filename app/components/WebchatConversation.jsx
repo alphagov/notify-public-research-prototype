@@ -7,6 +7,10 @@ import MessageList from './MessageList'
 
 export default class WebchatConversation extends Component {
   static propTypes = {
+    adviser: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired
+    }).isRequired,
     currentMessage: PropTypes.string.isRequired,
     handleMessageChange: PropTypes.func.isRequired,
     handleMessageSubmit: PropTypes.func.isRequired,
@@ -27,6 +31,7 @@ export default class WebchatConversation extends Component {
     return <div className="h-100">
       <div style={{ height: 'calc(100% - 3rem)' }}>
         <MessageList
+          adviser={this.props.adviser}
           isAgent={this.props.isAgent}
           messages={this.props.messages}
           name={this.props.name}
