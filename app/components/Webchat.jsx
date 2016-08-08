@@ -229,11 +229,21 @@ export default class Webchat extends Component {
   }
 
   changeToAreYouSure () {
-    this.setState({ step: 'are-you-sure' })
+    this.setState({
+      previousStep: this.state.step,
+      step: 'are-you-sure'
+    })
   }
 
   changeToEnd () {
     this.setState({ step: 'end' })
+  }
+
+  changeToPrevious () {
+    this.setState({
+      previousStep: this.state.step,
+      step: this.state.previousStep
+    })
   }
 
   renderCurrentStep () {
@@ -277,7 +287,7 @@ export default class Webchat extends Component {
       case 'are-you-sure':
         return <WebchatAreYouSure
           handleEnd={this::this.changeToEnd}
-          handleReturn={this::this.changeToIntro}
+          handleReturn={this::this.changeToPrevious}
         />
       case 'end':
         return <WebchatEnd
