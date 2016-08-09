@@ -11,6 +11,14 @@ import WebchatConversation from './WebchatConversation'
 import IconClear from './IconClear'
 import IconExpandMore from './IconExpandMore'
 
+function pad (n) { return n < 10 ? '0' + n : n }
+
+function HHMMDateString (d) {
+  const HH = pad(d.getHours())
+  const MM = pad(d.getMinutes())
+  return `${HH}:${MM}`
+}
+
 const advisers = [
   { name: 'Chris', image: 'https://pbs.twimg.com/profile_images/103521656/cheathco_square.jpg' },
   { name: 'Emma', image: 'https://avatars.slack-edge.com/2016-07-11/58543921264_069b73b591245de5ef4d_192.png' },
@@ -211,6 +219,22 @@ export default class Webchat extends Component {
     })
   }
 
+  handleTranscriptDownload () {
+    const text = this.state.messages
+      .map((msg) => `${HHMMDateString(new Date(msg.time))} ${msg.author}: ${msg.content}`)
+      .join('\n')
+    const element = document.createElement('a')
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+    element.setAttribute('download', 'webchat-transcript.txt')
+
+    element.style.display = 'none'
+    document.body.appendChild(element)
+
+    element.click()
+
+    document.body.removeChild(element)
+  }
+
   changeToIntro () {
     this.setState({ step: 'intro' })
   }
@@ -280,6 +304,7 @@ export default class Webchat extends Component {
           currentMessage={this.state.currentMessage}
           handleMessageChange={this::this.handleMessageChange}
           handleMessageSubmit={this::this.handleMessageSubmit}
+          handleTranscriptDownload={this::this.handleTranscriptDownload}
           isAgent={this.isAgent()}
           messages={this.state.messages}
           userIsTyping={this.userIsTyping()}

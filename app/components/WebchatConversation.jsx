@@ -14,6 +14,7 @@ export default class WebchatConversation extends Component {
     currentMessage: PropTypes.string.isRequired,
     handleMessageChange: PropTypes.func.isRequired,
     handleMessageSubmit: PropTypes.func.isRequired,
+    handleTranscriptDownload: PropTypes.func.isRequired,
     isAgent: PropTypes.bool.isRequired,
     messages: PropTypes.messages.isRequired,
     name: PropTypes.string.isRequired,
@@ -28,8 +29,12 @@ export default class WebchatConversation extends Component {
   }
 
   render () {
+    const height = (this.props.isAgent) ? 'calc(100% - 5rem)' : 'calc(100% - 3rem)'
+    const transcriptButton = (this.props.isAgent) ? <div className="mv3 w-50">
+      <Button onClick={this.props.handleTranscriptDownload}>Download transcript</Button>
+    </div> : null
     return <div className="h-100">
-      <div style={{ height: 'calc(100% - 3rem)' }}>
+      <div style={{ height }}>
         <MessageList
           adviser={this.props.adviser}
           isAgent={this.props.isAgent}
@@ -53,6 +58,7 @@ export default class WebchatConversation extends Component {
           <Button onClick={this.props.handleMessageSubmit}>Send</Button>
         </div>
       </div>
+      {transcriptButton}
     </div>
   }
 }
