@@ -310,6 +310,14 @@ export default class Webchat extends Component {
       transformContainer = `translate3d(0, ${height}px, 0)`
     }
 
+    const closeButton = (this.state.step === 'end') ? null : <span
+      className="flex pointer"
+      onClick={this::this.changeToAreYouSure}
+    >
+      <span className="mr1">close</span>
+      <IconClear />
+    </span>
+
     return <div
       className="ba bb-0 b--govuk-gray-1 bg-white fixed bottom-0 right-0 right-2-ns transition-transform w-100 mw6-ns"
       style={{
@@ -326,13 +334,7 @@ export default class Webchat extends Component {
           <IconExpandMore flipVertical={overlayMinimized} />
           <span className="ml1">{(overlayMinimized) ? 'show chat' : 'hide'}</span>
         </span>
-        <span
-          className="flex pointer"
-          onClick={this::this.changeToAreYouSure}
-        >
-          <span className="mr1">close</span>
-          <IconClear />
-        </span>
+        {closeButton}
       </div>
       <div className="ph2 center mw6-ns" style={{
         height: 'calc(100% - 3rem)'
