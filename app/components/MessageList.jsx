@@ -43,6 +43,9 @@ export default class MessageList extends Component {
 
   render () {
     const ref = (c) => { this._node = c }
+    const messageType = (message) => (this.props.isAgent)
+      ? ((message.adviser) ? 'gray' : 'blue')
+      : ((message.adviser) ? 'blue' : 'gray')
     return <div className="h-100 overflow-y-scroll pb4 wos-t" ref={ref}>
       {(this.props.isAgent) ? null : <ChattingWithBanner
         image={this.props.adviser.image}
@@ -54,7 +57,7 @@ export default class MessageList extends Component {
         author={message.author}
         content={message.content}
         time={message.time}
-        type={(message.author === this.props.name) ? 'gray' : 'blue'}
+        type={messageType(message)}
       />)}
       {this.props.userIsTyping ? <UserIsTyping user={this.props.userIsTyping} /> : ''}
     </div>

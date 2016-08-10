@@ -86,7 +86,7 @@ export default class Webchat extends Component {
       const time = Date.now()
       this.socket.emit('message', {
         type: 'WEBCHAT_MESSAGE',
-        payload: { author, content, time }
+        payload: { author, content, time, adviser: this.isAgent() }
       })
       this.socket.emit('message', {
         type: 'WEBCHAT_ADVISER',
@@ -175,7 +175,7 @@ export default class Webchat extends Component {
     const time = Date.now()
     this.socket.emit('message', {
       type: 'WEBCHAT_MESSAGE',
-      payload: { author, content, time }
+      payload: { author, content, time, adviser: this.isAgent() }
     })
     this.socket.emit('message', {
       type: 'WEBCHAT_TYPING',
