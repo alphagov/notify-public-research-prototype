@@ -84,10 +84,12 @@ export default class Webchat extends Component {
       const author = this.getMyName()
       const content = this.state.welcomeMessage
       const time = Date.now()
-      this.socket.emit('message', {
-        type: 'WEBCHAT_MESSAGE',
-        payload: { author, content, time, adviser: this.isAgent() }
-      })
+      if (content) {
+        this.socket.emit('message', {
+          type: 'WEBCHAT_MESSAGE',
+          payload: { author, content, time, adviser: this.isAgent() }
+        })
+      }
       this.socket.emit('message', {
         type: 'WEBCHAT_ADVISER',
         payload: { selectedAdviser: this.state.selectedAdviser }
@@ -97,6 +99,9 @@ export default class Webchat extends Component {
   }
 
   handleWebchatMessage (payload) {
+    if (payload.content.length === 0 || payload.author.length === 0) {
+      return
+    }
     this.setState({ messages: [...this.state.messages, payload] })
   }
 
@@ -173,18 +178,20 @@ export default class Webchat extends Component {
     const author = this.getMyName()
     const content = this.state.currentMessage
     const time = Date.now()
-    this.socket.emit('message', {
-      type: 'WEBCHAT_MESSAGE',
-      payload: { author, content, time, adviser: this.isAgent() }
-    })
-    this.socket.emit('message', {
-      type: 'WEBCHAT_TYPING',
-      payload: {
-        name: author,
-        isTyping: false
-      }
-    })
-    this.setState({ currentMessage: '' })
+    if (content) {
+      this.socket.emit('message', {
+        type: 'WEBCHAT_MESSAGE',
+        payload: { author, content, time, adviser: this.isAgent() }
+      })
+      this.socket.emit('message', {
+        type: 'WEBCHAT_TYPING',
+        payload: {
+          name: author,
+          isTyping: false
+        }
+      })
+      this.setState({ currentMessage: '' })
+    }
   }
 
   handleAdviserChange (idx) {

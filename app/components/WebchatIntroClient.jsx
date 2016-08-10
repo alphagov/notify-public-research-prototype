@@ -15,7 +15,7 @@ export default class WebchatIntroClient extends Component {
     return <div className="mt3">
       <p>Please fill in your name to start chatting.</p>
 
-      <div className="w-75">
+      <div className="w-75 mt5">
         <Label htmlFor="webchat-input-name">Name</Label>
         <Input
           id="webchat-input-name"
