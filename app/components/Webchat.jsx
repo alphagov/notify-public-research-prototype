@@ -20,9 +20,11 @@ function HHMMDateString (d) {
 }
 
 const advisers = [
-  { name: 'Chris', image: 'https://pbs.twimg.com/profile_images/103521656/cheathco_square.jpg' },
-  { name: 'Emma', image: 'https://avatars.slack-edge.com/2016-07-11/58543921264_069b73b591245de5ef4d_192.png' },
-  { name: 'Theo', image: 'https://pbs.twimg.com/profile_images/455332460046188544/19_XJF18.png' }
+  { name: 'Emily', image: '/public/images/advisers/emily.png' },
+  { name: 'Maria', image: '/public/images/advisers/flaminia.png' },
+  { name: 'Neejal', image: '/public/images/advisers/neejal.png' },
+  { name: 'Tom', image: '/public/images/advisers/tom.png' },
+  { name: 'Abby', image: '/public/images/advisers/tricia.png' }
 ]
 
 export default class Webchat extends Component {
