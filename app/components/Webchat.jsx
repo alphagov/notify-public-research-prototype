@@ -333,7 +333,7 @@ export default class Webchat extends Component {
 
   renderOverlay () {
     const {overlayMinimized, overlayVisible} = this.state
-    const height = 500
+    const height = 460
     let transformContainer = ''
     if (overlayVisible) {
       if (overlayMinimized) {
