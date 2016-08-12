@@ -337,7 +337,7 @@ export default class Webchat extends Component {
     let transformContainer = ''
     if (overlayVisible) {
       if (overlayMinimized) {
-        transformContainer = `translate3d(0, calc(${height}px - 2.5rem), 0)`
+        transformContainer = `translate3d(0, calc(${height}px - 3rem), 0)`
       } else {
         transformContainer = 'translate3d(0, 0, 0)'
       }
