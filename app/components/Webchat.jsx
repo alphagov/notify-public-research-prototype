@@ -345,7 +345,8 @@ export default class Webchat extends Component {
       transformContainer = `translate3d(0, ${height}px, 0)`
     }
 
-    const closeButton = (this.state.step === 'end') ? null : <span
+    const noCloseButtonStep = this.state.step === 'end' || this.state.step === 'are-you-sure'
+    const closeButton = (noCloseButtonStep || overlayMinimized) ? null : <span
       className="flex pointer"
       onClick={this::this.changeToAreYouSure}
     >
