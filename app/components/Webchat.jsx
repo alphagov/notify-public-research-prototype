@@ -351,7 +351,9 @@ export default class Webchat extends Component {
       onClick={this::this.changeToAreYouSure}
     >
       <span className="mr1">close</span>
-      <IconClear />
+      <span className="flex self-center">
+        <IconClear />
+      </span>
     </span>
 
     return <div
@@ -367,7 +369,9 @@ export default class Webchat extends Component {
           className="flex pointer transition-transform"
           onClick={this::this.handleOverlayToggle}
         >
-          <IconExpandMore flipVertical={overlayMinimized} />
+          <span className="flex self-center">
+            <IconExpandMore flipVertical={overlayMinimized} />
+          </span>
           <span className="ml1">{(overlayMinimized) ? 'show chat' : 'hide'}</span>
         </span>
         {closeButton}
