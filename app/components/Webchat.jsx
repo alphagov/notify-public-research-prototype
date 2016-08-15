@@ -333,16 +333,16 @@ export default class Webchat extends Component {
 
   renderOverlay () {
     const {overlayMinimized, overlayVisible} = this.state
-    const height = 460
+    const height = '70vh'
     let transformContainer = ''
     if (overlayVisible) {
       if (overlayMinimized) {
-        transformContainer = `translate3d(0, calc(${height}px - 3rem), 0)`
+        transformContainer = `translate3d(0, calc(${height} - 3rem), 0)`
       } else {
         transformContainer = 'translate3d(0, 0, 0)'
       }
     } else {
-      transformContainer = `translate3d(0, ${height}px, 0)`
+      transformContainer = `translate3d(0, ${height}, 0)`
     }
 
     const noCloseButtonStep = this.state.step === 'end' || this.state.step === 'are-you-sure'
