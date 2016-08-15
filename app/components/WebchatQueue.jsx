@@ -24,7 +24,7 @@ export default class WebchatQueue extends Component {
           {(this.props.welcomeMessage) ? <p>Once the chat begins, the user will automatically receive this welcome message: "{this.props.welcomeMessage}"</p> : null}
           <p>To move them ahead, use the button below. When the count reaches 0, you'll both be taken to the chat.</p>
           <Button onClick={this.props.handleQueueDecrement}>
-            {(actualQueueSize > 1) ? 'Decrement queue by around 1000' : 'Begin chat'}
+            {(actualQueueSize > 1) ? `Decrement queue by around ${QUEUE_MAGNITUDE}` : 'Begin chat'}
           </Button>
         </div>
       } else {
