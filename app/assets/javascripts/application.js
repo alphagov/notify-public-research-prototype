@@ -118,7 +118,8 @@ $(document).ready(function () {
 
   $('.js-trigger-livechat').on('click', function (evt) {
     evt.preventDefault()
-    window.open('https://secure.livechatinc.com/licence/7756631/open_chat.cgi', 'newwin', 'width=200,height=100')
+    window.LC_API.show_full_view()
+    // window.open('https://secure.livechatinc.com/licence/7756631/open_chat.cgi', 'newwin', 'width=200,height=100')
   })
 
   $('.js-trigger-custom-window').on('click', function (evt) {
