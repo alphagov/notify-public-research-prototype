@@ -46,7 +46,7 @@ export default class MessageList extends Component {
     const messageType = (message) => (this.props.isAgent)
       ? ((message.adviser) ? 'gray' : 'blue')
       : ((message.adviser) ? 'blue' : 'gray')
-    return <div className="h-100 overflow-y-scroll pb4 wos-t" ref={ref}>
+    return <div className="h-100 overflow-y-scroll pb4 wos-a" ref={ref}>
       {(this.props.isAgent) ? null : <ChattingWithBanner
         image={this.props.adviser.image}
         name={this.props.adviser.name}

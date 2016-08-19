@@ -46,3 +46,14 @@ a:visited {
 .header-proposition {
   display: none;
 }
+
+.prevent-scrolling {
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  overflow-y: hidden;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+}

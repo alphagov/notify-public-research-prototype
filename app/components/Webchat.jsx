@@ -205,15 +205,22 @@ export default class Webchat extends Component {
 
   handleOverlayToggle () {
     const overlayMinimized = !this.state.overlayMinimized
+    if (overlayMinimized) {
+      document.body.classList.remove('prevent-scrolling')
+    } else {
+      document.body.classList.add('prevent-scrolling')
+    }
     this.setState({ overlayMinimized })
   }
 
   handleOverlayShow (evt) {
     evt.preventDefault()
+    document.body.classList.add('prevent-scrolling')
     this.setState({ overlayVisible: true, overlayMinimized: false })
   }
 
   handleOverlayHide () {
+    document.body.classList.remove('prevent-scrolling')
     this.setState({ overlayVisible: false })
   }
 
@@ -335,14 +342,22 @@ export default class Webchat extends Component {
     const {overlayMinimized, overlayVisible} = this.state
     const height = '70vh'
     let transformContainer = ''
+    let backdropOpacity = 0.0
+    let backdropPointerEvents = ''
     if (overlayVisible) {
       if (overlayMinimized) {
-        transformContainer = `translate3d(0, calc(${height} - 3rem), 0)`
+        transformContainer = `translate3d(0, calc(${height} - 3rem + 1px), 0)`
+        backdropOpacity = 0.0
+        backdropPointerEvents = 'none'
       } else {
         transformContainer = 'translate3d(0, 0, 0)'
+        backdropOpacity = 0.5
+        backdropPointerEvents = 'auto'
       }
     } else {
       transformContainer = `translate3d(0, ${height}, 0)`
+      backdropOpacity = 0.0
+      backdropPointerEvents = 'none'
     }
 
     const noCloseButtonStep = this.state.step === 'end' || this.state.step === 'are-you-sure'
@@ -356,30 +371,45 @@ export default class Webchat extends Component {
       </span>
     </span>
 
-    return <div
-      className="ba bb-0 b--govuk-gray-1 bg-white fixed bottom-0 right-0 right-2-ns transition-transform w-100 mw6-ns"
-      style={{
-        height,
-        transform: transformContainer,
-        zIndex: 1
-      }}
-    >
-      <div className="pa2 bg-govuk-black-1 white flex justify-between">
-        <span
-          className="flex pointer transition-transform"
-          onClick={this::this.handleOverlayToggle}
+    return <div>
+      <div
+        className="fixed top-0 left-0 bottom-0 right-0 bg-black"
+        style={{
+          opacity: backdropOpacity,
+          pointerEvents: backdropPointerEvents,
+          transition: 'opacity 0.2s ease',
+          zIndex: 1
+        }}
+        onClick={(overlayMinimized) ? null : this::this.handleOverlayToggle}
+      />
+      <div
+        className="ba bb-0 b--govuk-gray-1 bg-white fixed bottom-0 right-0 right-2-ns transition-transform w-100 mw6-ns"
+        style={{
+          height,
+          transform: transformContainer,
+          zIndex: 2
+        }}
+      >
+        <div
+          className="pa2 bg-govuk-black-1 white flex justify-between"
+          onClick={(overlayMinimized) ? this::this.handleOverlayToggle : null}
         >
-          <span className="flex self-center">
-            <IconExpandMore flipVertical={overlayMinimized} />
+          <span
+            className="flex pointer transition-transform"
+            onClick={this::this.handleOverlayToggle}
+          >
+            <span className="flex self-center">
+              <IconExpandMore flipVertical={overlayMinimized} />
+            </span>
+            <span className="ml1">{(overlayMinimized) ? 'show chat' : 'hide'}</span>
           </span>
-          <span className="ml1">{(overlayMinimized) ? 'show chat' : 'hide'}</span>
-        </span>
-        {closeButton}
-      </div>
-      <div className="ph2 center mw6-ns" style={{
-        height: 'calc(100% - 3rem)'
-      }}>
-        {this.renderCurrentStep()}
+          {closeButton}
+        </div>
+        <div className="ph2 center mw6-ns" style={{
+          height: 'calc(100% - 3rem)'
+        }}>
+          {this.renderCurrentStep()}
+        </div>
       </div>
     </div>
   }

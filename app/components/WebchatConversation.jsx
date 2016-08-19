@@ -29,7 +29,7 @@ export default class WebchatConversation extends Component {
   }
 
   render () {
-    const height = (this.props.isAgent) ? 'calc(100% - 5rem)' : 'calc(100% - 3rem)'
+    const height = (this.props.isAgent) ? 'calc(100% - 5rem - 0.5rem)' : 'calc(100% - 3rem - 0.5rem)'
     const transcriptButton = (this.props.isAgent) ? <div className="mv3 w-50">
       <Button onClick={this.props.handleTranscriptDownload}>Download transcript</Button>
     </div> : null
@@ -44,7 +44,7 @@ export default class WebchatConversation extends Component {
         />
       </div>
 
-      <div className="flex">
+      <div className="flex mt2">
         <div className="w-75 pr1">
           <Input
             handleChange={this.props.handleMessageChange}
