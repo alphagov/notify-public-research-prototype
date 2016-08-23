@@ -43,6 +43,7 @@ export default class Webchat extends Component {
     queueSize: 10,
     selectedAdviser: 0,
     step: 'intro',
+    theirName: '',
     userConnected: false,
     whoIsTyping: '',
     welcomeMessage: ''
@@ -81,21 +82,24 @@ export default class Webchat extends Component {
     this.setState({ selectedAdviser })
   }
 
-  handleWebchatConnect () {
-    if (this.state.welcomeMessage && this.isAgent()) {
-      const author = this.getMyName()
-      const content = this.state.welcomeMessage
-      const time = Date.now()
-      if (content) {
+  handleWebchatConnect (payload) {
+    if (this.isAgent()) {
+      if (this.state.welcomeMessage) {
+        const author = this.getMyName()
+        const content = this.state.welcomeMessage
+        const time = Date.now()
+        if (content) {
+          this.socket.emit('message', {
+            type: 'WEBCHAT_MESSAGE',
+            payload: { author, content, time, adviser: this.isAgent() }
+          })
+        }
         this.socket.emit('message', {
-          type: 'WEBCHAT_MESSAGE',
-          payload: { author, content, time, adviser: this.isAgent() }
+          type: 'WEBCHAT_ADVISER',
+          payload: { selectedAdviser: this.state.selectedAdviser }
         })
       }
-      this.socket.emit('message', {
-        type: 'WEBCHAT_ADVISER',
-        payload: { selectedAdviser: this.state.selectedAdviser }
-      })
+      this.setState({ theirName: payload.name })
     }
     this.setState({ userConnected: true })
   }
@@ -142,6 +146,31 @@ export default class Webchat extends Component {
     }
   }
 
+  handleWebchatHello () {
+    if (this.state.step === 'conversation') {
+      if (this.isAgent()) {
+        this.socket.emit('message', {
+          type: 'WEBCHAT_CATCH_UP',
+          payload: {
+            messages: this.state.messages,
+            myName: this.state.theirName,
+            queueSize: 0,
+            selectedAdviser: this.state.selectedAdviser,
+            step: 'conversation',
+            userConnected: this.state.userConnected
+          }
+        })
+      }
+    }
+  }
+
+  handleWebchatCatchUp (payload) {
+    if (this.isClient()) {
+      this.handleOverlayShow()
+      this.setState({ ...payload })
+    }
+  }
+
   handleChatMessageReceived ({ type, payload }) {
     switch (type) {
       case 'WEBCHAT_ADVISER':
@@ -162,6 +191,12 @@ export default class Webchat extends Component {
       case 'WEBCHAT_END':
         this.handleWebchatEnd(payload)
         break
+      case 'WEBCHAT_HELLO':
+        this.handleWebchatHello(payload)
+        break
+      case 'WEBCHAT_CATCH_UP':
+        this.handleWebchatCatchUp(payload)
+        break
       default:
         console.warn('Unknown webchat message received!')
         console.warn('Type:', type)
@@ -172,6 +207,10 @@ export default class Webchat extends Component {
   componentDidMount () {
     this.socket = io()
     this.socket.on('message', this::this.handleChatMessageReceived)
+    this.socket.emit('message', {
+      type: 'WEBCHAT_HELLO',
+      payload: {}
+    })
 
     this.handleTypingCleanup = _.debounce(this.handleTypingCleanup, 3000)
 
@@ -235,7 +274,7 @@ export default class Webchat extends Component {
   }
 
   handleOverlayShow (evt) {
-    evt.preventDefault()
+    if (evt) { evt.preventDefault() }
     if (isInertialScrollingBrowser) {
       document.body.classList.add('prevent-scrolling')
     }
