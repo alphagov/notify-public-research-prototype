@@ -29,10 +29,10 @@ function HHMMDateString (d) {
 }
 
 const advisers = [
-  { name: 'Emily', image: '/public/images/advisers/emily.png' },
-  { name: 'Maria', image: '/public/images/advisers/flaminia.png' },
+  { name: 'Sam', image: '/public/images/advisers/emily.png' },
+  { name: 'Jess', image: '/public/images/advisers/flaminia.png' },
   { name: 'Neejal', image: '/public/images/advisers/neejal.png' },
-  { name: 'Tom', image: '/public/images/advisers/tom.png' },
+  { name: 'Thomas', image: '/public/images/advisers/tom.png' },
   { name: 'Abby', image: '/public/images/advisers/tricia.png' }
 ]
 
