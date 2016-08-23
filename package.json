@@ -58,6 +58,7 @@
     "serve-favicon": "2.3.0",
     "socket.io": "^1.4.8",
     "tachyons": "^4.0.2",
+    "ua-parser-js": "^0.7.10",
     "webpack": "^2.1.0-beta.17",
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.1"

@@ -1,6 +1,7 @@
 /* global io */
 import React, { Component } from 'react'
 import _ from 'lodash'
+import UAParser from 'ua-parser-js'
 import PropTypes from '../lib/PropTypes'
 import WebchatAreYouSure from './WebchatAreYouSure'
 import WebchatEnd from './WebchatEnd'
@@ -10,6 +11,14 @@ import WebchatQueue from './WebchatQueue'
 import WebchatConversation from './WebchatConversation'
 import IconClear from './IconClear'
 import IconExpandMore from './IconExpandMore'
+
+// Yes, I am ashamed.
+const parser = new UAParser()
+const browserName = parser.getBrowser().name
+const os = parser.getOS().name
+const isAndroidChrome = os === 'Android' && browserName === 'Chrome'
+const isMobileSafari = browserName === 'Mobile Safari'
+const isInertialScrollingBrowser = isMobileSafari || isAndroidChrome
 
 function pad (n) { return n < 10 ? '0' + n : n }
 
@@ -205,22 +214,28 @@ export default class Webchat extends Component {
 
   handleOverlayToggle () {
     const overlayMinimized = !this.state.overlayMinimized
-    if (overlayMinimized) {
-      document.body.classList.remove('prevent-scrolling')
-    } else {
-      document.body.classList.add('prevent-scrolling')
+    if (isInertialScrollingBrowser) {
+      if (overlayMinimized) {
+        document.body.classList.remove('prevent-scrolling')
+      } else {
+        document.body.classList.add('prevent-scrolling')
+      }
     }
     this.setState({ overlayMinimized })
   }
 
   handleOverlayShow (evt) {
     evt.preventDefault()
-    document.body.classList.add('prevent-scrolling')
+    if (isInertialScrollingBrowser) {
+      document.body.classList.add('prevent-scrolling')
+    }
     this.setState({ overlayVisible: true, overlayMinimized: false })
   }
 
   handleOverlayHide () {
-    document.body.classList.remove('prevent-scrolling')
+    if (isInertialScrollingBrowser) {
+      document.body.classList.remove('prevent-scrolling')
+    }
     this.setState({ overlayVisible: false })
   }
 
@@ -371,17 +386,19 @@ export default class Webchat extends Component {
       </span>
     </span>
 
+    const overlay = (!isInertialScrollingBrowser) ? null : <div
+      className="fixed top-0 left-0 bottom-0 right-0 bg-black"
+      style={{
+        opacity: backdropOpacity,
+        pointerEvents: backdropPointerEvents,
+        transition: 'opacity 0.2s ease',
+        zIndex: 1
+      }}
+      onClick={(overlayMinimized) ? null : this::this.handleOverlayToggle}
+    />
+
     return <div>
-      <div
-        className="fixed top-0 left-0 bottom-0 right-0 bg-black"
-        style={{
-          opacity: backdropOpacity,
-          pointerEvents: backdropPointerEvents,
-          transition: 'opacity 0.2s ease',
-          zIndex: 1
-        }}
-        onClick={(overlayMinimized) ? null : this::this.handleOverlayToggle}
-      />
+      {overlay}
       <div
         className="ba bb-0 b--govuk-gray-1 bg-white fixed bottom-0 right-0 right-2-ns transition-transform w-100 mw6-ns"
         style={{
