@@ -1,16 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from '../lib/PropTypes'
 import Button from './Button'
+import DownloadTranscript from './DownloadTranscript'
 import Label from './Label'
 
-export default class WebchatIntroClient extends Component {
+export default class WebchatEnd extends Component {
   static propTypes = {
-    handleWindowClose: PropTypes.func.isRequired
+    handleWindowClose: PropTypes.func.isRequired,
+    messages: PropTypes.messages.isRequired
   }
 
   render () {
     return <div className="pt3 overflow-y-scroll pb3 wos-a h-100">
-      <p>Thank you for using the chat.</p>
+      {(this.props.messages.length)
+        ? <p>
+          <DownloadTranscript messages={this.props.messages}>
+            <span className="underline">Save a copy of your chat</span>
+          </DownloadTranscript>
+        </p>
+        : null
+      }
       <p>Did we answer your question today?</p>
       <div className="cf">
         <label className="block-label" htmlFor="radio-1">
