@@ -32,3 +32,20 @@ export default class DownloadTranscript extends Component {
     </a>
   }
 }
+
+export function downloadTranscript (messages) {
+  const text = messages
+    .map((msg) => `${HHMMDateString(new Date(msg.time))} ${msg.author}: ${msg.content}`)
+    .join('\n')
+  const element = document.createElement('a')
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+  element.setAttribute('download', 'webchat-transcript.txt')
+  element.setAttribute('target', '_blank')
+
+  element.style.display = 'none'
+  document.body.appendChild(element)
+
+  element.click()
+
+  document.body.removeChild(element)
+}

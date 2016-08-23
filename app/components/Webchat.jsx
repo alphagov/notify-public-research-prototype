@@ -11,6 +11,7 @@ import WebchatQueue from './WebchatQueue'
 import WebchatConversation from './WebchatConversation'
 import IconClear from './IconClear'
 import IconExpandMore from './IconExpandMore'
+import {downloadTranscript} from './DownloadTranscript'
 
 // Yes, I am ashamed.
 const parser = new UAParser()
@@ -127,6 +128,20 @@ export default class Webchat extends Component {
     }
   }
 
+  handleWebchatEnd () {
+    if (this.isClient()) {
+      this.changeToEnd()
+    } else {
+      downloadTranscript(this.state.messages)
+      this.setState({
+        messages: [],
+        queueSize: 10,
+        userConnected: false
+      })
+      this.changeToQueue()
+    }
+  }
+
   handleChatMessageReceived ({ type, payload }) {
     switch (type) {
       case 'WEBCHAT_ADVISER':
@@ -143,6 +158,9 @@ export default class Webchat extends Component {
         break
       case 'WEBCHAT_QUEUE_DECREMENT':
         this.handleWebchatQueueDecrement(payload)
+        break
+      case 'WEBCHAT_END':
+        this.handleWebchatEnd(payload)
         break
       default:
         console.warn('Unknown webchat message received!')
@@ -242,6 +260,13 @@ export default class Webchat extends Component {
     })
   }
 
+  handleEndChat () {
+    this.socket.emit('message', {
+      type: 'WEBCHAT_END',
+      payload: {}
+    })
+  }
+
   changeToIntro () {
     this.setState({ step: 'intro' })
   }
@@ -309,6 +334,7 @@ export default class Webchat extends Component {
         return <WebchatConversation
           adviser={advisers[this.state.selectedAdviser]}
           currentMessage={this.state.currentMessage}
+          handleEndChat={this::this.handleEndChat}
           handleMessageChange={this::this.handleMessageChange}
           handleMessageSubmit={this::this.handleMessageSubmit}
           isAgent={this.isAgent()}
@@ -318,7 +344,7 @@ export default class Webchat extends Component {
         />
       case 'are-you-sure':
         return <WebchatAreYouSure
-          handleEnd={this::this.changeToEnd}
+          handleEnd={this::this.handleEndChat}
           handleReturn={this::this.changeToPrevious}
         />
       case 'end':

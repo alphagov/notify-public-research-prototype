@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from '../lib/PropTypes'
 import Button from './Button'
-import DownloadTranscript from './DownloadTranscript'
 import Input from './Input'
 import MessageList from './MessageList'
 
@@ -13,6 +12,7 @@ export default class WebchatConversation extends Component {
       image: PropTypes.string.isRequired
     }).isRequired,
     currentMessage: PropTypes.string.isRequired,
+    handleEndChat: PropTypes.func.isRequired,
     handleMessageChange: PropTypes.func.isRequired,
     handleMessageSubmit: PropTypes.func.isRequired,
     isAgent: PropTypes.bool.isRequired,
@@ -30,11 +30,9 @@ export default class WebchatConversation extends Component {
 
   render () {
     const height = (this.props.isAgent) ? 'calc(100% - 5rem - 0.5rem)' : 'calc(100% - 3rem - 0.5rem)'
-    const transcriptButton = (this.props.isAgent)
-      ? <div className="mv3 w-50">
-        <DownloadTranscript messages={this.props.messages}>
-          <Button>Download transcript</Button>
-        </DownloadTranscript>
+    const buttons = (this.props.isAgent)
+      ? <div className="mt3 fl">
+        <Button onClick={this.props.handleEndChat}>End chat</Button>
       </div>
       : null
     return <div className="h-100">
@@ -62,7 +60,7 @@ export default class WebchatConversation extends Component {
           <Button onClick={this.props.handleMessageSubmit}>Send</Button>
         </div>
       </div>
-      {transcriptButton}
+      {buttons}
     </div>
   }
 }
