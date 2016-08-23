@@ -36,7 +36,7 @@ export default class WebchatEnd extends Component {
         <textarea id="webchat-other-thoughts" className="ba2 b--govuk-gray-1 outline w-100 input-reset" />
       </div>
       <div className="w-50-ns mt4-ns mt3">
-        <Button onClick={this.props.handleWindowClose}>Close the window</Button>
+        <Button onClick={this.props.handleWindowClose}>Submit and close</Button>
       </div>
     </div>
   }
