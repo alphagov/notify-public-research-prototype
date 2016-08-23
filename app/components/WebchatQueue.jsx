@@ -2,14 +2,23 @@ import React, { Component } from 'react'
 import PropTypes from '../lib/PropTypes'
 import Button from './Button'
 import Dots from './Dots'
+import WebchatAgentForm from './WebchatAgentForm'
 
 const QUEUE_MAGNITUDE = 100
 
 export default class WebchatQueue extends Component {
   static propTypes = {
+    advisers: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired
+    })).isRequired,
+    handleAdviserChange: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
     handleQueueDecrement: PropTypes.func.isRequired,
+    handleWelcomeMessageChange: PropTypes.func.isRequired,
     isAgent: PropTypes.bool.isRequired,
     queueSize: PropTypes.number.isRequired,
+    selectedAdviser: PropTypes.number.isRequired,
     userConnected: PropTypes.bool.isRequired,
     welcomeMessage: PropTypes.string.isRequired
   }
@@ -29,7 +38,15 @@ export default class WebchatQueue extends Component {
         </div>
       } else {
         return <div>
-          <p>Waiting for user to connect<Dots /></p>
+          <WebchatAgentForm
+            advisers={this.props.advisers}
+            handleAdviserChange={this.props.handleAdviserChange}
+            handleWelcomeMessageChange={this.props.handleWelcomeMessageChange}
+            handleSubmit={this.props.handleSubmit}
+            selectedAdviser={this.props.selectedAdviser}
+            welcomeMessage={this.props.welcomeMessage}
+          />
+          <p className="mt3">Waiting for user to connect<Dots /></p>
         </div>
       }
     } else {

@@ -324,9 +324,14 @@ export default class Webchat extends Component {
         }
       case 'queue':
         return <WebchatQueue
+          advisers={advisers}
+          handleAdviserChange={this::this.handleAdviserChange}
           handleQueueDecrement={this::this.handleQueueDecrement}
+          handleSubmit={this::this.changeToQueue}
+          handleWelcomeMessageChange={this::this.handleWelcomeMessageChange}
           isAgent={this.isAgent()}
           queueSize={this.state.queueSize}
+          selectedAdviser={this.state.selectedAdviser}
           userConnected={this.state.userConnected}
           welcomeMessage={this.state.welcomeMessage}
         />
