@@ -33,13 +33,16 @@
           <h2 class="b f3 mv3">Call us</h2>
           <p>0345 300 3900<br />3 minute queue</p>
 
-          <h2 class="b f3 mv3"><a class="js-trigger-livechat" href="/">Live chat</a></h2>
+          <h2 class="b f3 mv3"><a class="js-trigger-custom-overlay" href="#">Live chat</a></h2>
           <p>3 minute queue</p>
         </div>
       </details>
       <a rel="nofollow" href="/state-pension-age/enter-postcode" class="button state-pension-age-next">Next</a>
     </div>
   </div>
+  <div id="webchat-root" data-webchat-type="client-overlay"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/public/javascripts/bundle.js"></script>
 </main>
 
 {% endblock %}
