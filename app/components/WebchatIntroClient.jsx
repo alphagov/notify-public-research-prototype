@@ -12,7 +12,7 @@ export default class WebchatIntroClient extends Component {
   }
 
   render () {
-    return <div className="mt3">
+    return <div className="pt3 overflow-y-scroll wos-a pb3 h-100">
       <p>Please fill in your name to start chatting.</p>
 
       <div className="w-75 mt5">
