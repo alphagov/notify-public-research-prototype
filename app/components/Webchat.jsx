@@ -34,19 +34,23 @@ export default class Webchat extends Component {
     type: PropTypes.oneOf(['client', 'client-overlay', 'agent']).isRequired
   }
 
-  state = {
-    currentMessage: '',
-    messages: [],
-    myName: '',
-    overlayVisible: false,
-    overlayMinimized: false,
-    queueSize: 10,
-    selectedAdviser: 0,
-    step: 'intro',
-    theirName: '',
-    userConnected: false,
-    whoIsTyping: '',
-    welcomeMessage: ''
+  state = this._getInitialState()
+
+  _getInitialState () {
+    return {
+      currentMessage: '',
+      messages: [],
+      myName: '',
+      overlayVisible: false,
+      overlayMinimized: false,
+      queueSize: 10,
+      selectedAdviser: 0,
+      step: 'intro',
+      theirName: '',
+      userConnected: false,
+      whoIsTyping: '',
+      welcomeMessage: ''
+    }
   }
 
   isClient () {
@@ -136,7 +140,9 @@ export default class Webchat extends Component {
     if (this.isClient()) {
       this.changeToEnd()
     } else {
-      downloadTranscript(this.state.messages)
+      if (this.state.messages.length) {
+        downloadTranscript(this.state.messages)
+      }
       this.setState({
         messages: [],
         queueSize: 10,
@@ -285,7 +291,7 @@ export default class Webchat extends Component {
     if (isInertialScrollingBrowser) {
       document.body.classList.remove('prevent-scrolling')
     }
-    this.setState({ overlayVisible: false })
+    this.setState(this._getInitialState())
   }
 
   handleWelcomeMessageChange (welcomeMessage) {
