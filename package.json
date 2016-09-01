@@ -52,6 +52,7 @@
     "portscanner": "^1.0.0",
     "prompt": "^0.2.14",
     "react": "^15.2.1",
+    "react-a11y": "^0.3.3",
     "react-dom": "^15.2.1",
     "react-hot-loader": "^3.0.0-beta.2",
     "readdir": "0.0.6",

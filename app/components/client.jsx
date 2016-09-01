@@ -2,6 +2,8 @@ import 'babel-polyfill'
 import fastclick from 'fastclick'
 fastclick.attach(document.body)
 import React from 'react'
+import a11y from 'react-a11y'
+a11y(React)
 import ReactDOM from 'react-dom'
 import App from './App'
 import { AppContainer } from 'react-hot-loader'

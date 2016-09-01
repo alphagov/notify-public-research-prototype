@@ -428,15 +428,17 @@ export default class Webchat extends Component {
     }
 
     const noCloseButtonStep = this.state.step === 'end' || this.state.step === 'are-you-sure'
-    const closeButton = (noCloseButtonStep || overlayMinimized) ? null : <span
-      className="flex pointer"
-      onClick={this::this.changeToAreYouSure}
-    >
-      <span className="mr1">close</span>
-      <span className="flex self-center">
-        <IconClear />
-      </span>
-    </span>
+    const closeButton = (noCloseButtonStep || overlayMinimized)
+      ? null
+      : <button
+        className="flex pointer bn white pa0 bg-none"
+        onClick={this::this.changeToAreYouSure}
+      >
+        <span className="mr1">close</span>
+        <span className="flex self-center">
+          <IconClear />
+        </span>
+      </button>
 
     const overlay = (!isInertialScrollingBrowser) ? null : <div
       className="fixed top-0 left-0 bottom-0 right-0 bg-black"
@@ -463,15 +465,15 @@ export default class Webchat extends Component {
           className="pa2 bg-govuk-black-1 white flex justify-between"
           onClick={(overlayMinimized) ? this::this.handleOverlayToggle : null}
         >
-          <span
-            className="flex pointer transition-transform"
+          <button
+            className="flex pointer transition-transform bn white pa0 bg-none"
             onClick={this::this.handleOverlayToggle}
           >
             <span className="flex self-center">
               <IconExpandMore flipVertical={overlayMinimized} />
             </span>
             <span className="ml1">{(overlayMinimized) ? 'show chat' : 'hide'}</span>
-          </span>
+          </button>
           {closeButton}
         </div>
         <div className="ph2 center mw6-ns" style={{
