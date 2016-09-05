@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from '../lib/PropTypes'
 import Button from './Button'
 import Input from './Input'
+import Label from './Label'
 import MessageList from './MessageList'
 
 export default class WebchatConversation extends Component {
@@ -48,9 +49,13 @@ export default class WebchatConversation extends Component {
 
       <div className="flex mt2">
         <div className="w-75 pr1">
+          <div className="clip">
+            <Label htmlFor="webchat-input-message">Message</Label>
+          </div>
           <Input
             handleChange={this.props.handleMessageChange}
             handleSubmit={this.props.handleMessageSubmit}
+            id="webchat-input-message"
             ref="messageInput"
             type="text"
             value={this.props.currentMessage}
