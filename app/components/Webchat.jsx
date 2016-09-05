@@ -431,6 +431,7 @@ export default class Webchat extends Component {
     const closeButton = (noCloseButtonStep || overlayMinimized)
       ? null
       : <button
+        aria-label="End chat"
         className="flex pointer bn white pa0 bg-none"
         onClick={this::this.changeToAreYouSure}
       >
@@ -466,6 +467,7 @@ export default class Webchat extends Component {
           onClick={(overlayMinimized) ? this::this.handleOverlayToggle : null}
         >
           <button
+            aria-label={(overlayMinimized) ? 'Show chat panel' : 'Hide chat panel'}
             className="flex pointer transition-transform bn white pa0 bg-none"
             onClick={this::this.handleOverlayToggle}
           >
