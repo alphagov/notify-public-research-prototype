@@ -15,7 +15,10 @@ export default class MessageBubble extends Component {
       'bg-purple white': this.props.type === 'blue',
       'bg-govuk-gray-2 govuk-black-1 ml-25': this.props.type === 'gray'
     })
-    return <div className={cls}>
+    return <div
+      aria-label={`${this.props.author} said: ${this.props.content}`}
+      className={cls}
+    >
       <div className="flex justify-between f5">
         <span>{this.props.author}</span>
       </div>
