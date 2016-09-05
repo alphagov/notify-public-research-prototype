@@ -478,9 +478,14 @@ export default class Webchat extends Component {
           </button>
           {closeButton}
         </div>
-        <div className="ph2 center mw6-ns" style={{
-          height: 'calc(100% - 3rem)'
-        }}>
+        <div
+          aria-live="polite"
+          className="ph2 center mw6-ns"
+          id="inner-chat"
+          style={{
+            height: 'calc(100% - 3rem)'
+          }}
+        >
           {this.renderCurrentStep()}
         </div>
       </div>
