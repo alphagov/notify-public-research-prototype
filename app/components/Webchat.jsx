@@ -280,7 +280,7 @@ export default class Webchat extends Component {
   }
 
   handleOverlayShow (evt) {
-    if (evt) { evt.preventDefault() }
+    // if (evt) { evt.preventDefault() }
     if (isInertialScrollingBrowser) {
       document.body.classList.add('prevent-scrolling')
     }
