@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from '../lib/PropTypes'
-import Dots from './Dots'
 
 export default class UserIsTyping extends Component {
   static propTypes = {
@@ -9,7 +8,7 @@ export default class UserIsTyping extends Component {
 
   render () {
     return <div className="govuk-gray-1 f5" style={{ height: 0 }}>
-      {this.props.user} is typing<Dots />
+      {this.props.user} is typing
     </div>
   }
 }

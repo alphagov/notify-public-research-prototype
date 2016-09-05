@@ -24,6 +24,6 @@ export default class Dots extends Component {
   }
 
   render () {
-    return <span>{this.state.dots}</span>
+    return <span role="presentation">{this.state.dots}</span>
   }
 }
