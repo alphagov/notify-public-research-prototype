@@ -479,7 +479,6 @@ export default class Webchat extends Component {
           {closeButton}
         </div>
         <div
-          aria-live="polite"
           className="ph2 center mw6-ns"
           id="inner-chat"
           style={{

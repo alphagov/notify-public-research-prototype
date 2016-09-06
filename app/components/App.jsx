@@ -8,7 +8,11 @@ export default class App extends Component {
   }
 
   render () {
-    return <div role="application" className="f4 h-100">
+    return <div
+      aria-live="polite"
+      role="application"
+      className="f4 h-100"
+    >
       <Webchat type={this.props.type} />
     </div>
   }
