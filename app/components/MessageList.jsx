@@ -12,7 +12,7 @@ class ChattingWithBanner extends Component {
   render () {
     const {image, name} = this.props
     return <div className="flex pv3">
-      <img className="br-100 w3 h3" src={image} alt={`${name}'s profile picture.`} />
+      <img className="br-100 w3 h3" src={image} alt="" />
       <p aria-label={`You are chatting with ${name}.`} className="self-center mv0 ml1">You are chatting with {name}.</p>
     </div>
   }
