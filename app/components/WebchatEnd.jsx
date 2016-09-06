@@ -12,6 +12,7 @@ export default class WebchatEnd extends Component {
 
   render () {
     return <div className="pt3 overflow-y-scroll pb3 wos-a h-100">
+      <p>You have finished your chat.</p>
       {(this.props.messages.length)
         ? <p>
           <DownloadTranscript messages={this.props.messages}>
