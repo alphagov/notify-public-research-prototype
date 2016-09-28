@@ -15,16 +15,33 @@
 <main id="content" role="main">
   <div class="grid-row">
     <div class="column-two-thirds">
-      <ul class="mt5-ns mt4">
-        <li><a href="/implementations/">Implementations</a></li>
-        <li><a href="/jobseekers-allowance">Jobseeker's Allowance prototype</a></li>
-        <li><a href="/universal-credit">Universal Credit prototype</a></li>
-        <li><a href="/new-state-pension">New State Pension prototype</a></li>
-        <li><a href="/shared-parental-leave-and-pay">Shared Parental Leave and Pay prototype</a></li>
-        <li><a href="/dvla-change-address">DVLA address change service prototype</a></li>
-        <li><a href="/pay-dartford-crossing-charge">Pay Dartford crossing charge service prototype</a></li>
-        <li><a href="/state-pension-age">State pension service prototype</a></li>
-      </ul>
+      <h1 class="b f2 f1-l mv4">Webchat Alpha</h1>
+      <h2 class="b f3 mv3">What's this?</h2>
+      <p>This is the latest deployed version of the <a href="https://governmentasaplatform.blog.gov.uk/2016/05/11/supporting-services-web-chat/" target="_blank" rel="external">GAAP Webchat Alpha user research prototype</a>.</p>
+      <p>The source code for this is <a href="https://github.com/alphagov/webchat-alpha" target="_blank" rel="external">on GitHub</a>.</p>
+      <h2 class="b f3 mv3">Instructions</h2>
+      <p>This works best with two devices, or you can also try two browser windows.</p>
+      <p>Pick one service and appropriate agent interface from the links below, and open each. For example, you can pick the <a href="/dvla-change-address">Dart charge prototype</a>, for which you'll need the <a href="/agent">Custom Chat agent interface</a>.</p>
+      <h3 class="b f4 mv3">Custom chat specific</h3>
+      <p>In the custom agent interface, follow the instructions by picking your adviser and writing an optional welcome message. Then click the "Start the chat" button. </p>
+      <p>In the service prototype, find and click the webchat call to action. Type in your name, and you'll be taken to the queue.</p>
+      <p>The agent interface will now give you an option to advance the queue, manually. Click 10 times to reach the conversation.</p>
+      <p>When you're ready to end the conversation, the agent can do it in one click, or the user can also do it by using the top right "end chat" button.</p>
+      <h3 class="b f4 mv3">LiveChat specific</h3>
+      <p>You'll need Chris Heathcote's livechat credentials to log into their agent interface. Once there, find the chat section.</p>
+      <p>In the service prototype, find and click the webchat call to action. Type in your name, and the conversation will begin.</p>
+      <h2 class="b f3 mv3">Links</h2>
+      <h3 class="b f4 mv3">Agent interface links</h3>
+      <p><a href="https://my.livechatinc.com" target="_blank" rel="external">LiveChat login page</a> - advisers need to login here for the prototypes that feature LiveChat</p>
+      <p><a href="/agent">Custom Chat agent interface</a> - advisers need to go here for the prototypes that feature the custom prototype chat</p>
+      <h3 class="b f4 mv3">Service links</h3>
+      <p><a href="/dvla-change-address">DVLA address change prototype</a> - Uses LiveChat. Does not validate any of the information requested. Will always fail to find your address, and display the support options, presenting the webchat call to action.</p>
+      <p><a href="/pay-dartford-crossing-charge">Pay Dartford crossing charge prototype</a> - Uses the custom chat. Does not validate any of the information. Will always fail to submit payment. The webchat call to action is in the persistent footer.</p>
+      <p><a href="/state-pension-age">State pension prototype</a> - Uses the custom chat. Validates typing anything at all into the NINO field. Stops at the postcode page. The webchat call to action is in the "I cannot find my NINO" section.</p>
+      <h2 class="b f3 mv3">Caveats</h2>
+      <p>This is a prototype built for the sole purpose of user testing in a lab with controlled devices. It is not exhaustively tested and uses plenty of shortcuts. The browsers we used were Chrome for macOS and Windows, Safari on iOS 9, and Chrome for Android.</p>
+      <p>The prototype does not work with more than one user and one agent. You can have more than one chat in a row, but every chat needs to end before a new one can begin. If you manage to break it and desync the agent/user, refresh both starting with the agent and start over.</p>
+      <p>If you're chatting as a user and you accidentally refresh the interface, you'll resume where you left off. If you refresh as an agent, you'll become desynced and you'll have to start over.</p>
     </div>
   </div>
 </main>
