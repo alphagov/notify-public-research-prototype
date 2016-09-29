@@ -15,16 +15,45 @@
 <main id="content" role="main">
   <div class="grid-row">
     <div class="column-two-thirds">
-      <ul class="mt5-ns mt4">
-        <li><a href="/implementations/">Implementations</a></li>
-        <li><a href="/jobseekers-allowance">Jobseeker's Allowance prototype</a></li>
-        <li><a href="/universal-credit">Universal Credit prototype</a></li>
-        <li><a href="/new-state-pension">New State Pension prototype</a></li>
-        <li><a href="/shared-parental-leave-and-pay">Shared Parental Leave and Pay prototype</a></li>
-        <li><a href="/dvla-change-address">DVLA address change service prototype</a></li>
-        <li><a href="/pay-dartford-crossing-charge">Pay Dartford crossing charge service prototype</a></li>
-        <li><a href="/state-pension-age">State pension service prototype</a></li>
-      </ul>
+      <h1 class="b f2 f1-l mv4">Webchat alpha prototype</h1>
+      <h2 class="b f3 mv3">What's this?</h2>
+      <p>This is a prototype implementation of a webchat client. It was created for carrying out user research for the GDS alpha project looking at webchat.</p>
+      <p>The source code for this is <a href="https://github.com/alphagov/webchat-alpha" target="_blank" rel="external">on GitHub</a>.</p>
+      <h2 class="b f3 mv3">Instructions</h2>
+      <p>This works best with two devices, or you can use two browser windows.</p>
+      <p>Open the agent interface and follow the instructions by picking your adviser and writing an optional welcome message. Then click the "Start the chat" button. </p>
+      <p>In the service prototype, find and click the webchat call to action. Type in your name, and you'll be taken to the queue.</p>
+      <p>The agent interface will now give you an option to advance the queue, manually. Click 10 times to reach the conversation.</p>
+      <p>When you're ready to end the conversation, the agent can do it in one click, or the user can also do it by using the top right "end chat" button.</p>
+      <h2 class="b f3 mv3">Try chatting</h2>
+      <h3 class="b f4 mv3">1. Open the agent interface</h3>
+      <p><a href="/agent">Open the agent interface</a></p>
+      <h3 class="b f4 mv3">2. Open a service</h3>
+      <p>
+        We were testing use of webchat with users in Goverment services.<br>
+        These are not real screens from real services: they helped get the user thinking about a task, instead of webchat or support.
+      </p>
+      <p>
+        <a href="/pay-dartford-crossing-charge">Pay Dartford crossing charge prototype</a><br>
+        The task was to pay for using the crossing today.<br>
+        The prototype does not validate any of the information.<br>
+        This will always fail to submit the payment.<br>
+        The webchat call to action is in the footer of all pages.
+      </p>
+      <p>
+        <a href="/state-pension-age">State pension prototype</a><br>
+        The task was to get a state pension forecast.<br>
+        As a part of this, we made users find their National Insurance number.<br>
+        Validates typing anything at all into the National Insurance number field. Stops at the postcode page.<br>
+        The webchat call to action is in the "I cannot find my National Insurance number" section.
+      </p>
+      <h2 class="b f3 mv3">Warning!</h2>
+      <p>This is a prototype built for the sole purpose of user testing in a lab. It is not exhaustively tested on all browsers. The browsers we used were Chrome for macOS and Windows, Safari on iOS 9, and Chrome for Android.</p>
+      <p>The prototype does not work with more than one user and one agent at a time. If someone else is using this prototype, you will see their chats or it may not work properly. You can have more than one chat in a row, but every chat needs to end before a new one can begin. If you manage to break it and desync the agent/user, refresh both starting with the agent and start over.</p>
+      <p>If you're chatting as a user and you accidentally refresh the interface, you'll resume where you left off. If you refresh as an agent, you'll become desynced and you'll have to start over.</p>
+      <h2 class="b f3 mv3">Get in contact</h2>
+      <p>For further information on the webchat alpha, please email Chris Heathcote - chris.heathcote@digital.cabinetoffice.gov.uk</p>
+      <p>There is a #webchat channel on <a href="https://ukgovernmentdigital.slack.com">UK Government Slack</a></p>
     </div>
   </div>
 </main>
