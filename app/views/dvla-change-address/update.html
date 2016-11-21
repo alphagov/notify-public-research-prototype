@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Tell DVLA you've changed address - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="grid-row">
+    <form class="column-two-thirds" method="post">
+      {% if sentTo %}
+        <div
+          style="margin: 30px 0 0 0; padding: 1px 30px 15px; background: #33FF3F; border: 8px dotted #fff;"
+        >
+          <h1 class="heading-large">💬 {{ sentTo }} 👍</h1>
+        </div>
+        <a class="heading-medium" style="display: block; text-shadow: 2px 2px 0 #fff; font-weight: bold;" href="update">Back</a>
+      {% else %}
+        <div
+          style="margin: 30px 0 0 0; padding: 1px 30px 30px; background: #fd3; border: 8px dotted #000;"
+        >
+          <h1 class="b f2 f1-l mv4">Update a user about their driving licence</h1>
+          <p>This will send them a text message.</p>
+          <div class="form-group">
+            <label class="form-label" for="address">Phone number</label>
+            <input class="form-control" id="phone" name="phone" type="text">
+          </div>
+          <input type="submit" class="big button">
+        </div>
+      {% endif %}
+    </form>
+  </div>
+</main>
+
+{% endblock %}

@@ -50,4 +50,23 @@ router.post('/dvla-change-address/phone-email', function (req, res) {
 
 })
 
+router.get('/dvla-change-address/update', function (req, res) {
+  res.render('dvla-change-address/update', {
+    sentTo: req.query.sentTo
+  })
+})
+
+router.post('/dvla-change-address/update', function (req, res) {
+
+  if (req.body.phone) {
+    notify.sendSms(
+      "ffa370ad-4129-4ceb-86b6-6a4c64db9250",
+      req.body.phone
+    )
+  }
+
+  res.redirect('/dvla-change-address/update?sentTo=' + req.body.phone);
+
+})
+
 module.exports = router
