@@ -21,4 +21,10 @@ router.get('/shared-parental-leave-and-pay', function (req, res) {
   res.render('shared-parental-leave-and-pay/overview')
 })
 
+// Notify prototype specific
+
+router.post('/dvla-change-address/phone-email', function (req, res) {
+  res.redirect('/dvla-change-address/result')
+})
+
 module.exports = router
