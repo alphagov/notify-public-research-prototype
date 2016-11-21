@@ -42,8 +42,7 @@ router.post('/dvla-change-address/phone-email', function (req, res) {
   if (req.body.phone) {
     notify.sendSms(
       "5e5c1075-fcae-432c-b344-1a00ef18ee84",
-      req.body.phone,
-      {}
+      req.body.phone
     );
   }
 
