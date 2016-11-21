@@ -14,52 +14,43 @@
 {% block content %}
 
 <main id="content" role="main">
+  <div class="highlighted-event" style="margin: 30px 0 0 0;">
+    <h1 class="heading-large">✔&ensp;Your address has been updated</h1>
+    <p>
+      Reference number<br />
+      <span class="heading-medium">
+        DC563412B
+      </span>
+    </p>
+  </div>
   <div class="grid-row">
     <div class="column-two-thirds">
-      <h1 class="b f2 f1-l mv4">Tell DVLA you’ve changed address</h1>
-      <div class="article-container group">
-        <div class="content-block">
-          <div class="inner">
-            <div class="summary">
-              <h2>We can't find your address.</h2>
-            </div>
-            <div class="content-block">
-              <p>You can't use our automated service. You will need to get in touch with DVLA to change your address.</p>
-              <h2>Webchat</h2>
-              <a class="js-trigger-livechat" href="/">Chat online with an adviser</a>
-              <p>Current waiting time: about 3 minutes</p>
-              <h3>Opening times:</h3>
-              <p>8am to 8pm Monday to Saturday<br />8am to 4pm Sunday</p>
-
-              <h2>Email</h2>
-              <a href="#email:contact-us@dvla.gov.uk">Email us</a>
-              <p>Current response time: about 7 days</p>
-
-              <h2>Telephone</h2>
-              <p>Telephone: 0345 300 3900</p>
-              <p>Current waiting time: about 2 minutes</p>
-              <h3>Opening times:</h3>
-              <p>8am to 8pm Monday to Friday<br />8am to 4pm Saturday</p>
-              <p>Calls cost up to 12p a minute from a landline and up to 45p a minute from a mobile</p>
-
-
-            </div>
-          </div>
-        </div>
-      </div>
+      <h2 class="heading-medium">
+        Your new driving licence is being printed
+      </h2>
+      <p>
+        It will be posted to you, and will be delivered by 8 December.
+      </p>
+      <h2 class="heading-medium">
+        Keep your old driving licence until the new one is delivered.
+      </h2>
+      <p>
+        It’s still valid, and you may need it if you’re stopped by the
+        police. You should destroy it once your new one arrives.
+      </p>
+      <h2 class="heading-medium">
+        Contact DVLA
+      </h2>
+      <p>Phone: <strong>0870 280 2395</p>
+      <p>Email: <strong><a href="mailto:test@example.com">help@drivinglicence.service.gov.uk</a></p>
+      <p>
+        You’ll need to quote the reference number above.
+      </p>
+      <p style="margin-top: 45px;">
+        <a href="https://www.gov.uk" class="button">Finished</a>
+      </p>
     </div>
   </div>
-  <!-- Start of LiveChat (www.livechatinc.com) code -->
-  <script type="text/javascript">
-  window.__lc = window.__lc || {};
-  window.__lc.license = 7756631;
-  (function() {
-    var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
-    lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
-  })();
-  </script>
-  <!-- End of LiveChat code -->
 </main>
 
 {% endblock %}
