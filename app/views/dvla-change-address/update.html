@@ -26,8 +26,23 @@
         <div
           style="margin: 30px 0 0 0; padding: 1px 30px 30px; background: #fd3; border: 8px dotted #000;"
         >
-          <h1 class="b f2 f1-l mv4">Update a user about their driving licence</h1>
-          <p>This will send them a text message.</p>
+          <h1 class="b f2 f1-l mv4">Send a text</h1>
+          <div class="form-group">
+            <fieldset style="border: 0; padding: 0">
+
+              <legend class="visually-hidden">Where do you live?</legend>
+
+              <label class="block-label" for="radio-1">
+                <input id="radio-1" type="radio" name="template" value="8b5eb752-be41-4766-ab80-e3f171eb3745">
+                Track licence
+              </label>
+              <label class="block-label" for="radio-2">
+                <input id="radio-2" type="radio" name="template" value="ffa370ad-4129-4ceb-86b6-6a4c64db9250">
+                Licence delivered
+              </label>
+
+            </fieldset>
+          </div>
           <div class="form-group">
             <label class="form-label" for="address">Phone number</label>
             <input class="form-control" id="phone" name="phone" type="text">

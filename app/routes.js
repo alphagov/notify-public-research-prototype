@@ -60,7 +60,7 @@ router.post('/dvla-change-address/update', function (req, res) {
 
   if (req.body.phone) {
     notify.sendSms(
-      "ffa370ad-4129-4ceb-86b6-6a4c64db9250",
+      req.body.template,
       req.body.phone
     )
   }
