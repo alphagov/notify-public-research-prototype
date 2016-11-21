@@ -49,6 +49,7 @@
     "hogan.js": "3.0.2",
     "lodash": "^4.14.0",
     "minimist": "0.0.8",
+    "notifications-node-client": "github:alphagov/notifications-node-client",
     "portscanner": "^1.0.0",
     "prompt": "^0.2.14",
     "react": "^15.2.1",

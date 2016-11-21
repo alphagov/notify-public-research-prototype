@@ -1,5 +1,8 @@
 var express = require('express')
 var router = express.Router()
+var NotifyClient = require('notifications-node-client').NotifyClient,
+
+notify = new NotifyClient(process.env.NOTIFYAPIKEY);
 
 router.get('/', function (req, res) {
   res.render('index')
@@ -24,7 +27,28 @@ router.get('/shared-parental-leave-and-pay', function (req, res) {
 // Notify prototype specific
 
 router.post('/dvla-change-address/phone-email', function (req, res) {
-  res.redirect('/dvla-change-address/result')
+
+  if (req.body.email) {
+    notify.sendEmail(
+      "a65e12cb-030c-4944-8948-fc445d0e2936",
+      req.body.email,
+      {
+        'delivery date': '8 December',
+        'reference number': 'DC563412B'
+      }
+    );
+  }
+
+  if (req.body.phone) {
+    notify.sendSms(
+      "5e5c1075-fcae-432c-b344-1a00ef18ee84",
+      req.body.phone,
+      {}
+    );
+  }
+
+  res.redirect('/dvla-change-address/result');
+
 })
 
 module.exports = router
