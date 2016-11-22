@@ -33,7 +33,6 @@ router.post('/dvla-change-address/phone-email', function (req, res) {
       "a65e12cb-030c-4944-8948-fc445d0e2936",
       req.body.email,
       {
-        'delivery date': '8 December',
         'reference number': 'DC563412B'
       }
     );
