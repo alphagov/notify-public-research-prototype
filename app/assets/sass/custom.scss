@@ -38,3 +38,10 @@ html, body { font-size: 100% }
 .transition-transform { transition: transform .2s ease }
 
 .bg-none { background: none }
+
+
+#backoffice {
+  input {
+    opacity: 1;
+  }
+}
