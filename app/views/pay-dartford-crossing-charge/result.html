@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/static-2016-07-04.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Pay Dartford Crossing Charge - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <div class="highlighted-event" style="margin: 30px 0">
+    <h1 class="heading-large">
+      ✔&ensp;Your payment succeeded
+    </h1>
+    <p>
+      Reference number<br />
+      <span style="letter-spacing: 0.1em; font-size: 24px; font-weight: 700">
+        147836
+      </span>
+    </p>
+  </div>
+  <div class="grid-row">
+    <div class="column-two-thirds">
+      <h2 class="heading-large">What happens next</h2>
+      <p>We’ve sent a receipt to {{ emailAddress }}</p>
+      <table>
+          <thead>
+            <!-- <tr>
+              <th colspan="2">Your purchase details</th>
+            </tr> -->
+          </thead>
+          <tbody>
+            <tr>
+              <td>Payment of:</td>
+              <td> Dartford crossing charge</td>
+            </tr>
+            <tr>
+              <td>Amount:</td>
+              <td> £2.50</td>
+            </tr>
+          </tbody>
+
+        </table>
+        </div>
+  </div>
+</main>
+
+{% endblock %}

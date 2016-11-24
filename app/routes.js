@@ -1,8 +1,8 @@
-var express = require('express')
-var router = express.Router()
+var express = require('express');
+var router = express.Router();
 var NotifyClient = require('notifications-node-client').NotifyClient,
-
-notify = new NotifyClient(process.env.NOTIFYAPIKEY);
+    notify = new NotifyClient(process.env.NOTIFYAPIKEY),
+    notifyDart = new NotifyClient(process.env.NOTIFYAPIKEYDART || 'abc123');
 
 router.get('/', function (req, res) {
   res.render('index')
@@ -66,6 +66,32 @@ router.post('/dvla-change-address/update', function (req, res) {
 
   res.redirect('/dvla-change-address/update?sentTo=' + req.body.phone);
 
-})
+});
+
+router.post('/pay-dartford-crossing-charge/email', function (req, res) {
+
+  req.session.email = req.body.email;
+  res.redirect('/pay-dartford-crossing-charge/pay');
+
+});
+
+router.post('/pay-dartford-crossing-charge/pay', function (req, res) {
+
+  notifyDart.sendSms(
+    "3a692856-cbef-4e98-949a-135f335f51ae",
+    req.session.email
+  );
+
+  res.redirect('/pay-dartford-crossing-charge/result');
+
+});
+
+router.get('/pay-dartford-crossing-charge/result', function(req, res) {
+
+  res.render('pay-dartford-crossing-charge/result', {
+    'emailAddress': req.session.email
+  });
+
+});
 
 module.exports = router

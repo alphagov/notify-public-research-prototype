@@ -14,7 +14,7 @@
 
 <main id="content" role="main">
   <div class="grid-row">
-    <div class="column-two-thirds">
+    <form method="post" class="column-two-thirds">
       <h1 class="b f2 f1-l mv4">Pay the Dartford Crossing charge (Dart Charge)</h1>
       <h2 class="b f3 mv3">Enter your card details</h2>
       <p>Total: <strong>£2.50</strong></p>
@@ -36,8 +36,8 @@
         <label class="form-label" for="card-security-code">Security code</label>
         <input class="mw3 form-control" id="card-security-code" name="card-security-code" type="text">
       </div>
-      <a rel="nofollow" href="/pay-dartford-crossing-charge/pay-result" class="button">Pay</a>
-    </div>
+      <input type="submit" value="Pay" class="button" />
+    </form>
   </div>
   <script>
     document.querySelectorAll('.form-control').forEach(function (el) {
