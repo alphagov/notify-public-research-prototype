@@ -117,11 +117,36 @@ router.post('/journey/dvla-change-address/:id/phone-email', function (req, res) 
 
 router.get('/admin/:id/send/:type', function (req, res) {
 
+  templates = {
+    'email': [
+      {
+        name: 'Track licence',
+        id: '1d905346-b1ca-49c3-99e1-258a33fcb63b',
+      },
+      {
+        name: 'Licence delivered',
+        id: 'fad4fb97-5630-482f-8e8e-cb85608352ef',
+      }
+    ],
+    'phone': [
+      {
+        name: 'Track licence',
+        id: '8b5eb752-be41-4766-ab80-e3f171eb3745',
+      },
+      {
+        name: 'Licence delivered',
+        id: 'ffa370ad-4129-4ceb-86b6-6a4c64db9250',
+      },
+    ],
+  };
+
   db(function(userJourneys) {
     userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
 
       res.render('dvla-change-address/update', {
         to: docs[0][req.params.type],
+        options: templates[req.params.type],
+        type: req.params.type,
       });
 
     });
@@ -142,10 +167,16 @@ router.post('/admin/:id/send/:type', function (req, res) {
 
     } else if ('email' == req.params.type) {
 
-      notify.sendEmail(
-        req.body.template,
-        req.body.to
-      );
+      userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
+
+        notify.sendEmail(
+          req.body.template,
+          req.body.to, {
+            name: docs[0].name
+          }
+        );
+
+      });
 
     }
 
@@ -189,6 +220,26 @@ router.post('/admin/:id/edit/:field', function (req, res) {
     userJourneys.update(
       {id: req.params.id},
       {$set: req.body},
+      function (err, result) {
+
+        if(err) throw err;
+
+        res.redirect('/admin');
+
+      }
+    );
+
+  });
+
+});
+
+
+router.get('/admin/:id/delete', function (req, res) {
+
+  db(function(userJourneys) {
+
+    userJourneys.deleteOne(
+      {id: req.params.id},
       function (err, result) {
 
         if(err) throw err;

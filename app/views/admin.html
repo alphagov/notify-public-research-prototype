@@ -22,7 +22,7 @@
     position: relative;
     top: -105px;
     left: -5px;
-    background: rgba(0, 0, 0, 0.7);
+    background: blue;
     float: right;
   ">Refresh</a>
 
@@ -31,33 +31,42 @@
       <div class="column-one-third">
         <h2 class="heading-small">Started {{ journey.started }}</h2>
         <p class="hint">{{ journey.type }}</p>
+        <p>
+          <a href="/admin/{{ journey.id }}/delete" style="color: red;">Delete</a>
+        </p>
       </div>
       <div class="column-two-thirds">
         <table style="margin-bottom: 90px;">
+          <thead>
+            <tr>
+              <th>key</th>
+              <th>value</th>
+            </td>
+          </thead>
           <tbody>
+            <tr>
+              <td width="50%">name</td>
+              <td width="50%">
+                {{ journey.name or '–' }}
+                <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/edit/name">Edit</a>
+              </td>
+            </tr>
             {% for key, value in journey %}
-              {% if key not in ['_id', 'type', 'nextPage', 'started', 'name'] %}
+              {% if key not in ['_id', 'type', 'nextPage', 'started', 'name', 'contact-me-by'] %}
                 <tr>
                   <td width="50%">{{ key }}</td>
                   <td width="50%">
-                    {{ value }}
-                    {% if key == 'phone' and 'dvla' in journey.type %}
+                    {{ value or '–' }}
+                    {% if key == 'phone' and 'dvla' in journey.type.toLowerCase() %}
                       <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/send/phone">Send update</a>
                     {% endif %}
-                    {% if key == 'email' and 'dvla' in journey.type %}
-                      <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/send/phone">Send update</a>
+                    {% if key == 'email' and 'dvla' in journey.type.toLowerCase() %}
+                      <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/send/email">Send update</a>
                     {% endif %}
                   </td>
                 </tr>
               {% endif %}
             {% endfor %}
-            <tr>
-              <td width="50%">name</td>
-              <td width="50%">
-                {{ journey.name }}
-                <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/edit/name">Edit</a>
-              </td>
-            </tr>
           </tbody>
         </table>
       </div>

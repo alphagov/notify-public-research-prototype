@@ -17,14 +17,36 @@
     <form class="column-two-thirds" method="post">
       <h1 class="b f2 f1-l mv4">Tell DVLA you’ve changed address</h1>
       <h2 class="b f3 mv3">How can we contact you?</h2>
-      <div class="form-group">
-        <label class="form-label" for="address">Phone number</label>
-        <input class="form-control" id="phone" name="phone" type="text">
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="postcode">Email address</label>
-        <input class="form-control" id="email" name="email" type="text">
-      </div>
+
+
+
+      <fieldset>
+
+        <legend class="visually-hidden">How do you want to be contacted?</legend>
+
+        <label class="block-label selection-button-radio" data-target="contact-by-email" for="example-contact-by-email">
+          <input id="example-contact-by-email" type="radio" name="contact-me-by" value="Email">
+          Email
+        </label>
+        <div class="panel panel-border-narrow js-hidden" id="contact-by-email">
+          <label class="form-label" for="contact-email">Email address</label>
+          <input class="form-control" name="email" type="text" id="contact-email">
+        </div>
+
+        <label class="block-label selection-button-radio" data-target="contact-by-text" for="example-contact-by-text">
+          <input id="example-contact-by-text" type="radio" name="contact-me-by" value="Text message">
+          Text message
+        </label>
+        <div class="panel panel-border-narrow js-hidden" id="contact-by-text">
+          <label class="form-label" for="contact-text-message">Mobile phone number</label>
+          <input class="form-control" name="phone" type="text" id="contact-text-message">
+        </div>
+
+      </fieldset>
+
+
+
+
       <input type="hidden" name="nextPage" value="result">
       <input type="submit" class="big button">
     </form>

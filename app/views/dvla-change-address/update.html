@@ -26,21 +26,16 @@
         background: rgba(0, 0, 0, 0.7);
         float: right;
       ">Back to list</a>
-      <h2 class="heading-medium">Send a message</h1>
+      <h2 class="heading-medium">Send to {{ type }}</h1>
       <div class="form-group">
         <fieldset style="border: 0; padding: 0">
-
-          <legend class="visually-hidden">Where do you live?</legend>
-
-          <label class="block-label" for="radio-1">
-            <input id="radio-1" type="radio" name="template" value="8b5eb752-be41-4766-ab80-e3f171eb3745">
-            Track licence
-          </label>
-          <label class="block-label" for="radio-2">
-            <input id="radio-2" type="radio" name="template" value="ffa370ad-4129-4ceb-86b6-6a4c64db9250">
-            Licence delivered
-          </label>
-
+          <legend class="visually-hidden">Choose template?</legend>
+          {% for option in options %}
+            <label class="block-label" for="radio-{{ option.id }}">
+              <input id="radio-{{ option.id }}" type="radio" name="template" value="{{ option.id }}">
+              {{ option.name }}
+            </label>
+          {% endfor %}
         </fieldset>
       </div>
       <div class="form-group">
