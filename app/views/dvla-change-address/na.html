@@ -14,23 +14,24 @@
 
 <main id="content" role="main">
   <div class="grid-row">
-    <div class="column-two-thirds">
+    <form class="column-two-thirds" method="post">
       <h1 class="b f2 f1-l mv4">Tell DVLA you’ve changed address</h1>
       <h2 class="b f3 mv3">What is your new address?</h2>
       <div class="form-group">
         <label class="form-label" for="address">Address</label>
-        <input class="form-control" id="address" name="address" type="text">
-        <input class="form-control mv1" type="text">
-        <input class="form-control mv1" type="text">
-        <input class="form-control mv1" type="text">
+        <input class="form-control" id="address" name="address1" type="text">
+        <input class="form-control mv1" type="text" name="address2">
+        <input class="form-control mv1" type="text" name="address3">
+        <input class="form-control mv1" type="text" name="address4">
       </div>
       <div class="form-group">
         <label class="form-label" for="postcode">Post code</label>
         <input class="form-control" id="postcode" name="postcode" type="text">
       </div>
-      <a rel="nofollow" href="/dvla-change-address/phone-email" class="big button">Next</a>
+      <input type="hidden" name="nextPage" value="phone-email">
+      <input type="submit" class="big button" value="Next">
     </div>
-  </div>
+  </form>
 </main>
 
 {% endblock %}
