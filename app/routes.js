@@ -113,19 +113,16 @@ router.post('/journey/pay-dartford-crossing-charge/:id/pay', function (req, res)
       if (docs[0].email) {
         notifyDart.sendEmail(
           "8d1cd00f-6a5e-4e76-98d8-7e6d2a45e7fe",
-          docs[0].email,
-          {
-            'name': docs[0].name || 'customer'
-          }
+          docs[0].email
         );
       }
 
-      if (req.body.phone) {
+      if (docs[0].phone) {
         notifyDart.sendSms(
           "3a692856-cbef-4e98-949a-135f335f51ae",
           docs[0].phone,
           {
-            'reference number': docs[0].id
+            'id': docs[0].id
           }
         );
       }
