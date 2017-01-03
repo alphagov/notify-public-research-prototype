@@ -4,13 +4,18 @@ var mongodb = require('mongodb');
 var shortid = require('shortid');
 var NotifyClient = require('notifications-node-client').NotifyClient,
     notify = new NotifyClient(process.env.NOTIFYAPIKEY),
-    notifyDart = new NotifyClient(process.env.NOTIFYAPIKEYDART || 'abc123'),
-    dbURI = process.env.MONGODB_URI;
+    notifyDart = new NotifyClient(process.env.NOTIFYAPIKEYDART || 'abc123');
 
 shortid.characters('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-@');
 
+var db = function(callback) {
 
-mongodb.MongoClient.connect(dbURI, function(err, db) {});
+  mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, db) {
+    var userJourneys = db.collection('journeys');
+    callback(userJourneys);
+  });
+
+};
 
 
 router.get('/', function (req, res) {
@@ -22,6 +27,20 @@ router.get('/', function (req, res) {
 router.post('/dvla-change-address/', function (req, res) {
 
   var id = shortid.generate().toUpperCase();
+
+  db(function(userJourneys) {
+    userJourneys.insert(
+      {
+        'type': 'DVLA change of address',
+        'id': id,
+      },
+      function(err, result) {
+
+        if(err) throw err;
+
+      }
+    );
+  });
 
   res.redirect('/dvla-change-address/' + id + '/ln');
 
@@ -38,8 +57,17 @@ router.get('/dvla-change-address/:id/:page', function(req, res){
 
 router.post('/dvla-change-address/:id/:page', function(req, res){
 
-  console.log("post");
-  console.log(req.params);
+  db(function(userJourneys) {
+    console.log("Updating:", req.params.id, req.body);
+    userJourneys.update(
+      {id: req.params.id},
+      {$set: req.body},
+      function (err, result) {
+
+        if(err) throw err;
+      }
+    );
+  });
 
   res.redirect('/dvla-change-address/' + req.params.id + '/' + req.body.nextPage);
 
