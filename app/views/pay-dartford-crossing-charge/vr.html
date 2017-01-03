@@ -14,15 +14,16 @@
 
 <main id="content" role="main">
   <div class="grid-row">
-    <div class="column-two-thirds">
+    <form method="post" class="column-two-thirds">
       <h1 class="b f2 f1-l mv4">Pay the Dartford Crossing charge (Dart Charge)</h1>
       <h2 class="b f3 mv3">Enter your vehicle's registration</h2>
       <div class="form-group">
         <label class="form-label" for="vehicle-registration-number">Vehicle registration number</label>
         <input class="form-control" id="vehicle-registration-number" name="vehicle-registration-number" type="text">
       </div>
-      <a rel="nofollow" href="/pay-dartford-crossing-charge/date" class="button">Next</a>
-    </div>
+      <input type="hidden" name="nextPage" value="date">
+      <input type="submit" class="button" value="Next">
+    </form>
   </div>
 </main>
 

@@ -50,7 +50,7 @@ router.post('/journey/:type', function (req, res) {
     );
   });
 
-  res.redirect('/journey/' + req.params.type + '/' + id + '/ln');
+  res.redirect('/journey/' + req.params.type + '/' + id + '/' + req.body.nextPage);
 
 });
 
@@ -59,24 +59,6 @@ router.get('/journey/:type/:id/:page', function(req, res){
   res.render(req.params.type + '/' + req.params.page, {
     'id': req.params.id
   });
-
-});
-
-
-router.post('/journey/:type/:id/:page', function(req, res){
-
-  db(function(userJourneys) {
-    userJourneys.update(
-      {id: req.params.id},
-      {$set: req.body},
-      function (err, result) {
-
-        if(err) throw err;
-      }
-    );
-  });
-
-  res.redirect('/journey/' + req.params.type + '/' + req.params.id + '/' + req.body.nextPage);
 
 });
 
@@ -114,6 +96,67 @@ router.post('/journey/dvla-change-address/:id/phone-email', function (req, res) 
   res.redirect('/journey/dvla-change-address/result');
 
 });
+
+
+router.post('/journey/pay-dartford-crossing-charge/:id/pay', function (req, res) {
+
+  db(function(userJourneys) {
+    userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
+
+      if (docs[0].email) {
+        notify.sendEmail(
+          "a65e12cb-030c-4944-8948-fc445d0e2936",
+          docs[0].email,
+          {
+            'name': 'customer'
+          }
+        );
+      }
+
+      if (req.body.phone) {
+        notify.sendSms(
+          "5e5c1075-fcae-432c-b344-1a00ef18ee84",
+          docs[0].email
+        );
+      }
+
+    });
+
+    userJourneys.update(
+      {id: req.params.id},
+      {$set: req.body},
+      function (err, result) {
+
+        if(err) throw err;
+      }
+    );
+  });
+
+  res.redirect('/journey/pay-dartford-crossing-charge/' + req.params.id + '/result');
+
+});
+
+
+router.post('/journey/:type/:id/:page', function(req, res){
+
+  db(function(userJourneys) {
+    userJourneys.update(
+      {id: req.params.id},
+      {$set: req.body},
+      function (err, result) {
+
+        if(err) throw err;
+      }
+    );
+  });
+
+  res.redirect('/journey/' + req.params.type + '/' + req.params.id + '/' + req.body.nextPage);
+
+});
+
+
+
+// Admin interface
 
 router.get('/admin/:id/send/:type', function (req, res) {
 
@@ -253,32 +296,6 @@ router.get('/admin/:id/delete', function (req, res) {
 
 });
 
-
-router.post('/pay-dartford-crossing-charge/email', function (req, res) {
-
-  req.session.email = req.body.email;
-  res.redirect('/pay-dartford-crossing-charge/pay');
-
-});
-
-router.post('/pay-dartford-crossing-charge/pay', function (req, res) {
-
-  notifyDart.sendSms(
-    "3a692856-cbef-4e98-949a-135f335f51ae",
-    req.session.email
-  );
-
-  res.redirect('/pay-dartford-crossing-charge/result');
-
-});
-
-router.get('/pay-dartford-crossing-charge/result', function(req, res) {
-
-  res.render('pay-dartford-crossing-charge/result', {
-    'emailAddress': req.session.email
-  });
-
-});
 
 router.get('/admin', function(req, res) {
 

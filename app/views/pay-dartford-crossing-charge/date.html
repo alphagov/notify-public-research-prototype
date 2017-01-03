@@ -14,10 +14,10 @@
 
 <main id="content" role="main">
   <div class="grid-row">
-    <div class="column-two-thirds">
+    <form class="column-two-thirds" method="post">
       <h1 class="b f2 f1-l mv4">Pay the Dartford Crossing charge (Dart Charge)</h1>
       <h2 class="b f3 mv3">What date do you want to pay for?</h2>
-      <div class="form-date cf">
+      <div class="form-date cf" style="margin-bottom: 30px">
         <div class="form-group form-group-day">
           <label class="form-label" for="pay-day">Day</label>
           <input class="form-control" id="pay-day" name="pay-day" type="number" pattern="[0-9]*" min="0" max="31">
@@ -31,8 +31,9 @@
           <input class="form-control" id="pay-year" name="pay-year" type="number" pattern="[0-9]*" min="0" max="2016">
         </div>
       </div>
-      <a rel="nofollow" href="/pay-dartford-crossing-charge/email" class="button mt4">Next</a>
-    </div>
+      <input type="hidden" name="nextPage" value="email">
+      <input type="submit" value="Next" class="button">
+    </form>
   </div>
 </main>
 

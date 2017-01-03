@@ -27,13 +27,14 @@
         <li>check how many crossings you’ve paid for</li>
       </ul>
       <div class="transaction">
-        <div class="get-started">
+        <form class="get-started" method="post">
           <p id="get-started" class="get-started group">
-            <a href="/pay-dartford-crossing-charge/vr" class="button mt2" role="button"
+            <input type="hidden" name="nextPage" value="vr">
+            <input type="submit" class="button mt2" role="button" value="Start now"
               style="font-size: 24px;line-height: 0.66667;padding: 0.60em 1.7em 0.45em 0.67em;background-image: url(https://assets.publishing.service.gov.uk/static/icon-pointer-73fdb5b0e577f60fabed035f3b3f52ef73742431aef9e01ac01bdf40efc1a266.png);background-position: 100% 50%;background-repeat: no-repeat;"
-            >Start now</a>
+            >
           </p>
-        </div>
+        </form>
       </div>
       <h3 class="mt3 b f3">Before you start</h3>
       <p>The <a href="#">crossing charge</a> depends on your vehicle and account type.</p>

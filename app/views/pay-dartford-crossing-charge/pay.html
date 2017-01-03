@@ -39,13 +39,6 @@
       <input type="submit" value="Pay" class="button" />
     </form>
   </div>
-  <script>
-    document.querySelectorAll('.form-control').forEach(function (el) {
-      el.addEventListener('keyup', function () {
-        localStorage.setItem(el.id, el.value)
-      })
-    })
-  </script>
 </main>
 
 {% endblock %}
