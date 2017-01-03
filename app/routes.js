@@ -5,24 +5,8 @@ var NotifyClient = require('notifications-node-client').NotifyClient,
     notifyDart = new NotifyClient(process.env.NOTIFYAPIKEYDART || 'abc123');
 
 router.get('/', function (req, res) {
-  res.render('index')
-})
-
-router.get('/jobseekers-allowance', function (req, res) {
-  res.render('jobseekers-allowance/overview')
-})
-
-router.get('/universal-credit', function (req, res) {
-  res.render('universal-credit/overview')
-})
-
-router.get('/new-state-pension', function (req, res) {
-  res.render('new-state-pension/overview')
-})
-
-router.get('/shared-parental-leave-and-pay', function (req, res) {
-  res.render('shared-parental-leave-and-pay/overview')
-})
+  res.render('index');
+});
 
 // Notify prototype specific
 
@@ -47,13 +31,13 @@ router.post('/dvla-change-address/phone-email', function (req, res) {
 
   res.redirect('/dvla-change-address/result');
 
-})
+});
 
 router.get('/dvla-change-address/update', function (req, res) {
   res.render('dvla-change-address/update', {
     sentTo: req.query.sentTo
-  })
-})
+  });
+});
 
 router.post('/dvla-change-address/update', function (req, res) {
 
@@ -61,7 +45,7 @@ router.post('/dvla-change-address/update', function (req, res) {
     notify.sendSms(
       req.body.template,
       req.body.phone
-    )
+    );
   }
 
   res.redirect('/dvla-change-address/update?sentTo=' + req.body.phone);
@@ -94,4 +78,4 @@ router.get('/pay-dartford-crossing-charge/result', function(req, res) {
 
 });
 
-module.exports = router
+module.exports = router;
