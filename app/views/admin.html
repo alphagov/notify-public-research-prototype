@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/public/stylesheets/tachyons.min.css" />
+  <link rel="stylesheet" href="/public/stylesheets/custom.css" />
+{% endblock %}
+
+{% block page_title %}
+  Admin interface
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+
+  <div style="background: #fd3;">
+    <h1 class="heading-xlarge">Notify prototype backend</h1>
+  </div>
+
+  <a href="/admin" class="big button" style="
+    position: relative;
+    top: -105px;
+    left: -5px;
+    background: rgba(0, 0, 0, 0.7);
+    float: right;
+  ">Refresh</a>
+
+  {% for journey in userJourneys %}
+    <h2 class="heading-small">Started {{ journey.started }}</h2>
+    <p class="hint">{{ journey.type }}</p>
+    <table style="margin-bottom: 60px;">
+      <tbody>
+        {% for key, value in journey %}
+          {% if key not in ['_id', 'id', 'type', 'nextPage', 'started'] %}
+            <tr>
+              <td width="50%">{{ key }}</td>
+              <td width="50%">
+                {{ value }}
+                {% if key == 'phone' and 'DVLA' in journey.type %}
+                  <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/update">Send update</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endfor %}
+
+</main>
+
+{% endblock %}

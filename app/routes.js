@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongodb = require('mongodb');
 var shortid = require('shortid');
+var humanize = require('humanize');
 var NotifyClient = require('notifications-node-client').NotifyClient,
     notify = new NotifyClient(process.env.NOTIFYAPIKEY),
     notifyDart = new NotifyClient(process.env.NOTIFYAPIKEYDART || 'abc123');
@@ -33,6 +34,7 @@ router.post('/dvla-change-address/', function (req, res) {
       {
         'type': 'DVLA change of address',
         'id': id,
+        'started': Date.now(),
       },
       function(err, result) {
 
@@ -58,7 +60,6 @@ router.get('/dvla-change-address/:id/:page', function(req, res){
 router.post('/dvla-change-address/:id/:page', function(req, res){
 
   db(function(userJourneys) {
-    console.log("Updating:", req.params.id, req.body);
     userJourneys.update(
       {id: req.params.id},
       {$set: req.body},
@@ -93,26 +94,57 @@ router.post('/dvla-change-address/:id/phone-email', function (req, res) {
     );
   }
 
+  db(function(userJourneys) {
+    userJourneys.update(
+      {id: req.params.id},
+      {$set: req.body},
+      function (err, result) {
+
+        if(err) throw err;
+      }
+    );
+  });
+
   res.redirect('/dvla-change-address/result');
 
 });
 
-router.get('/dvla-change-address/update', function (req, res) {
-  res.render('dvla-change-address/update', {
-    sentTo: req.query.sentTo
+router.get('/admin/:id/update', function (req, res) {
+
+  db(function(userJourneys) {
+    userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
+
+      res.render('dvla-change-address/update', {
+        phone: docs[0].phone,
+      });
+
+    });
   });
+
 });
 
-router.post('/dvla-change-address/update', function (req, res) {
+router.post('/admin/:id/update', function (req, res) {
 
-  if (req.body.phone) {
+  db(function(userJourneys) {
+
     notify.sendSms(
       req.body.template,
       req.body.phone
     );
-  }
 
-  res.redirect('/dvla-change-address/update?sentTo=' + req.body.phone);
+    userJourneys.update(
+      {id: req.params.id},
+      {$set: {'updateSent': Date.now()}},
+      function (err, result) {
+
+        if(err) throw err;
+
+        res.redirect('/admin');
+
+      }
+    );
+
+  });
 
 });
 
@@ -141,5 +173,27 @@ router.get('/pay-dartford-crossing-charge/result', function(req, res) {
   });
 
 });
+
+router.get('/admin', function(req, res) {
+
+  db(function(userJourneys) {
+    userJourneys.find().sort({started: -1}).toArray(function (err, docs) {
+
+      if(err) throw err;
+
+      res.render('admin', {
+        userJourneys: docs.map(function(element) {
+          element.started = humanize.relativeTime(element.started / 1000);
+          element.updateSent = humanize.relativeTime(element.updateSent / 1000);
+          return element;
+        }),
+      });
+
+    });
+
+  });
+
+});
+
 
 module.exports = router;
