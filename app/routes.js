@@ -315,8 +315,8 @@ router.get('/admin', function(req, res) {
       res.render('admin', {
         userJourneys: docs.map(function(element) {
           element.started = humanize.relativeTime(element.started / 1000);
-          if (element.updateSent) {
-            element.updateSent = humanize.relativeTime(element.updateSent / 1000);
+          if (element['update-sent']) {
+            element['update-sent'] = humanize.relativeTime(element['update-sent'] / 1000);
           }
           return element;
         }),
