@@ -1,8 +1,14 @@
 var express = require('express');
 var router = express.Router();
+var mongodb = require('mongodb');
 var NotifyClient = require('notifications-node-client').NotifyClient,
     notify = new NotifyClient(process.env.NOTIFYAPIKEY),
-    notifyDart = new NotifyClient(process.env.NOTIFYAPIKEYDART || 'abc123');
+    notifyDart = new NotifyClient(process.env.NOTIFYAPIKEYDART || 'abc123'),
+    dbURI = process.env.MONGODB_URI;
+
+
+mongodb.MongoClient.connect(dbURI, function(err, db) {});
+
 
 router.get('/', function (req, res) {
   res.render('index');
