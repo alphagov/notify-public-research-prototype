@@ -25,14 +25,20 @@ router.get('/', function (req, res) {
 
 // Notify prototype specific
 
-router.post('/dvla-change-address/', function (req, res) {
+router.get('/journey/:type', function (req, res) {
+
+  res.render(req.params.type + '/index');
+
+});
+
+router.post('/journey/:type', function (req, res) {
 
   var id = shortid.generate().toUpperCase();
 
   db(function(userJourneys) {
     userJourneys.insert(
       {
-        'type': 'DVLA change of address',
+        'type': req.params.type,
         'id': id,
         'started': Date.now(),
       },
@@ -44,20 +50,20 @@ router.post('/dvla-change-address/', function (req, res) {
     );
   });
 
-  res.redirect('/dvla-change-address/' + id + '/ln');
+  res.redirect('/journey/' + req.params.type + '/' + id + '/ln');
 
 });
 
-router.get('/dvla-change-address/:id/:page', function(req, res){
+router.get('/journey/:type/:id/:page', function(req, res){
 
-  res.render('dvla-change-address/' + req.params.page, {
+  res.render(req.params.type + '/' + req.params.page, {
     'id': req.params.id
   });
 
 });
 
 
-router.post('/dvla-change-address/:id/:page', function(req, res){
+router.post('/journey/:type/:id/:page', function(req, res){
 
   db(function(userJourneys) {
     userJourneys.update(
@@ -70,12 +76,12 @@ router.post('/dvla-change-address/:id/:page', function(req, res){
     );
   });
 
-  res.redirect('/dvla-change-address/' + req.params.id + '/' + req.body.nextPage);
+  res.redirect('/journey/' + req.params.type + '/' + req.params.id + '/' + req.body.nextPage);
 
 });
 
 
-router.post('/dvla-change-address/:id/phone-email', function (req, res) {
+router.post('/journey/dvla-change-address/:id/phone-email', function (req, res) {
 
   if (req.body.email) {
     notify.sendEmail(
@@ -105,17 +111,17 @@ router.post('/dvla-change-address/:id/phone-email', function (req, res) {
     );
   });
 
-  res.redirect('/dvla-change-address/result');
+  res.redirect('/journey/dvla-change-address/result');
 
 });
 
-router.get('/admin/:id/update', function (req, res) {
+router.get('/admin/:id/send/:type', function (req, res) {
 
   db(function(userJourneys) {
     userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
 
       res.render('dvla-change-address/update', {
-        phone: docs[0].phone,
+        to: docs[0][req.params.type],
       });
 
     });
@@ -123,14 +129,25 @@ router.get('/admin/:id/update', function (req, res) {
 
 });
 
-router.post('/admin/:id/update', function (req, res) {
+router.post('/admin/:id/send/:type', function (req, res) {
 
   db(function(userJourneys) {
 
-    notify.sendSms(
-      req.body.template,
-      req.body.phone
-    );
+    if ('phone' == req.params.type) {
+
+      notify.sendSms(
+        req.body.template,
+        req.body.to
+      );
+
+    } else if ('email' == req.params.type) {
+
+      notify.sendEmail(
+        req.body.template,
+        req.body.to
+      );
+
+    }
 
     userJourneys.update(
       {id: req.params.id},
@@ -147,6 +164,44 @@ router.post('/admin/:id/update', function (req, res) {
   });
 
 });
+
+
+router.get('/admin/:id/edit/:field', function (req, res) {
+
+  db(function(userJourneys) {
+    userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
+
+      res.render('dvla-change-address/edit', {
+        field: req.params.field,
+        value: docs[0][req.params.field],
+      });
+
+    });
+  });
+
+});
+
+
+router.post('/admin/:id/edit/:field', function (req, res) {
+
+  db(function(userJourneys) {
+
+    userJourneys.update(
+      {id: req.params.id},
+      {$set: req.body},
+      function (err, result) {
+
+        if(err) throw err;
+
+        res.redirect('/admin');
+
+      }
+    );
+
+  });
+
+});
+
 
 router.post('/pay-dartford-crossing-charge/email', function (req, res) {
 
@@ -184,7 +239,9 @@ router.get('/admin', function(req, res) {
       res.render('admin', {
         userJourneys: docs.map(function(element) {
           element.started = humanize.relativeTime(element.started / 1000);
-          element.updateSent = humanize.relativeTime(element.updateSent / 1000);
+          if (element.updateSent) {
+            element.updateSent = humanize.relativeTime(element.updateSent / 1000);
+          }
           return element;
         }),
       });

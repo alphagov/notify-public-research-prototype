@@ -27,25 +27,41 @@
   ">Refresh</a>
 
   {% for journey in userJourneys %}
-    <h2 class="heading-small">Started {{ journey.started }}</h2>
-    <p class="hint">{{ journey.type }}</p>
-    <table style="margin-bottom: 60px;">
-      <tbody>
-        {% for key, value in journey %}
-          {% if key not in ['_id', 'id', 'type', 'nextPage', 'started'] %}
+    <div class="grid-row">
+      <div class="column-one-third">
+        <h2 class="heading-small">Started {{ journey.started }}</h2>
+        <p class="hint">{{ journey.type }}</p>
+      </div>
+      <div class="column-two-thirds">
+        <table style="margin-bottom: 90px;">
+          <tbody>
+            {% for key, value in journey %}
+              {% if key not in ['_id', 'type', 'nextPage', 'started', 'name'] %}
+                <tr>
+                  <td width="50%">{{ key }}</td>
+                  <td width="50%">
+                    {{ value }}
+                    {% if key == 'phone' and 'dvla' in journey.type %}
+                      <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/send/phone">Send update</a>
+                    {% endif %}
+                    {% if key == 'email' and 'dvla' in journey.type %}
+                      <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/send/phone">Send update</a>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
             <tr>
-              <td width="50%">{{ key }}</td>
+              <td width="50%">name</td>
               <td width="50%">
-                {{ value }}
-                {% if key == 'phone' and 'DVLA' in journey.type %}
-                  <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/update">Send update</a>
-                {% endif %}
+                {{ journey.name }}
+                <a style="float: right; margin-right: -20px;" href="/admin/{{ journey.id }}/edit/name">Edit</a>
               </td>
             </tr>
-          {% endif %}
-        {% endfor %}
-      </tbody>
-    </table>
+          </tbody>
+        </table>
+      </div>
+    </div>
   {% endfor %}
 
 </main>
