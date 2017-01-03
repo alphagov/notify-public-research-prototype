@@ -26,6 +26,10 @@
     float: right;
   ">Refresh</a>
 
+  {% if not userJourneys.length %}
+    No user journeys to show.
+  {% endif %}
+
   {% for journey in userJourneys %}
     <div class="grid-row">
       <div class="column-one-third">

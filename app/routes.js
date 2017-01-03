@@ -172,7 +172,7 @@ router.post('/admin/:id/send/:type', function (req, res) {
         notify.sendEmail(
           req.body.template,
           req.body.to, {
-            name: docs[0].name
+            name: docs[0].name || 'customer'
           }
         );
 
