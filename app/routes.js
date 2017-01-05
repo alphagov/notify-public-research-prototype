@@ -56,9 +56,18 @@ router.post('/journey/:type', function (req, res) {
 
 router.get('/journey/:type/:id/:page', function(req, res){
 
-  res.render(req.params.type + '/' + req.params.page, {
-    'id': req.params.id
+  db(function(userJourneys) {
+    userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
+
+      res.render(req.params.type + '/' + req.params.page, {
+        'id': req.params.id,
+        'email': docs[0].email,
+        'phone': docs[0].phone,
+      });
+
+    });
   });
+
 
 });
 
