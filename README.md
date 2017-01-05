@@ -17,3 +17,30 @@ npm i
 npm start
 open http://localhost:3000
 ```
+
+## Local environment
+
+You’ll need the following environment variables set locally in order to
+talk to external services.
+
+If you need these locally, take them from the _settings_ page in Heroku.
+
+Key name | What it’s for
+---|---
+`MONGODB_URI` | Connecting the prototype’s Mongo DB instance
+`NOTIFYAPIKEY` | API key for the _Change your driving licence address_ service on GOV.UK Notify
+`NOTIFYAPIKEYDART` | API key for the _Pay the Dart Charge_ service on GOV.UK Notify
+
+
+## Deploying
+
+Once you have this repo cloned and are in its directory:
+
+```
+heroku git:remote -a yfiton
+```
+
+Then every time you want to deploy:
+```
+git push heroku master
+```
