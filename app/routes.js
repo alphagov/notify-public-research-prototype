@@ -117,7 +117,34 @@ router.post('/journey/dvla-change-address/:id/phone-email', function (req, res) 
     );
   });
 
-  res.redirect('/journey/dvla-change-address/' + req.params.id + '/result');
+  if (req.body.email) {
+    res.redirect('/journey/dvla-change-address/' + req.params.id + '/confirm-email');
+  } else {
+    res.redirect('/journey/dvla-change-address/' + req.params.id + '/result');
+  }
+
+});
+
+
+router.post('/journey/pay-dartford-crossing-charge/:id/email', function (req, res) {
+
+  if (req.body.email) {
+
+    notify.sendEmail(
+      "e8fe7a9e-b19c-4544-96d6-4fee0ccf6686",
+      req.body.email,
+      {
+        'id': req.params.id
+      }
+    );
+
+    res.redirect('/journey/pay-dartford-crossing-charge/' + req.params.id + '/confirm-email');
+
+  } else {
+
+    res.redirect('/journey/pay-dartford-crossing-charge/' + req.params.id + '/pay');
+
+  }
 
 });
 
