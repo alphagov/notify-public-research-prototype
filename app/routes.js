@@ -130,7 +130,7 @@ router.post('/journey/pay-dartford-crossing-charge/:id/email', function (req, re
 
   if (req.body.email) {
 
-    notify.sendEmail(
+    notifyDart.sendEmail(
       "e8fe7a9e-b19c-4544-96d6-4fee0ccf6686",
       req.body.email,
       {
