@@ -59,17 +59,44 @@ router.get('/journey/:type/:id/:page', function(req, res){
   db(function(userJourneys) {
     userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
 
+      var checkAnswersPageKeys = [
+            'driving-license-number',
+            'post-code',
+            'address1',
+            'address2',
+            'address3',
+            'address4',
+            'postcode',
+          ],
+          checkAnswersPageLabels = [
+            'Driving licence number',
+            'Current postcode',
+            'New address line 1',
+            'New address line 2',
+            'New address line 3',
+            'New address line 4',
+            'New postcode',
+          ];
+
+
+
       if (docs[0] !== undefined) {  // Need to handle when DB hasn’t created journey yet
         res.render(req.params.type + '/' + req.params.page, {
           'id': req.params.id,
           'email': docs[0].email,
           'phone': docs[0].phone,
+          'journey': docs[0],
+          'checkAnswersPageKeys': checkAnswersPageKeys,
+          'checkAnswersPageLabels': checkAnswersPageLabels
         });
       } else {
         res.render(req.params.type + '/' + req.params.page, {
           'id': req.params.id,
           'email': '',
           'phone': '',
+          'journey': docs[0],
+          'checkAnswersPageKeys': checkAnswersPageKeys,
+          'checkAnswersPageLabels': checkAnswersPageLabels
         });
       }
 
@@ -81,6 +108,24 @@ router.get('/journey/:type/:id/:page', function(req, res){
 
 
 router.post('/journey/dvla-change-address/:id/phone-email', function (req, res) {
+
+  if (req.body.email) {
+    notify.sendEmail(
+      '24a8b897-2de9-4a9f-a2db-b6ef682f733a',
+      req.body.email,
+      {
+        'id': req.params.id,
+      }
+    );
+    res.redirect('/journey/dvla-change-address/' + req.params.id + '/confirm-email');
+  } else {
+    res.redirect('/journey/dvla-change-address/' + req.params.id + '/check-answers');
+  }
+
+});
+
+
+router.post('/journey/dvla-change-address/:id/check-answers', function (req, res) {
 
   db(function(userJourneys) {
     userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
@@ -117,11 +162,7 @@ router.post('/journey/dvla-change-address/:id/phone-email', function (req, res) 
     );
   });
 
-  if (req.body.email) {
-    res.redirect('/journey/dvla-change-address/' + req.params.id + '/confirm-email');
-  } else {
-    res.redirect('/journey/dvla-change-address/' + req.params.id + '/result');
-  }
+  res.redirect('/journey/dvla-change-address/' + req.params.id + '/result');
 
 });
 
