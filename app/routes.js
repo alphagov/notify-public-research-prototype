@@ -59,24 +59,40 @@ router.get('/journey/:type/:id/:page', function(req, res){
   db(function(userJourneys) {
     userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
 
-      var checkAnswersPageKeys = [
-            'driving-license-number',
-            'post-code',
-            'address1',
-            'address2',
-            'address3',
-            'address4',
-            'postcode',
-          ],
-          checkAnswersPageLabels = [
-            'Driving licence number',
-            'Current postcode',
-            'New address line 1',
-            'New address line 2',
-            'New address line 3',
-            'New address line 4',
-            'New postcode',
-          ];
+      var checkAnswersPageKeys = {
+            'dvla-change-address': [
+              'driving-license-number',
+              'post-code',
+              'address1',
+              'address2',
+              'address3',
+              'address4',
+              'postcode',
+            ],
+            'pay-dartford-crossing-charge': [
+              'vehicle-registration-number',
+              'pay-day',
+              'pay-month',
+              'pay-year'
+            ]
+          },
+          checkAnswersPageLabels = {
+            'dvla-change-address': [
+              'Driving licence number',
+              'Current postcode',
+              'New address line 1',
+              'New address line 2',
+              'New address line 3',
+              'New address line 4',
+              'New postcode',
+            ],
+            'pay-dartford-crossing-charge': [
+              'Vehicle registration number',
+              'Day',
+              'Month',
+              'Year'
+            ]
+          };
 
 
 
@@ -86,8 +102,8 @@ router.get('/journey/:type/:id/:page', function(req, res){
           'email': docs[0].email,
           'phone': docs[0].phone,
           'journey': docs[0],
-          'checkAnswersPageKeys': checkAnswersPageKeys,
-          'checkAnswersPageLabels': checkAnswersPageLabels
+          'checkAnswersPageKeys': checkAnswersPageKeys[req.params.type],
+          'checkAnswersPageLabels': checkAnswersPageLabels[req.params.type]
         });
       } else {
         res.render(req.params.type + '/' + req.params.page, {
@@ -95,8 +111,8 @@ router.get('/journey/:type/:id/:page', function(req, res){
           'email': '',
           'phone': '',
           'journey': docs[0],
-          'checkAnswersPageKeys': checkAnswersPageKeys,
-          'checkAnswersPageLabels': checkAnswersPageLabels
+          'checkAnswersPageKeys': checkAnswersPageKeys[req.params.type],
+          'checkAnswersPageLabels': checkAnswersPageLabels[req.params.type]
         });
       }
 
@@ -168,41 +184,36 @@ router.post('/journey/dvla-change-address/:id/check-answers', function (req, res
 });
 
 
-router.post('/journey/pay-dartford-crossing-charge/:id/email', function (req, res) {
+router.post('/journey/pay-dartford-crossing-charge/:id/pay', function (req, res) {
 
   db(function(userJourneys) {
-    userJourneys.update(
-      {id: req.params.id},
-      {$set: req.body},
-      function (err, result) {
+    userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
 
-        if(err) throw err;
+      if (docs[0].email) {
+
+        notifyDart.sendEmail(
+          "e8fe7a9e-b19c-4544-96d6-4fee0ccf6686",
+          docs[0].email,
+          {
+            'id': req.params.id
+          }
+        );
+
+        res.redirect('/journey/pay-dartford-crossing-charge/' + req.params.id + '/confirm-email');
+
+      } else {
+
+        res.redirect('/journey/pay-dartford-crossing-charge/' + req.params.id + '/check-answers');
+
       }
-    );
+
+    });
   });
-
-  if (req.body.email) {
-
-    notifyDart.sendEmail(
-      "e8fe7a9e-b19c-4544-96d6-4fee0ccf6686",
-      req.body.email,
-      {
-        'id': req.params.id
-      }
-    );
-
-    res.redirect('/journey/pay-dartford-crossing-charge/' + req.params.id + '/confirm-email');
-
-  } else {
-
-    res.redirect('/journey/pay-dartford-crossing-charge/' + req.params.id + '/pay');
-
-  }
 
 });
 
 
-router.post('/journey/pay-dartford-crossing-charge/:id/pay', function (req, res) {
+router.post('/journey/pay-dartford-crossing-charge/:id/check-answers', function (req, res) {
 
   db(function(userJourneys) {
     userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
@@ -225,19 +236,9 @@ router.post('/journey/pay-dartford-crossing-charge/:id/pay', function (req, res)
       }
 
     });
-
-    userJourneys.update(
-      {id: req.params.id},
-      {$set: req.body},
-      function (err, result) {
-
-        if(err) throw err;
-      }
-    );
-
   });
 
-  res.redirect('/journey/pay-dartford-crossing-charge/' + req.params.id + '/result');
+    res.redirect('/journey/pay-dartford-crossing-charge/' + req.params.id + '/result');
 
 });
 

@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block head %}
+  <link href="/public/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/static-2016-07-04.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/public/stylesheets/tachyons.min.css" rel="stylesheet" />
+  <link href="/public/stylesheets/custom.css" rel="stylesheet" />
+{% endblock %}
+
+{% block page_title %}
+  Pay the Dart charge - GOV.UK
+{% endblock %}
+
+{% block content %}
+
+<main id="content" role="main">
+  <h1 class="heading-large">
+    Check your answers
+  </h1>
+  <form method="post" class="grid-row">
+    <div class="column-two-thirds">
+      <table style="margin-bottom: 30px;">
+        <thead>
+          <tr>
+            <th></th>
+            <th></th>
+          </td>
+        </thead>
+        <tbody>
+      {% for key in checkAnswersPageKeys %}
+        <tr>
+          <td width="33%">{{ checkAnswersPageLabels[loop.index0] }}</td>
+          <td width="66%">
+            {{ journey[key] }}
+          </td>
+        </tr>
+      {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="column-two-thirds">
+      <input type="hidden" name="nextPage" value="result" />
+      <input type="submit" class="button" value="Finish" />
+    </div>
+  </form>
+</main>
+
+{% endblock %}
