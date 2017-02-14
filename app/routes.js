@@ -109,6 +109,17 @@ router.get('/journey/:type/:id/:page', function(req, res){
 
 router.post('/journey/dvla-change-address/:id/phone-email', function (req, res) {
 
+  db(function(userJourneys) {
+    userJourneys.update(
+      {id: req.params.id},
+      {$set: req.body},
+      function (err, result) {
+
+        if(err) throw err;
+      }
+    );
+  });
+
   if (req.body.email) {
     notify.sendEmail(
       '24a8b897-2de9-4a9f-a2db-b6ef682f733a',
@@ -130,10 +141,10 @@ router.post('/journey/dvla-change-address/:id/check-answers', function (req, res
   db(function(userJourneys) {
     userJourneys.find({id: req.params.id}).toArray(function (err, docs) {
 
-      if (req.body.email) {
+      if (docs[0].email) {
         notify.sendEmail(
           "a65e12cb-030c-4944-8948-fc445d0e2936",
-          req.body.email,
+          docs[0].email,
           {
             'name': docs[0].name || 'customer',
             'reference number': docs[0].id
@@ -141,33 +152,34 @@ router.post('/journey/dvla-change-address/:id/check-answers', function (req, res
         );
       }
 
-      if (req.body.phone) {
+      if (docs[0].phone) {
         notify.sendSms(
           "5e5c1075-fcae-432c-b344-1a00ef18ee84",
-          req.body.phone
+          docs[0].phone
         );
       }
+
+      res.redirect('/journey/dvla-change-address/' + req.params.id + '/result');
 
     });
 
   });
+
+});
+
+
+router.post('/journey/pay-dartford-crossing-charge/:id/email', function (req, res) {
 
   db(function(userJourneys) {
     userJourneys.update(
       {id: req.params.id},
       {$set: req.body},
       function (err, result) {
+
         if(err) throw err;
       }
     );
   });
-
-  res.redirect('/journey/dvla-change-address/' + req.params.id + '/result');
-
-});
-
-
-router.post('/journey/pay-dartford-crossing-charge/:id/email', function (req, res) {
 
   if (req.body.email) {
 
