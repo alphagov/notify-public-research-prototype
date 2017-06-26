@@ -171,7 +171,10 @@ router.post('/journey/dvla-change-address/:id/check-answers', function (req, res
       if (docs[0].phone) {
         notify.sendSms(
           "5e5c1075-fcae-432c-b344-1a00ef18ee84",
-          docs[0].phone
+          docs[0].phone,
+          {
+            'name': docs[0].name || 'customer',
+          }
         );
       }
 
