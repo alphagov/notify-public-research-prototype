@@ -1,136 +1,183 @@
 var $ = window.$
 
-function ShowHideContent () {
-  var self = this
-  var result
+;(function (global) {
+  'use strict'
 
-  self.escapeElementName = function (str) {
-    result = str.replace('[', '\\[').replace(']', '\\]')
-    return (result)
-  }
+  var $ = global.jQuery
+  var GOVUK = global.GOVUK || {}
 
-  self.showHideRadioToggledContent = function () {
-    $(".block-label input[type='radio']").each(function () {
-      var $radio = $(this)
-      var $radioGroupName = $radio.attr('name')
-      var $radioLabel = $radio.parent('label')
+  function ShowHideContent () {
+    var self = this
 
-      var dataTarget = $radioLabel.attr('data-target')
+    // Radio and Checkbox selectors
+    var selectors = {
+      namespace: 'ShowHideContent',
+      radio: '[data-target] > input[type="radio"]',
+      checkbox: '[data-target] > input[type="checkbox"]'
+    }
 
-      // Add ARIA attributes
+    // Escape name attribute for use in DOM selector
+    function escapeElementName (str) {
+      var result = str.replace('[', '\\[').replace(']', '\\]')
+      return result
+    }
 
-      // If the data-target attribute is defined
-      if (dataTarget) {
-        // Set aria-controls
-        $radio.attr('aria-controls', dataTarget)
+    // Adds ARIA attributes to control + associated content
+    function initToggledContent () {
+      var $control = $(this)
+      var $content = getToggledContent($control)
 
-        $radio.on('click', function () {
-          // Select radio buttons in the same group
-          $radio.closest('form').find('.block-label input[name=' + self.escapeElementName($radioGroupName) + ']').each(function () {
-            var $this = $(this)
-
-            var groupDataTarget = $this.parent('label').attr('data-target')
-            var $groupDataTarget = $('#' + groupDataTarget)
-
-            // Hide toggled content
-            $groupDataTarget.addClass('js-hidden')
-            // Set aria-expanded and aria-hidden for hidden content
-            $this.attr('aria-expanded', 'false')
-            $groupDataTarget.attr('aria-hidden', 'true')
-          })
-
-          var $dataTarget = $('#' + dataTarget)
-          $dataTarget.removeClass('js-hidden')
-          // Set aria-expanded and aria-hidden for clicked radio
-          $radio.attr('aria-expanded', 'true')
-          $dataTarget.attr('aria-hidden', 'false')
-        })
-      } else {
-        // If the data-target attribute is undefined for a radio button,
-        // hide visible data-target content for radio buttons in the same group
-
-        $radio.on('click', function () {
-          // Select radio buttons in the same group
-          $('.block-label input[name=' + self.escapeElementName($radioGroupName) + ']').each(function () {
-            var groupDataTarget = $(this).parent('label').attr('data-target')
-            var $groupDataTarget = $('#' + groupDataTarget)
-
-            // Hide toggled content
-            $groupDataTarget.addClass('js-hidden')
-            // Set aria-expanded and aria-hidden for hidden content
-            $(this).attr('aria-expanded', 'false')
-            $groupDataTarget.attr('aria-hidden', 'true')
-          })
-        })
+      // Set aria-controls and defaults
+      if ($content.length) {
+        $control.attr('aria-controls', $content.attr('id'))
+        $control.attr('aria-expanded', 'false')
+        $content.attr('aria-hidden', 'true')
       }
-    })
-  }
-  self.showHideCheckboxToggledContent = function () {
-    $(".block-label input[type='checkbox']").each(function () {
-      var $checkbox = $(this)
-      var $checkboxLabel = $(this).parent()
+    }
 
-      var $dataTarget = $checkboxLabel.attr('data-target')
+    // Return toggled content for control
+    function getToggledContent ($control) {
+      var id = $control.attr('aria-controls')
 
-      // Add ARIA attributes
-
-      // If the data-target attribute is defined
-      if (typeof $dataTarget !== 'undefined' && $dataTarget !== false) {
-        // Set aria-controls
-        $checkbox.attr('aria-controls', $dataTarget)
-
-        // Set aria-expanded and aria-hidden
-        $checkbox.attr('aria-expanded', 'false')
-        $('#' + $dataTarget).attr('aria-hidden', 'true')
-
-        // For checkboxes revealing hidden content
-        $checkbox.on('click', function () {
-          var state = $(this).attr('aria-expanded') === 'false'
-
-          // Toggle hidden content
-          $('#' + $dataTarget).toggleClass('js-hidden')
-
-          // Update aria-expanded and aria-hidden attributes
-          $(this).attr('aria-expanded', state)
-          $('#' + $dataTarget).attr('aria-hidden', !state)
-        })
+      // ARIA attributes aren't set before init
+      if (!id) {
+        id = $control.closest('[data-target]').data('target')
       }
-    })
+
+      // Find show/hide content by id
+      return $('#' + id)
+    }
+
+    // Show toggled content for control
+    function showToggledContent ($control, $content) {
+      // Show content
+      if ($content.hasClass('js-hidden')) {
+        $content.removeClass('js-hidden')
+        $content.attr('aria-hidden', 'false')
+
+        // If the controlling input, update aria-expanded
+        if ($control.attr('aria-controls')) {
+          $control.attr('aria-expanded', 'true')
+        }
+      }
+    }
+
+    // Hide toggled content for control
+    function hideToggledContent ($control, $content) {
+      $content = $content || getToggledContent($control)
+
+      // Hide content
+      if (!$content.hasClass('js-hidden')) {
+        $content.addClass('js-hidden')
+        $content.attr('aria-hidden', 'true')
+
+        // If the controlling input, update aria-expanded
+        if ($control.attr('aria-controls')) {
+          $control.attr('aria-expanded', 'false')
+        }
+      }
+    }
+
+    // Handle radio show/hide
+    function handleRadioContent ($control, $content) {
+      // All radios in this group which control content
+      var selector = selectors.radio + '[name=' + escapeElementName($control.attr('name')) + '][aria-controls]'
+      var $form = $control.closest('form')
+      var $radios = $form.length ? $form.find(selector) : $(selector)
+
+      // Hide content for radios in group
+      $radios.each(function () {
+        hideToggledContent($(this))
+      })
+
+      // Select content for this control
+      if ($control.is('[aria-controls]')) {
+        showToggledContent($control, $content)
+      }
+    }
+
+    // Handle checkbox show/hide
+    function handleCheckboxContent ($control, $content) {
+      // Show checkbox content
+      if ($control.is(':checked')) {
+        showToggledContent($control, $content)
+      } else { // Hide checkbox content
+        hideToggledContent($control, $content)
+      }
+    }
+
+    // Set up event handlers etc
+    function init ($container, elementSelector, eventSelectors, handler) {
+      $container = $container || $(document.body)
+
+      // Handle control clicks
+      function deferred () {
+        var $control = $(this)
+        handler($control, getToggledContent($control))
+      }
+
+      // Prepare ARIA attributes
+      var $controls = $(elementSelector)
+      $controls.each(initToggledContent)
+
+      // Handle events
+      $.each(eventSelectors, function (idx, eventSelector) {
+        $container.on('click.' + selectors.namespace, eventSelector, deferred)
+      })
+
+      // Any already :checked on init?
+      if ($controls.is(':checked')) {
+        $controls.filter(':checked').each(deferred)
+      }
+    }
+
+    // Get event selectors for all radio groups
+    function getEventSelectorsForRadioGroups () {
+      var radioGroups = []
+
+      // Build an array of radio group selectors
+      return $(selectors.radio).map(function () {
+        var groupName = $(this).attr('name')
+
+        if ($.inArray(groupName, radioGroups) === -1) {
+          radioGroups.push(groupName)
+          return 'input[type="radio"][name="' + $(this).attr('name') + '"]'
+        }
+        return null
+      })
+    }
+
+    // Set up radio show/hide content for container
+    self.showHideRadioToggledContent = function ($container) {
+      init($container, selectors.radio, getEventSelectorsForRadioGroups(), handleRadioContent)
+    }
+
+    // Set up checkbox show/hide content for container
+    self.showHideCheckboxToggledContent = function ($container) {
+      init($container, selectors.checkbox, [selectors.checkbox], handleCheckboxContent)
+    }
+
+    // Remove event handlers
+    self.destroy = function ($container) {
+      $container = $container || $(document.body)
+      $container.off('.' + selectors.namespace)
+    }
   }
-}
+
+  ShowHideContent.prototype.init = function ($container) {
+    this.showHideRadioToggledContent($container)
+    this.showHideCheckboxToggledContent($container)
+  }
+
+  GOVUK.ShowHideContent = ShowHideContent
+  global.GOVUK = GOVUK
+})(window);
+
 
 $(document).ready(function () {
   var GOVUK = window.GOVUK
 
-  // Use GOV.UK selection-buttons.js to set selected
-  // and focused states for block labels
-  var $blockLabels = $(".block-label input[type='radio'], .block-label input[type='checkbox']")
+  var showHideContent = new GOVUK.ShowHideContent()
+  showHideContent.init()
 
-  ;(function () {
-    return new GOVUK.SelectionButtons($blockLabels)
-  })()
-
-  // Show and hide toggled content
-  // Where .block-label uses the data-target attribute
-  var toggleContent = new ShowHideContent()
-  toggleContent.showHideRadioToggledContent()
-  toggleContent.showHideCheckboxToggledContent()
-
-  $('.js-trigger-livechat').on('click', function (evt) {
-    evt.preventDefault()
-    window.LC_API.show_full_view()
-    // window.open('https://secure.livechatinc.com/licence/7756631/open_chat.cgi', 'newwin', 'width=200,height=100')
-  })
-
-  $('.js-trigger-custom-window').on('click', function (evt) {
-    evt.preventDefault()
-    window.open('/implementations/custom-window', 'newwin', 'width=400,height=500')
-  })
-
-  $('.state-pension-age-next').on('click', function (evt) {
-    if ($('#nino').val().trim().length === 0) {
-      evt.preventDefault()
-      $('#nino-error').removeClass('dn')
-    }
-  })
 })

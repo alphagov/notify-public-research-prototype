@@ -4,7 +4,7 @@
   "version": "3.0.0",
   "private": true,
   "engines": {
-    "node": ">=4.0 <5.0"
+    "node": ">=8.0 <9.0"
   },
   "scripts": {
     "start": "source environment.sh && node start.js",
@@ -37,9 +37,9 @@
     "express-session": "^1.13.0",
     "express-writer": "0.0.4",
     "fastclick": "^1.0.6",
-    "govuk-elements-sass": "2.2.0",
-    "govuk_frontend_toolkit": "5.0.0",
-    "govuk_template_jinja": "0.17.3",
+    "govuk-elements-sass": "3.1.1",
+    "govuk_frontend_toolkit": "7.0.1",
+    "govuk_template_jinja": "0.22.3",
     "grunt": "0.4.5",
     "grunt-cli": "0.1.13",
     "grunt-concurrent": "0.4.3",

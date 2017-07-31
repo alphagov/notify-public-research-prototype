@@ -16,30 +16,31 @@
   <div class="grid-row">
     <form class="column-two-thirds" method="post">
       <h1 class="b f2 f1-l mv4">Tell DVLA you’ve changed address</h1>
-      <h2 class="b f3 mv3">How can we contact you?</h2>
-
-
 
       <fieldset>
 
-        <legend class="visually-hidden">How do you want to be contacted?</legend>
+        <legend>
+          <h2 class="heading-medium">
+            How do you want to be contacted?
+          </h2>
+        </legend>
 
-        <label class="block-label selection-button-radio" data-target="contact-by-email" for="example-contact-by-email">
+        <div class="multiple-choice" data-target="contact-by-email">
           <input id="example-contact-by-email" type="radio" name="contact-me-by" value="Email">
-          Email
-        </label>
+          <label for="example-contact-by-email">Email</label>
+        </div>
         <div class="panel panel-border-narrow js-hidden" id="contact-by-email">
-          <label class="form-label" for="contact-email">Email address</label>
-          <input class="form-control" name="email" type="text" id="contact-email">
+          <label class="form-label" for="email">Email address</label>
+          <input class="form-control" name="email" type="text" id="email">
         </div>
 
-        <label class="block-label selection-button-radio" data-target="contact-by-text" for="example-contact-by-text">
-          <input id="example-contact-by-text" type="radio" name="contact-me-by" value="Text message">
-          Text message
-        </label>
-        <div class="panel panel-border-narrow js-hidden" id="contact-by-text">
-          <label class="form-label" for="contact-text-message">Mobile phone number</label>
-          <input class="form-control" name="phone" type="text" id="contact-text-message">
+        <div class="multiple-choice" data-target="contact-by-sms">
+          <input id="example-contact-by-sms" type="radio" name="contact-me-by" value="Text message">
+          <label for="example-contact-by-sms">Text message</label>
+        </div>
+        <div class="panel panel-border-narrow js-hidden" id="contact-by-sms">
+          <label class="form-label" for="phone">Phone number</label>
+          <input class="form-control" name="phone" type="text" id="phone">
         </div>
 
       </fieldset>
